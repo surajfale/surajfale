@@ -8,4 +8,4 @@
 - 🌱 I’m currently learning AI/ML alongwith contanerizationd and orchestration architecture
 
 
-You can find more detail about me at: https://www.suraj-fale.com/
+You can find more detail about me at: https://bio.link/surajfale
