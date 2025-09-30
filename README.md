@@ -1,8 +1,136 @@
-### Hi there, I'm Suraj 👋
+<div align="center">
 
-<!--
-**surajfale/surajfale** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
--->
+# 👋 Hi, I'm Suraj Fale
 
-- 🔭 I’m currently working on Scala and Apache Kafka Projects
-- 🌱 I’m currently learning AI/ML alongwith contanerizationd and orchestration architecture
+### Software Engineer | Scala & Kafka Specialist | Exploring Gen AI & Prompt Engineering
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/surajfale)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/surajfale)
+[![Stack Overflow](https://img.shields.io/badge/Stack_Overflow-FE7A16?style=for-the-badge&logo=stack-overflow&logoColor=white)](https://stackoverflow.com/users/585398/suraj-fale)
+[![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://surajfale.netlify.app)
+
+</div>
+
+---
+
+## 🚀 About Me
+
+I'm a passionate software engineer currently working at **Bank of America**, specializing in building scalable distributed systems and event-driven architectures. I thrive on solving complex problems with elegant solutions using modern technologies.
+
+- 🔭 Currently working on **Scala and Apache Kafka projects**
+- 🤖 **Exploring Generative AI, Prompt Engineering, and LLM integration**
+- 🌱 Learning **AI/ML, containerization (Docker/Kubernetes), and orchestration architectures**
+- 💼 Working at **Bank of America** on enterprise-scale distributed systems
+- 🎓 **Java Certified** by HackerRank (2020)
+- 💡 Passionate about **clean code, system design, and performance optimization**
+- 🌐 Portfolio: [surajfale.com](https://surajfale.com)
+
+---
+
+## 🛠️ Tech Stack
+
+### Languages
+
+**Core Strengths:**
+
+![Scala](https://img.shields.io/badge/Scala-DC322F?style=for-the-badge&logo=scala&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
+**Also Proficient:**
+
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+
+### Frameworks & Technologies
+![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-231F20?style=flat-square&logo=apache-kafka&logoColor=white)
+![Apache Spark](https://img.shields.io/badge/Apache_Spark-E25A1C?style=flat-square&logo=apache-spark&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white)
+
+### Tools & Platforms
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
+
+---
+
+## 💼 Professional Experience
+
+### 🏦 Bank of America
+**Software Engineer** | Current
+
+- Working on enterprise-scale distributed systems
+- Building real-time data processing pipelines with Apache Kafka
+- Developing microservices using Scala and functional programming principles
+- Contributing to high-performance, mission-critical applications
+
+---
+
+## 🎯 Featured Projects
+
+### 🎤 [Voice Enabled Grocery App](https://voice-grocery-list.netlify.app/)
+A smart grocery list application with voice recognition capabilities, making shopping lists more accessible and efficient.
+
+**Tech Stack:** React, Voice API, JavaScript
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=flat-square)](https://voice-grocery-list.netlify.app/)
+[![Source Code](https://img.shields.io/badge/Source-Code-blue?style=flat-square&logo=github)](https://github.com/surajfale/voice-grocery-list_app)
+
+### 🔧 [Developer Tools Collection](https://devs-tools.netlify.app/)
+A curated collection of essential developer tools and utilities to boost productivity and streamline development workflows.
+
+**Tech Stack:** React, TypeScript, Material-UI
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=flat-square)](https://devs-tools.netlify.app/)
+[![Source Code](https://img.shields.io/badge/Source-Code-blue?style=flat-square&logo=github)](https://github.com/surajfale/dev-tools)
+
+---
+
+## 📊 GitHub Stats
+
+<div align="center">
+
+![Suraj's GitHub Stats](https://github-readme-stats.vercel.app/api?username=surajfale&show_icons=true&theme=radical&hide_border=true)
+
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=surajfale&layout=compact&theme=radical&hide_border=true)
+
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=surajfale&theme=radical&hide_border=true)
+
+</div>
+
+---
+
+## 🏆 Certifications
+
+- **Java Certification** - HackerRank (May 2020)
+  - Credential ID: 5021eaeaac35
+
+---
+
+## 📫 Let's Connect
+
+I'm always interested in connecting with fellow developers, discussing new technologies, or exploring collaboration opportunities!
+
+<div align="center">
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/surajfale)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/surajfale)
+[![Stack Overflow](https://img.shields.io/badge/Stack_Overflow-Profile-FE7A16?style=for-the-badge&logo=stack-overflow)](https://stackoverflow.com/users/585398/suraj-fale)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-FF5722?style=for-the-badge&logo=google-chrome)](https://surajfale.netlify.app)
+
+</div>
+
+---
+
+<div align="center">
+
+### 💭 Quote of the Day
+
+*"The best way to predict the future is to invent it."* - Alan Kay
+
+---
+
+**⭐ From [surajfale](https://github.com/surajfale)**
+
+![Profile Views](https://komarev.com/ghpvc/?username=surajfale&color=blueviolet&style=flat-square)
+
+</div>
