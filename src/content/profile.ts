@@ -114,5 +114,21 @@ export const profileData: Profile = {
       sourceUrl: 'https://github.com/surajfale/dev-tools',
       image: '/project-devtools.png',
     },
+    {
+      title: 'Git Commit MCP Server',
+      description: 'A lightweight MCP server that automates Conventional Commit message generation, changelog updates, and optional git pushes. Ideal for AI-assisted, well-formed commit messages and automated changelog management.',
+      technologies: ['Python 3.10+', 'MCP Protocol', 'Git'],
+      liveUrl: 'https://test.pypi.org/project/git-commit-mcp-server/',
+      sourceUrl: 'https://github.com/surajfale/git-mcp-server',
+      image: '/project-git-mcp-server.png',
+    },
+    {
+      title: 'Notes & Tasks Web Application',
+      description: 'A modern, production-ready web app for managing notes and tasks with full offline support, list organization, and a responsive Material Design 3 UI. Features rich text notes, task tracking, JWT authentication, and seamless sync.',
+      technologies: ['SvelteKit', 'Node.js', 'Express', 'MongoDB Atlas', 'TypeScript', 'Tailwind CSS'],
+      liveUrl: 'https://notestasks.netlify.app/',
+      sourceUrl: 'https://github.com/surajfale/notes-tasks',
+      image: '/project-notes-tasks.png',
+    },
   ],
 }
