@@ -43,14 +43,22 @@ const Projects = () => {
           variant="body1"
           sx={{
             textAlign: 'center',
-            maxWidth: '700px',
+            maxWidth: '800px',
             mx: 'auto',
             mb: 6,
             color: 'text.secondary',
             fontSize: '1.1rem',
+            lineHeight: 1.8,
+            '& span': {
+              color: 'primary.main',
+              fontWeight: 600,
+            }
           }}
         >
-          A selection of projects showcasing my work in web development and modern JavaScript frameworks
+          Showcasing innovative projects across <span>AI & Machine Learning</span>,{' '}
+          <span>Event Distribution Systems</span>, <span>Prompt Engineering</span>,{' '}
+          and <span>Web Development</span>. Specialized in implementing cutting-edge{' '}
+          <span>AI features</span> and creating intelligent solutions.
         </Typography>
 
         <Grid container spacing={4}>
