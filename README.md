@@ -83,6 +83,19 @@ A curated collection of essential developer tools and utilities to boost product
 [![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=flat-square)](https://devs-tools.netlify.app/)
 [![Source Code](https://img.shields.io/badge/Source-Code-blue?style=flat-square&logo=github)](https://github.com/surajfale/dev-tools)
 
+### 🤖 [Git Commit MCP Server](https://github.com/surajfale/git-mcp-server)
+A lightweight Model Context Protocol (MCP) server that automates Conventional Commit message generation, changelog updates, and optional git pushes. Ideal for teams and individuals who want AI-assisted, well-formed commit messages and automated changelog management.
+
+**Tech Stack:** Python 3.10+, MCP Protocol, Git
+[![Source Code](https://img.shields.io/badge/Source-Code-blue?style=flat-square&logo=github)](https://github.com/surajfale/git-mcp-server)
+
+### 📝 [Notes & Tasks Web Application](https://github.com/surajfale/notes-tasks)
+A modern, production-ready web app for managing notes and tasks with full offline support, list organization, and a responsive Material Design 3 UI. Features rich text notes, task tracking, JWT authentication, and seamless sync.
+
+**Tech Stack:** SvelteKit, Node.js, Express, MongoDB Atlas, TypeScript, Tailwind CSS
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=flat-square)](https://notestasks.netlify.app/)
+[![Source Code](https://img.shields.io/badge/Source-Code-blue?style=flat-square&logo=github)](https://github.com/surajfale/notes-tasks)
+
 ---
 
 ## 📊 GitHub Stats
