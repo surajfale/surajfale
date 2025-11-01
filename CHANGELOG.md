@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### 2025-10-30 00:13:37 - 47be102 [LOCAL]
+### 2025-10-31 23:34:16 - 9dd4433 [LOCAL]
+
+feat(docs): add new blog links to README and profile data
+
+- Added dev.to and Medium links to README
+- Updated profile data to include new blog entries
+- Enhanced visibility of developer resources### 2025-10-30 00:13:37 - 47be102 [PUSHED]
 
 feat(Projects): enhance project description and styling
 

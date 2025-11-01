@@ -78,6 +78,18 @@ export const profileData: Profile = {
       emphasized: false,
     },
     {
+      name: 'dev.to',
+      url: 'https://dev.to/surajfale',
+      icon: 'DevTo',
+      emphasized: false,
+    },
+    {
+      name: 'Medium',
+      url: 'https://medium.com/@surajfale',
+      icon: 'Medium',
+      emphasized: false,
+    },
+    {
       name: 'Facebook',
       url: 'https://facebook.com/suraj.fale',
       icon: 'Facebook',
