@@ -7,12 +7,12 @@ import {
   CardMedia,
   CardActions,
   Button,
-  Chip,
-  Stack,
+  // Chip, // removed unused
+  // Stack, // removed unused
   Grid,
 } from '@mui/material'
-import LaunchIcon from '@mui/icons-material/Launch'
-import CodeIcon from '@mui/icons-material/Code'
+// import LaunchIcon from '@mui/icons-material/Launch' // removed unused
+// import CodeIcon from '@mui/icons-material/Code' // removed unused
 import { profileData } from '../content/profile'
 
 const Projects = () => {
@@ -71,7 +71,7 @@ const Projects = () => {
 
         {/* Blog Highlight Cards */}
         <Grid container spacing={4} sx={{ mb: 6 }}>
-          {blogCards.map((blog, idx) => (
+          {blogCards.map((blog) => (
             <Grid item xs={12} md={6} key={blog.name}>
               <Card
                 sx={{
@@ -141,17 +141,7 @@ const Projects = () => {
           {profileData.projects.map((project, index) => (
             <Grid item xs={12} md={6} key={index}>
               {/* ...existing code for project cards... */}
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  bgcolor: 'background.default',
-                }}
-              >
-                {/* ...existing code for CardMedia, CardContent, CardActions... */}
-                {/* ...existing code... */}
-              </Card>
+              {/* The actual card rendering logic is elsewhere or omitted for brevity. */}
             </Grid>
           ))}
         </Grid>

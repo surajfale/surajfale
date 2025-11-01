@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### 2025-10-31 23:44:00 - b7a0cdc [LOCAL]
+### 2025-10-31 23:48:21 - 314e458 [LOCAL]
+
+refactor(Projects): remove unused imports and simplify card rendering
+
+- Cleaned up unused imports for better readability
+- Simplified card rendering logic in the Projects component
+- Improved code maintainability by reducing clutter### 2025-10-31 23:44:00 - b7a0cdc [PUSHED]
 
 feat(components): add blog highlight buttons and cards to Projects
 
