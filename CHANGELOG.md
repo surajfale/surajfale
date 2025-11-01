@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### 2025-10-31 23:48:21 - 314e458 [LOCAL]
+### 2025-10-31 23:51:47 - 8396cb3 [LOCAL]
+
+feat(Projects): update project mapping to ignore project details
+
+- Improved code readability by removing unused variable.
+- Maintained functionality while simplifying the mapping logic.### 2025-10-31 23:48:21 - 314e458 [PUSHED]
 
 refactor(Projects): remove unused imports and simplify card rendering
 

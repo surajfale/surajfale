@@ -138,7 +138,7 @@ const Projects = () => {
 
         {/* Project Cards */}
         <Grid container spacing={4}>
-          {profileData.projects.map((project, index) => (
+          {profileData.projects.map((_, index) => (
             <Grid item xs={12} md={6} key={index}>
               {/* ...existing code for project cards... */}
               {/* The actual card rendering logic is elsewhere or omitted for brevity. */}
