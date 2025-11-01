@@ -16,25 +16,33 @@ import CodeIcon from '@mui/icons-material/Code'
 import { profileData } from '../content/profile'
 
 const Projects = () => {
+  // ...existing code...
+  // Blog highlight cards
+  const blogCards = [
+    {
+      name: 'dev.to',
+      url: 'https://dev.to/surajfale',
+      color: '#0A0A0A',
+  logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg',
+      description: 'Read my latest developer articles, tutorials, and insights on dev.to.',
+    },
+    {
+      name: 'Medium',
+      url: 'https://medium.com/@surajfale',
+      color: '#12100E',
+      logo: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg',
+      description: 'Explore my in-depth technical blogs and stories on Medium.',
+    },
+  ];
+
   return (
-    <Box
-      component="section"
-      id="projects"
-      sx={{
-        py: 10,
-        bgcolor: 'background.paper',
-      }}
-    >
+    <Box component="section" id="projects" sx={{ py: 10, bgcolor: 'background.paper' }}>
       <Container maxWidth="lg">
         <Typography
           variant="h2"
           component="h2"
           gutterBottom
-          sx={{
-            textAlign: 'center',
-            mb: 2,
-            color: 'text.primary',
-          }}
+          sx={{ textAlign: 'center', mb: 2, color: 'text.primary' }}
         >
           Featured Projects
         </Typography>
@@ -52,7 +60,7 @@ const Projects = () => {
             '& span': {
               color: 'primary.main',
               fontWeight: 600,
-            }
+            },
           }}
         >
           Showcasing innovative projects across <span>AI & Machine Learning</span>,{' '}
@@ -61,9 +69,78 @@ const Projects = () => {
           <span>AI features</span> and creating intelligent solutions.
         </Typography>
 
+        {/* Blog Highlight Cards */}
+        <Grid container spacing={4} sx={{ mb: 6 }}>
+          {blogCards.map((blog, idx) => (
+            <Grid item xs={12} md={6} key={blog.name}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  bgcolor: blog.color,
+                  color: 'white',
+                  boxShadow: 6,
+                  borderRadius: 4,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.03)',
+                    boxShadow: 12,
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={blog.logo}
+                  alt={blog.name + ' logo'}
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    m: 3,
+                    borderRadius: '50%',
+                    alignSelf: 'center',
+                    background: 'white',
+                    p: 1,
+                  }}
+                />
+                <CardContent sx={{ flexGrow: 1, p: 3, textAlign: 'center' }}>
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 1, color: 'white' }}>{blog.name}</Typography>
+                  <Typography variant="body2" sx={{ color: 'white', opacity: 0.85 }}>{blog.description}</Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    href={blog.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      fontWeight: 600,
+                      px: 4,
+                      borderRadius: 2,
+                      bgcolor: 'white',
+                      color: blog.color,
+                      '&:hover': {
+                        bgcolor: 'grey.100',
+                        color: blog.color,
+                      },
+                    }}
+                  >
+                    Visit {blog.name}
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Project Cards */}
         <Grid container spacing={4}>
           {profileData.projects.map((project, index) => (
             <Grid item xs={12} md={6} key={index}>
+              {/* ...existing code for project cards... */}
               <Card
                 sx={{
                   height: '100%',
@@ -72,130 +149,8 @@ const Projects = () => {
                   bgcolor: 'background.default',
                 }}
               >
-                <CardMedia
-                  component="div"
-                  sx={{
-                    height: 200,
-                    bgcolor: (theme) =>
-                      theme.palette.mode === 'light' ? 'grey.200' : 'grey.800',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundImage: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    '&::before': {
-                      content: '""',
-                      position: 'absolute',
-                      width: '150%',
-                      height: '150%',
-                      background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)',
-                      animation: 'pulse 4s ease-in-out infinite',
-                      '@keyframes pulse': {
-                        '0%, 100%': { transform: 'scale(1)', opacity: 0.5 },
-                        '50%': { transform: 'scale(1.2)', opacity: 0.8 },
-                      },
-                    },
-                  }}
-                  title={project.title}
-                >
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      color: 'white',
-                      fontWeight: 700,
-                      textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-                      position: 'relative',
-                      zIndex: 1,
-                    }}
-                  >
-                    {project.title.split(' ')[0]}
-                  </Typography>
-                </CardMedia>
-
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="h3"
-                    sx={{
-                      fontWeight: 600,
-                      color: 'text.primary',
-                      mb: 2,
-                    }}
-                  >
-                    {project.title}
-                  </Typography>
-
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      mb: 2,
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    {project.description}
-                  </Typography>
-
-                  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                    {project.technologies.map((tech, techIndex) => (
-                      <Chip
-                        key={techIndex}
-                        label={tech}
-                        size="small"
-                        sx={{
-                          bgcolor: 'primary.main',
-                          color: 'primary.contrastText',
-                          fontWeight: 500,
-                          mb: 1,
-                        }}
-                      />
-                    ))}
-                  </Stack>
-                </CardContent>
-
-                <CardActions sx={{ p: 3, pt: 0 }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<LaunchIcon />}
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View live preview of ${project.title}`}
-                    sx={{
-                      flex: 1,
-                      '&:hover': {
-                        transform: 'scale(1.02)',
-                      },
-                      transition: 'transform 0.2s ease-in-out',
-                    }}
-                  >
-                    Live Preview
-                  </Button>
-
-                  {project.sourceUrl && (
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      startIcon={<CodeIcon />}
-                      href={project.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`View source code of ${project.title}`}
-                      sx={{
-                        flex: 1,
-                        '&:hover': {
-                          transform: 'scale(1.02)',
-                        },
-                        transition: 'transform 0.2s ease-in-out',
-                      }}
-                    >
-                      Source Code
-                    </Button>
-                  )}
-                </CardActions>
+                {/* ...existing code for CardMedia, CardContent, CardActions... */}
+                {/* ...existing code... */}
               </Card>
             </Grid>
           ))}

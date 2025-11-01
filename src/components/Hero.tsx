@@ -109,9 +109,7 @@ const Hero = () => {
             direction={{ xs: 'column', sm: 'row' }}
             spacing={2}
             justifyContent="center"
-            sx={{
-              animation: 'fadeInUp 0.8s ease-out 0.6s both',
-            }}
+            sx={{ animation: 'fadeInUp 0.8s ease-out 0.6s both' }}
           >
             <Button
               component="a"
@@ -161,6 +159,56 @@ const Hero = () => {
               }}
             >
               View GitHub
+            </Button>
+
+            <Button
+              component="a"
+              variant="contained"
+              size="large"
+              startIcon={<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="dev.to" style={{ width: 24, height: 24, borderRadius: 4 }} />}
+              href={profileData.socials.find((s) => s.name === 'dev.to')?.url || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit dev.to blog"
+              sx={{
+                bgcolor: '#0A0A0A',
+                color: 'white',
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+                '&:hover': {
+                  bgcolor: '#222',
+                  transform: 'scale(1.05)',
+                },
+                transition: 'all 0.2s ease-in-out',
+              }}
+            >
+              Blog on dev.to
+            </Button>
+
+            <Button
+              component="a"
+              variant="contained"
+              size="large"
+              startIcon={<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg" alt="Medium" style={{ width: 24, height: 24 }} />}
+              href={profileData.socials.find((s) => s.name === 'Medium')?.url || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Medium blog"
+              sx={{
+                bgcolor: '#12100E',
+                color: 'white',
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+                '&:hover': {
+                  bgcolor: '#222',
+                  transform: 'scale(1.05)',
+                },
+                transition: 'all 0.2s ease-in-out',
+              }}
+            >
+              Blog on Medium
             </Button>
           </Stack>
         </Box>

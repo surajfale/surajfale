@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### 2025-10-31 23:34:16 - 9dd4433 [LOCAL]
+### 2025-10-31 23:44:00 - b7a0cdc [LOCAL]
+
+feat(components): add blog highlight buttons and cards to Projects
+
+- Introduced buttons for dev.to and Medium in Hero component
+- Added blog highlight cards in Projects component
+- Improved styling for new buttons and cards### 2025-10-31 23:34:16 - 9dd4433 [PUSHED]
 
 feat(docs): add new blog links to README and profile data
 
