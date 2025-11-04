@@ -70,20 +70,7 @@ const About = () => {
                 mb: 3,
               }}
             >
-              Experienced software engineer at{' '}
-              <Box
-                component="span"
-                sx={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  fontWeight: 700,
-                }}
-              >
-                Bank of America
-              </Box>
-              , specializing in distributed systems, event-driven architectures, and real-time data processing.
+              Experienced software engineer, specializing in distributed systems, event-driven architectures, and real-time data processing.
             </Typography>
 
             <Box

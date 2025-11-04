@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### 2025-10-31 23:51:47 - 8396cb3 [LOCAL]
+### 2025-11-03 23:40:56 - e791fc3 [LOCAL]
+
+feat(docs): update portfolio and README for role and project highlights
+
+- Changed title and tagline to reflect current role as Lead Architect
+- Updated project highlights to include additional live demos
+- Revised descriptions for clarity and emphasis on leadership and mentoring### 2025-10-31 23:51:47 - 8396cb3 [PUSHED]
 
 feat(Projects): update project mapping to ignore project details
 

@@ -32,19 +32,18 @@ export interface Profile {
 
 export const profileData: Profile = {
   name: 'Suraj Fale',
-  title: 'Software Engineer',
-  tagline: 'Building scalable distributed systems with Scala, Apache Kafka, Apache Spark | Exploring Generative AI & Prompt Engineering',
+  title: 'Lead Architect',
+  tagline: 'Lead Architect — System Design, Multi-project Delivery, Scala & Kafka | Generative AI & Prompt Engineering',
 
-  about: `Experienced software engineer currently working at Bank of America, specializing in distributed systems,
-    event-driven architectures, and real-time data processing. Passionate about building robust, scalable solutions
-    using Scala, Apache Kafka, Apache Spark, and cloud technologies. Continuously exploring Generative AI, Prompt Engineering,
-    LLM integration, containerization, and orchestration architectures to stay at the forefront of modern software engineering.`,
+  about: `Lead Architect with experience designing and delivering large-scale distributed systems across multiple projects. I lead architecture, system design, implementation, and cross-team delivery while mentoring engineers and driving technical direction.
+    I focus on resilient event-driven architectures, real-time data processing, and pragmatic system design using Scala, Java, Apache Kafka, Apache Spark, and cloud-native patterns.
+    I'm also exploring Generative AI, Prompt Engineering, and LLM integration to bring practical AI features into production services.`,
 
   highlights: [
     {
       year: 'Present',
-      title: 'Bank of America',
-      description: 'Working on enterprise-scale distributed systems and data processing pipelines',
+      title: 'Lead Architect',
+      description: 'Leading multiple software projects end-to-end: architecture, design, implementation, and delivery; mentoring engineering teams and aligning technical strategy with business goals.',
     },
     {
       year: '2020',

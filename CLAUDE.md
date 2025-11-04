@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a modern single-page portfolio website for Suraj Fale built with React, TypeScript, and Material-UI. The site showcases professional experience (Bank of America, Scala/Kafka/Spark specialist), projects with live demos, and social links with emphasis on LinkedIn and GitHub. The portfolio highlights expertise in distributed systems and exploration of Generative AI & Prompt Engineering.
+This is a modern single-page portfolio website for Suraj Fale built with React, TypeScript, and Material-UI. The site showcases professional experience (Scala/Kafka/Spark specialist), projects with live demos, and social links with emphasis on LinkedIn and GitHub. The portfolio highlights expertise in distributed systems and exploration of Generative AI & Prompt Engineering.
 
 ## Technology Stack
 
@@ -93,15 +93,14 @@ netlify deploy --prod  # Deploy to production
 Edit `src/content/profile.ts` to update:
 - **Personal info**: name, title, tagline (includes core tech + Gen AI exploration)
 - **About text**: Background, specialization, technologies used
-- **Highlights** (3 cards): Bank of America role, Java certification, continuous learning
+- **Highlights** (3 cards):  role, Java certification, continuous learning
 - **Projects** (2 featured): Voice Grocery App, Dev Tools Collection (liveUrl, sourceUrl, tech stack)
 - **Socials** (6 platforms): LinkedIn/GitHub (emphasized: true), Stack Overflow, Facebook, Instagram, Snapchat
 
 **Important**: The About component breaks down the about text into:
-1. Opening statement with gradient "Bank of America"
-2. Passion badge with sparkle icon
-3. "Core Technologies" section with gradient-filled chips
-4. "Currently Exploring" section with outlined chips (fills on hover)
+1. Passion badge with sparkle icon
+2. "Core Technologies" section with gradient-filled chips
+3. "Currently Exploring" section with outlined chips (fills on hover)
 
 ## Styling and Theming
 
@@ -148,8 +147,7 @@ All components implement:
 - Core expertise: Scala, Java, Python (core strengths in README)
 - Technologies: Apache Kafka, Apache Spark (featured prominently)
 - Current focus: Generative AI, Prompt Engineering, LLM integration
-- Company: Bank of America (distributed systems)
-- Projects: 2 live demos (Voice Grocery App, Dev Tools)
+- Projects: 4 live demos (Voice Grocery App, Dev Tools, Notes Tasks, Git Commit MCP Server)
 
 **Design Philosophy:**
 - Modern, gradient-heavy aesthetic

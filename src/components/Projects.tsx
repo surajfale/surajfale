@@ -7,12 +7,12 @@ import {
   CardMedia,
   CardActions,
   Button,
-  // Chip, // removed unused
-  // Stack, // removed unused
+  Chip,
+  Stack,
   Grid,
 } from '@mui/material'
-// import LaunchIcon from '@mui/icons-material/Launch' // removed unused
-// import CodeIcon from '@mui/icons-material/Code' // removed unused
+import LaunchIcon from '@mui/icons-material/Launch'
+import CodeIcon from '@mui/icons-material/Code'
 import { profileData } from '../content/profile'
 
 const Projects = () => {
@@ -34,6 +34,9 @@ const Projects = () => {
       description: 'Explore my in-depth technical blogs and stories on Medium.',
     },
   ];
+
+  // accent colors for project headers (solid blocks instead of images)
+  const projectColors = ['#667eea', '#764ba2', '#2b8a9f', '#d9480f', '#16a34a']
 
   return (
     <Box component="section" id="projects" sx={{ py: 10, bgcolor: 'background.paper' }}>
@@ -69,79 +72,78 @@ const Projects = () => {
           <span>AI features</span> and creating intelligent solutions.
         </Typography>
 
-        {/* Blog Highlight Cards */}
-        <Grid container spacing={4} sx={{ mb: 6 }}>
-          {blogCards.map((blog) => (
-            <Grid item xs={12} md={6} key={blog.name}>
+        {/* Project Cards */}
+        <Grid container spacing={4}>
+          {profileData.projects.map((project, index) => (
+            <Grid item xs={12} md={6} key={index}>
               <Card
                 sx={{
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  bgcolor: blog.color,
-                  color: 'white',
-                  boxShadow: 6,
-                  borderRadius: 4,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'transform 0.2s',
-                  '&:hover': {
-                    transform: 'scale(1.03)',
-                    boxShadow: 12,
-                  },
+                  bgcolor: 'background.default',
                 }}
               >
                 <CardMedia
-                  component="img"
-                  image={blog.logo}
-                  alt={blog.name + ' logo'}
+                  component="div"
                   sx={{
-                    width: 60,
-                    height: 60,
-                    m: 3,
-                    borderRadius: '50%',
-                    alignSelf: 'center',
-                    background: 'white',
-                    p: 1,
+                    height: 200,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: projectColors[index % projectColors.length],
                   }}
-                />
-                <CardContent sx={{ flexGrow: 1, p: 3, textAlign: 'center' }}>
-                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 1, color: 'white' }}>{blog.name}</Typography>
-                  <Typography variant="body2" sx={{ color: 'white', opacity: 0.85 }}>{blog.description}</Typography>
+                  title={project.title}
+                >
+                  <Typography variant="h4" sx={{ color: 'white', fontWeight: 700 }}>{project.title}</Typography>
+                </CardMedia>
+
+                <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                  <Typography gutterBottom variant="h5" component="h3" sx={{ fontWeight: 600, color: 'text.primary', mb: 2 }}>
+                    {project.title}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2, lineHeight: 1.7 }}>
+                    {project.description}
+                  </Typography>
+
+                  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    {project.technologies.map((tech, techIndex) => (
+                      <Chip key={techIndex} label={tech} size="small" sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', fontWeight: 500, mb: 1 }} />
+                    ))}
+                  </Stack>
                 </CardContent>
-                <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
+
+                <CardActions sx={{ p: 3, pt: 0 }}>
                   <Button
                     variant="contained"
-                    color="secondary"
-                    href={blog.url}
+                    color="primary"
+                    startIcon={<LaunchIcon />}
+                    href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    sx={{
-                      fontWeight: 600,
-                      px: 4,
-                      borderRadius: 2,
-                      bgcolor: 'white',
-                      color: blog.color,
-                      '&:hover': {
-                        bgcolor: 'grey.100',
-                        color: blog.color,
-                      },
-                    }}
+                    aria-label={`View live preview of ${project.title}`}
+                    sx={{ flex: 1, '&:hover': { transform: 'scale(1.02)' }, transition: 'transform 0.2s ease-in-out' }}
                   >
-                    Visit {blog.name}
+                    Live Preview
                   </Button>
+
+                  {project.sourceUrl && (
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      startIcon={<CodeIcon />}
+                      href={project.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View source code of ${project.title}`}
+                      sx={{ flex: 1, '&:hover': { transform: 'scale(1.02)' }, transition: 'transform 0.2s ease-in-out' }}
+                    >
+                      Source Code
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
-            </Grid>
-          ))}
-        </Grid>
-
-        {/* Project Cards */}
-        <Grid container spacing={4}>
-          {profileData.projects.map((_, index) => (
-            <Grid item xs={12} md={6} key={index}>
-              {/* ...existing code for project cards... */}
-              {/* The actual card rendering logic is elsewhere or omitted for brevity. */}
             </Grid>
           ))}
         </Grid>

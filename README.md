@@ -2,7 +2,7 @@
 
 # 👋 Hi, I'm Suraj Fale
 
-### Software Engineer | Scala & Kafka Specialist | Exploring Gen AI & Prompt Engineering
+### Lead Architect | System Design & Architecture | Scala & Kafka | Generative AI & Prompt Engineering
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/surajfale)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/surajfale)
@@ -18,12 +18,12 @@
 
 ## 🚀 About Me
 
-I'm a passionate software engineer currently working at **Bank of America**, specializing in building scalable distributed systems and event-driven architectures. I thrive on solving complex problems with elegant solutions using modern technologies.
+I'm a Lead Architect focused on designing and delivering large-scale distributed systems and leading multiple software projects from architecture through delivery. I enjoy solving complex systems problems and mentoring teams to build maintainable, scalable solutions.
 
-- 🔭 Currently working on **Scala and Apache Kafka projects**
+- 🔭 Currently leading architecture and delivery of **Scala and Apache Kafka** projects
 - 🤖 **Exploring Generative AI, Prompt Engineering, and LLM integration**
 - 🌱 Learning **AI/ML, containerization (Docker/Kubernetes), and orchestration architectures**
-- 💼 Working at **Bank of America** on enterprise-scale distributed systems
+- 💼 Leading architecture and delivery of **enterprise-scale distributed systems**
 - 🎓 **Java Certified** by HackerRank (2020)
 - 💡 Passionate about **clean code, system design, and performance optimization**
 - 🌐 Portfolio: [surajfale.com](https://surajfale.com)
@@ -60,13 +60,12 @@ I'm a passionate software engineer currently working at **Bank of America**, spe
 
 ## 💼 Professional Experience
 
-### 🏦 Bank of America
-**Software Engineer** | Current
+**Lead Architect** | Current
 
-- Working on enterprise-scale distributed systems
-- Building real-time data processing pipelines with Apache Kafka
-- Developing microservices using Scala and functional programming principles
-- Contributing to high-performance, mission-critical applications
+- Leading multiple software projects end-to-end: architecture, design, implementation, and delivery
+- Building and overseeing real-time data processing pipelines with Apache Kafka
+- Designing microservices and platform components with Scala and modern architectural patterns
+- Mentoring engineers and aligning technical strategy with business goals
 
 ---
 
