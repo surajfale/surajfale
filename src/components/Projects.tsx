@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Container,
@@ -11,29 +12,14 @@ import {
   Stack,
   Grid,
 } from '@mui/material'
-import LaunchIcon from '@mui/icons-material/Launch'
-import CodeIcon from '@mui/icons-material/Code'
+import AppsIcon from '@mui/icons-material/Apps'
 import { profileData } from '../content/profile'
 
 const Projects = () => {
-  // ...existing code...
-  // Blog highlight cards
-  const blogCards = [
-    {
-      name: 'dev.to',
-      url: 'https://dev.to/surajfale',
-      color: '#0A0A0A',
-  logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg',
-      description: 'Read my latest developer articles, tutorials, and insights on dev.to.',
-    },
-    {
-      name: 'Medium',
-      url: 'https://medium.com/@surajfale',
-      color: '#12100E',
-      logo: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg',
-      description: 'Explore my in-depth technical blogs and stories on Medium.',
-    },
-  ];
+  const navigate = useNavigate()
+  
+  // Show only featured projects (first 2-3)
+  const featuredProjects = profileData.projects.slice(0, 2)
 
   // accent colors for project headers (solid blocks instead of images)
   const projectColors = ['#667eea', '#764ba2', '#2b8a9f', '#d9480f', '#16a34a']
@@ -72,22 +58,28 @@ const Projects = () => {
           <span>AI features</span> and creating intelligent solutions.
         </Typography>
 
-        {/* Project Cards */}
+        {/* Featured Project Cards */}
         <Grid container spacing={4}>
-          {profileData.projects.map((project, index) => (
-            <Grid item xs={12} md={6} key={index}>
+          {featuredProjects.map((project, index) => (
+            <Grid item xs={12} md={6} key={project.slug}>
               <Card
                 sx={{
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
                   bgcolor: 'background.default',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    transform: 'translateY(-8px) scale(1.02)',
+                  },
+                  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 }}
+                onClick={() => navigate(`/apps/${project.slug}`)}
               >
                 <CardMedia
                   component="div"
                   sx={{
-                    height: 200,
+                    height: 180,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -95,7 +87,9 @@ const Projects = () => {
                   }}
                   title={project.title}
                 >
-                  <Typography variant="h4" sx={{ color: 'white', fontWeight: 700 }}>{project.title}</Typography>
+                  <Typography variant="h4" sx={{ color: 'white', fontWeight: 700, px: 2, textAlign: 'center' }}>
+                    {project.title}
+                  </Typography>
                 </CardMedia>
 
                 <CardContent sx={{ flexGrow: 1, p: 3 }}>
@@ -103,14 +97,37 @@ const Projects = () => {
                     {project.title}
                   </Typography>
 
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2, lineHeight: 1.7 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      mb: 2,
+                      lineHeight: 1.7,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}
+                  >
                     {project.description}
                   </Typography>
 
                   <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                    {project.technologies.map((tech, techIndex) => (
-                      <Chip key={techIndex} label={tech} size="small" sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', fontWeight: 500, mb: 1 }} />
+                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                      <Chip
+                        key={techIndex}
+                        label={tech}
+                        size="small"
+                        sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', fontWeight: 500, mb: 1 }}
+                      />
                     ))}
+                    {project.technologies.length > 3 && (
+                      <Chip
+                        label={`+${project.technologies.length - 3}`}
+                        size="small"
+                        sx={{ bgcolor: 'text.secondary', color: 'background.paper', fontWeight: 500, mb: 1 }}
+                      />
+                    )}
                   </Stack>
                 </CardContent>
 
@@ -118,35 +135,42 @@ const Projects = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    startIcon={<LaunchIcon />}
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View live preview of ${project.title}`}
-                    sx={{ flex: 1, '&:hover': { transform: 'scale(1.02)' }, transition: 'transform 0.2s ease-in-out' }}
+                    fullWidth
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      navigate(`/apps/${project.slug}`)
+                    }}
+                    sx={{ '&:hover': { transform: 'scale(1.02)' }, transition: 'transform 0.2s ease-in-out' }}
                   >
-                    Live Preview
+                    View Details
                   </Button>
-
-                  {project.sourceUrl && (
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      startIcon={<CodeIcon />}
-                      href={project.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`View source code of ${project.title}`}
-                      sx={{ flex: 1, '&:hover': { transform: 'scale(1.02)' }, transition: 'transform 0.2s ease-in-out' }}
-                    >
-                      Source Code
-                    </Button>
-                  )}
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
+
+        {/* View All Apps Button */}
+        <Box sx={{ textAlign: 'center', mt: 6 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<AppsIcon />}
+            onClick={() => navigate('/apps')}
+            sx={{
+              px: 4,
+              py: 1.5,
+              fontSize: '1.1rem',
+              '&:hover': {
+                transform: 'scale(1.05)',
+              },
+              transition: 'transform 0.2s ease-in-out',
+            }}
+          >
+            View All Apps
+          </Button>
+        </Box>
       </Container>
     </Box>
   )

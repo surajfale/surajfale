@@ -1,12 +1,11 @@
 import { useState, useMemo, useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider, CssBaseline, Box } from '@mui/material'
 import { createAppTheme } from './theme'
-import Hero from './components/Hero'
-import About from './components/About'
-import Projects from './components/Projects'
-import Socials from './components/Socials'
-import Footer from './components/Footer'
 import ThemeToggle from './components/ThemeToggle'
+import Home from './pages/Home'
+import Apps from './pages/Apps'
+import AppDetail from './pages/AppDetail'
 
 type ThemeMode = 'light' | 'dark'
 
@@ -32,14 +31,16 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <ThemeToggle mode={mode} onToggle={toggleTheme} />
-        <Hero />
-        <About />
-        <Projects />
-        <Socials />
-        <Footer />
-      </Box>
+      <BrowserRouter>
+        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <ThemeToggle mode={mode} onToggle={toggleTheme} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/apps" element={<Apps />} />
+            <Route path="/apps/:slug" element={<AppDetail />} />
+          </Routes>
+        </Box>
+      </BrowserRouter>
     </ThemeProvider>
   )
 }
