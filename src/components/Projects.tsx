@@ -17,24 +17,35 @@ import { profileData } from '../content/profile'
 
 const Projects = () => {
   const navigate = useNavigate()
-  
+
   // Show only featured projects (first 2-3)
   const featuredProjects = profileData.projects.slice(0, 2)
 
   // accent colors for project headers (solid blocks instead of images)
-  const projectColors = ['#667eea', '#764ba2', '#2b8a9f', '#d9480f', '#16a34a']
+  const projectColors = ['#FFEB3B', '#FF0000', '#0000FF', '#00FF00', '#FF00FF']
 
   return (
-    <Box component="section" id="projects" sx={{ py: 10, bgcolor: 'background.paper' }}>
+    <Box component="section" id="projects" sx={{ py: 10, bgcolor: 'background.paper', borderBottom: (theme) => `3px solid ${theme.palette.text.primary}` }}>
       <Container maxWidth="lg">
         <Typography
           variant="h2"
           component="h2"
           gutterBottom
-          sx={{ textAlign: 'center', mb: 2, color: 'text.primary' }}
+          sx={{ textAlign: 'center', mb: 2, color: 'text.primary', fontWeight: 900, textTransform: 'uppercase' }}
         >
           Featured Projects
         </Typography>
+
+        <Box
+          sx={{
+            width: 100,
+            height: 8,
+            bgcolor: 'secondary.main',
+            mx: 'auto',
+            mb: 4,
+            border: (theme) => `2px solid ${theme.palette.text.primary}`,
+          }}
+        />
 
         <Typography
           variant="body1"
@@ -42,13 +53,16 @@ const Projects = () => {
             textAlign: 'center',
             maxWidth: '800px',
             mx: 'auto',
-            mb: 6,
-            color: 'text.secondary',
+            mb: 8,
+            color: 'text.primary',
             fontSize: '1.1rem',
             lineHeight: 1.8,
+            fontFamily: '"Space Mono", monospace',
             '& span': {
-              color: 'primary.main',
-              fontWeight: 600,
+              bgcolor: 'secondary.main',
+              color: 'text.primary',
+              fontWeight: 700,
+              px: 0.5,
             },
           }}
         >
@@ -69,10 +83,14 @@ const Projects = () => {
                   flexDirection: 'column',
                   bgcolor: 'background.default',
                   cursor: 'pointer',
+                  border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                  boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
+                  borderRadius: 0,
                   '&:hover': {
-                    transform: 'translateY(-8px) scale(1.02)',
+                    transform: 'translate(-4px, -4px)',
+                    boxShadow: (theme) => `12px 12px 0px 0px ${theme.palette.text.primary}`,
                   },
-                  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: 'all 0.1s ease',
                 }}
                 onClick={() => navigate(`/apps/${project.slug}`)}
               >
@@ -84,29 +102,31 @@ const Projects = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     background: projectColors[index % projectColors.length],
+                    borderBottom: (theme) => `2px solid ${theme.palette.text.primary}`,
                   }}
                   title={project.title}
                 >
-                  <Typography variant="h4" sx={{ color: 'white', fontWeight: 700, px: 2, textAlign: 'center' }}>
+                  <Typography variant="h4" sx={{ color: 'black', fontWeight: 900, px: 2, textAlign: 'center', textTransform: 'uppercase' }}>
                     {project.title}
                   </Typography>
                 </CardMedia>
 
                 <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                  <Typography gutterBottom variant="h5" component="h3" sx={{ fontWeight: 600, color: 'text.primary', mb: 2 }}>
+                  <Typography gutterBottom variant="h5" component="h3" sx={{ fontWeight: 700, color: 'text.primary', mb: 2, textTransform: 'uppercase' }}>
                     {project.title}
                   </Typography>
 
                   <Typography
                     variant="body2"
-                    color="text.secondary"
+                    color="text.primary"
                     sx={{
-                      mb: 2,
+                      mb: 3,
                       lineHeight: 1.7,
                       display: '-webkit-box',
                       WebkitLineClamp: 3,
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
+                      fontFamily: '"Space Mono", monospace',
                     }}
                   >
                     {project.description}
@@ -118,14 +138,28 @@ const Projects = () => {
                         key={techIndex}
                         label={tech}
                         size="small"
-                        sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', fontWeight: 500, mb: 1 }}
+                        sx={{
+                          bgcolor: 'white',
+                          color: 'text.primary',
+                          fontWeight: 700,
+                          mb: 1,
+                          borderRadius: 0,
+                          border: (theme) => `1px solid ${theme.palette.text.primary}`,
+                        }}
                       />
                     ))}
                     {project.technologies.length > 3 && (
                       <Chip
                         label={`+${project.technologies.length - 3}`}
                         size="small"
-                        sx={{ bgcolor: 'text.secondary', color: 'background.paper', fontWeight: 500, mb: 1 }}
+                        sx={{
+                          bgcolor: 'secondary.main',
+                          color: 'text.primary',
+                          fontWeight: 700,
+                          mb: 1,
+                          borderRadius: 0,
+                          border: (theme) => `1px solid ${theme.palette.text.primary}`,
+                        }}
                       />
                     )}
                   </Stack>
@@ -140,7 +174,14 @@ const Projects = () => {
                       e.stopPropagation()
                       navigate(`/apps/${project.slug}`)
                     }}
-                    sx={{ '&:hover': { transform: 'scale(1.02)' }, transition: 'transform 0.2s ease-in-out' }}
+                    sx={{
+                      bgcolor: 'text.primary',
+                      color: 'background.default',
+                      '&:hover': {
+                        bgcolor: 'text.primary',
+                        opacity: 0.9,
+                      },
+                    }}
                   >
                     View Details
                   </Button>
@@ -151,10 +192,10 @@ const Projects = () => {
         </Grid>
 
         {/* View All Apps Button */}
-        <Box sx={{ textAlign: 'center', mt: 6 }}>
+        <Box sx={{ textAlign: 'center', mt: 8 }}>
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             size="large"
             startIcon={<AppsIcon />}
             onClick={() => navigate('/apps')}
@@ -162,10 +203,13 @@ const Projects = () => {
               px: 4,
               py: 1.5,
               fontSize: '1.1rem',
+              bgcolor: 'secondary.main',
+              color: 'text.primary',
               '&:hover': {
-                transform: 'scale(1.05)',
+                bgcolor: 'secondary.dark',
+                transform: 'translate(-2px, -2px)',
+                boxShadow: (theme) => `6px 6px 0px 0px ${theme.palette.text.primary}`,
               },
-              transition: 'transform 0.2s ease-in-out',
             }}
           >
             View All Apps

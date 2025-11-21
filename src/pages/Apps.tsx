@@ -67,7 +67,7 @@ const Apps = () => {
     navigate(`/apps/${project.slug}`)
   }
 
-  const projectColors = ['#667eea', '#764ba2', '#2b8a9f', '#d9480f', '#16a34a']
+  const projectColors = ['#FFEB3B', '#FF0000', '#0000FF', '#00FF00', '#FF00FF']
 
   return (
     <Box component="main" sx={{ minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
@@ -79,19 +79,24 @@ const Apps = () => {
             component="h1"
             gutterBottom
             sx={{
-              fontWeight: 700,
-              background: (theme) =>
-                theme.palette.mode === 'light'
-                  ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                  : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              fontWeight: 900,
+              textTransform: 'uppercase',
+              color: 'text.primary',
             }}
           >
             My Apps
           </Typography>
-          <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', mt: 2 }}>
+          <Box
+            sx={{
+              width: 100,
+              height: 8,
+              bgcolor: 'secondary.main',
+              mx: 'auto',
+              mb: 4,
+              border: (theme) => `2px solid ${theme.palette.text.primary}`,
+            }}
+          />
+          <Typography variant="body1" sx={{ color: 'text.primary', maxWidth: '600px', mx: 'auto', mt: 2, fontFamily: '"Space Mono", monospace' }}>
             Explore my collection of applications and projects. Each app showcases different technologies and
             solutions to real-world problems.
           </Typography>
@@ -116,10 +121,14 @@ const Apps = () => {
               displayEmpty
               sx={{
                 bgcolor: 'background.paper',
+                borderRadius: 0,
+                border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+                '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
               }}
             >
               {categories.map((category) => (
-                <MenuItem key={category} value={category}>
+                <MenuItem key={category} value={category} sx={{ fontFamily: '"Space Mono", monospace' }}>
                   {category}
                 </MenuItem>
               ))}
@@ -134,6 +143,21 @@ const Apps = () => {
             aria-label="view mode"
             sx={{
               bgcolor: 'background.paper',
+              borderRadius: 0,
+              border: (theme) => `2px solid ${theme.palette.text.primary}`,
+              boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+              '& .MuiToggleButton-root': {
+                border: 'none',
+                borderRadius: 0,
+                color: 'text.primary',
+                '&.Mui-selected': {
+                  bgcolor: 'secondary.main',
+                  color: 'text.primary',
+                  '&:hover': {
+                    bgcolor: 'secondary.dark',
+                  },
+                },
+              },
             }}
           >
             <ToggleButton value="card" aria-label="card view">
@@ -158,10 +182,14 @@ const Apps = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     bgcolor: 'background.paper',
+                    border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                    boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
+                    borderRadius: 0,
                     '&:hover': {
-                      transform: 'translateY(-8px) scale(1.02)',
+                      transform: 'translate(-4px, -4px)',
+                      boxShadow: (theme) => `12px 12px 0px 0px ${theme.palette.text.primary}`,
                     },
-                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transition: 'all 0.1s ease',
                   }}
                 >
                   <CardMedia
@@ -173,17 +201,19 @@ const Apps = () => {
                       justifyContent: 'center',
                       background: projectColors[index % projectColors.length],
                       position: 'relative',
+                      borderBottom: (theme) => `2px solid ${theme.palette.text.primary}`,
                     }}
                     title={project.title}
                   >
                     <Typography
                       variant="h5"
                       sx={{
-                        color: 'white',
-                        fontWeight: 700,
+                        color: 'black',
+                        fontWeight: 900,
                         textAlign: 'center',
                         px: 2,
                         fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                        textTransform: 'uppercase',
                       }}
                     >
                       {project.title}
@@ -195,10 +225,11 @@ const Apps = () => {
                         position: 'absolute',
                         top: 8,
                         right: 8,
-                        bgcolor: 'rgba(255, 255, 255, 0.2)',
-                        color: 'white',
-                        fontWeight: 600,
-                        backdropFilter: 'blur(10px)',
+                        bgcolor: 'white',
+                        color: 'text.primary',
+                        fontWeight: 700,
+                        borderRadius: 0,
+                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
                       }}
                     />
                   </CardMedia>
@@ -206,14 +237,15 @@ const Apps = () => {
                   <CardContent sx={{ flexGrow: 1, p: 3 }}>
                     <Typography
                       variant="body2"
-                      color="text.secondary"
+                      color="text.primary"
                       sx={{
-                        mb: 2,
+                        mb: 3,
                         lineHeight: 1.7,
                         display: '-webkit-box',
                         WebkitLineClamp: 3,
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
+                        fontFamily: '"Space Mono", monospace',
                       }}
                     >
                       {project.description}
@@ -226,10 +258,12 @@ const Apps = () => {
                           label={tech}
                           size="small"
                           sx={{
-                            bgcolor: 'primary.main',
-                            color: 'primary.contrastText',
-                            fontWeight: 500,
+                            bgcolor: 'secondary.main',
+                            color: 'text.primary',
+                            fontWeight: 700,
                             fontSize: '0.75rem',
+                            borderRadius: 0,
+                            border: (theme) => `1px solid ${theme.palette.text.primary}`,
                           }}
                         />
                       ))}
@@ -238,10 +272,12 @@ const Apps = () => {
                           label={`+${project.technologies.length - 3}`}
                           size="small"
                           sx={{
-                            bgcolor: 'text.secondary',
-                            color: 'background.paper',
-                            fontWeight: 500,
+                            bgcolor: 'white',
+                            color: 'text.primary',
+                            fontWeight: 700,
                             fontSize: '0.75rem',
+                            borderRadius: 0,
+                            border: (theme) => `1px solid ${theme.palette.text.primary}`,
                           }}
                         />
                       )}
@@ -258,10 +294,12 @@ const Apps = () => {
                         navigate(`/apps/${project.slug}`)
                       }}
                       sx={{
+                        bgcolor: 'text.primary',
+                        color: 'background.default',
                         '&:hover': {
-                          transform: 'scale(1.02)',
+                          bgcolor: 'text.primary',
+                          opacity: 0.9,
                         },
-                        transition: 'transform 0.2s ease-in-out',
                       }}
                     >
                       View Details
@@ -276,13 +314,14 @@ const Apps = () => {
                         window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
                       }}
                       sx={{
+                        bgcolor: 'white',
+                        color: 'text.primary',
                         '&:hover': {
-                          transform: 'scale(1.02)',
+                          bgcolor: 'secondary.main',
                         },
-                        transition: 'transform 0.2s ease-in-out',
                       }}
                     >
-                      View Live
+                      Live
                     </Button>
                   </CardActions>
                 </Card>
@@ -290,16 +329,16 @@ const Apps = () => {
             ))}
           </Grid>
         ) : (
-          <List sx={{ bgcolor: 'background.paper', borderRadius: 2, overflow: 'hidden' }}>
+          <List sx={{ bgcolor: 'background.paper', borderRadius: 0, border: (theme) => `2px solid ${theme.palette.text.primary}`, boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}` }}>
             {filteredProjects.map((project, index) => (
               <Box key={project.slug}>
                 <ListItem
                   disablePadding
                   sx={{
                     '&:hover': {
-                      bgcolor: 'action.hover',
+                      bgcolor: 'secondary.light',
                     },
-                    transition: 'background-color 0.2s ease-in-out',
+                    transition: 'background-color 0.1s ease-in-out',
                   }}
                 >
                   <ListItemButton onClick={() => handleProjectClick(project)} sx={{ py: 3 }}>
@@ -307,7 +346,8 @@ const Apps = () => {
                       sx={{
                         width: 80,
                         height: 80,
-                        borderRadius: 2,
+                        borderRadius: 0,
+                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
                         bgcolor: projectColors[index % projectColors.length],
                         display: 'flex',
                         alignItems: 'center',
@@ -316,24 +356,26 @@ const Apps = () => {
                         flexShrink: 0,
                       }}
                     >
-                      <Typography variant="h6" sx={{ color: 'white', fontWeight: 700, textAlign: 'center', px: 1 }}>
+                      <Typography variant="h6" sx={{ color: 'black', fontWeight: 900, textAlign: 'center', px: 1 }}>
                         {project.title.split(' ').map((w) => w[0]).join('').slice(0, 2)}
                       </Typography>
                     </Box>
                     <ListItemText
                       primary={
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                          <Typography variant="h6" component="span" sx={{ fontWeight: 600 }}>
+                          <Typography variant="h6" component="span" sx={{ fontWeight: 700, textTransform: 'uppercase' }}>
                             {project.title}
                           </Typography>
                           <Chip
                             label={getProjectCategory(project)}
                             size="small"
                             sx={{
-                              bgcolor: 'primary.main',
-                              color: 'primary.contrastText',
-                              fontWeight: 500,
+                              bgcolor: 'secondary.main',
+                              color: 'text.primary',
+                              fontWeight: 700,
                               height: 24,
+                              borderRadius: 0,
+                              border: (theme) => `1px solid ${theme.palette.text.primary}`,
                             }}
                           />
                         </Box>
@@ -342,13 +384,14 @@ const Apps = () => {
                         <Box>
                           <Typography
                             variant="body2"
-                            color="text.secondary"
+                            color="text.primary"
                             sx={{
                               mb: 1,
                               display: '-webkit-box',
                               WebkitLineClamp: 2,
                               WebkitBoxOrient: 'vertical',
                               overflow: 'hidden',
+                              fontFamily: '"Space Mono", monospace',
                             }}
                           >
                             {project.description}
@@ -360,9 +403,13 @@ const Apps = () => {
                                 label={tech}
                                 size="small"
                                 sx={{
-                                  bgcolor: 'action.selected',
+                                  bgcolor: 'white',
+                                  color: 'text.primary',
                                   fontSize: '0.7rem',
                                   height: 20,
+                                  borderRadius: 0,
+                                  border: (theme) => `1px solid ${theme.palette.text.primary}`,
+                                  fontWeight: 700,
                                 }}
                               />
                             ))}
@@ -371,9 +418,13 @@ const Apps = () => {
                                 label={`+${project.technologies.length - 4}`}
                                 size="small"
                                 sx={{
-                                  bgcolor: 'action.selected',
+                                  bgcolor: 'white',
+                                  color: 'text.primary',
                                   fontSize: '0.7rem',
                                   height: 20,
+                                  borderRadius: 0,
+                                  border: (theme) => `1px solid ${theme.palette.text.primary}`,
+                                  fontWeight: 700,
                                 }}
                               />
                             )}
@@ -390,6 +441,7 @@ const Apps = () => {
                           e.stopPropagation()
                           window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
                         }}
+                        sx={{ bgcolor: 'white', color: 'text.primary', '&:hover': { bgcolor: 'secondary.main' } }}
                       >
                         Live
                       </Button>
@@ -402,6 +454,7 @@ const Apps = () => {
                             e.stopPropagation()
                             window.open(project.sourceUrl, '_blank', 'noopener,noreferrer')
                           }}
+                          sx={{ bgcolor: 'black', color: 'white', '&:hover': { bgcolor: '#333' } }}
                         >
                           Code
                         </Button>
@@ -409,7 +462,7 @@ const Apps = () => {
                     </Box>
                   </ListItemButton>
                 </ListItem>
-                {index < filteredProjects.length - 1 && <Divider />}
+                {index < filteredProjects.length - 1 && <Divider sx={{ borderColor: 'text.primary', borderBottomWidth: 2 }} />}
               </Box>
             ))}
           </List>
@@ -417,7 +470,7 @@ const Apps = () => {
 
         {filteredProjects.length === 0 && (
           <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="h6" color="text.primary" sx={{ fontFamily: '"Space Mono", monospace' }}>
               No apps found in this category.
             </Typography>
           </Box>

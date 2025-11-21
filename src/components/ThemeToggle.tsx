@@ -19,18 +19,26 @@ const ThemeToggle = ({ mode, onToggle }: ThemeToggleProps) => {
           right: 20,
           zIndex: 1000,
           bgcolor: 'background.paper',
-          boxShadow: 3,
+          borderRadius: 0,
+          border: '2px solid',
+          borderColor: 'text.primary',
+          boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
           '&:hover': {
-            bgcolor: 'background.paper',
-            transform: 'scale(1.1) rotate(90deg)',
+            bgcolor: 'secondary.main',
+            transform: 'translate(-2px, -2px)',
+            boxShadow: (theme) => `6px 6px 0px 0px ${theme.palette.text.primary}`,
           },
-          transition: 'all 0.3s ease-in-out',
+          '&:active': {
+            transform: 'translate(0px, 0px)',
+            boxShadow: 'none',
+          },
+          transition: 'all 0.1s ease-in-out',
         }}
       >
         {mode === 'dark' ? (
-          <Brightness7Icon sx={{ color: 'warning.main' }} />
+          <Brightness7Icon sx={{ color: 'text.primary' }} />
         ) : (
-          <Brightness4Icon sx={{ color: 'primary.main' }} />
+          <Brightness4Icon sx={{ color: 'text.primary' }} />
         )}
       </IconButton>
     </Tooltip>

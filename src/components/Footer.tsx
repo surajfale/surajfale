@@ -10,8 +10,7 @@ const Footer = () => {
       sx={{
         py: 4,
         bgcolor: 'background.paper',
-        borderTop: 1,
-        borderColor: 'divider',
+        borderTop: (theme) => `3px solid ${theme.palette.text.primary}`,
         mt: 'auto',
       }}
     >
@@ -28,11 +27,13 @@ const Footer = () => {
         >
           <Typography
             variant="body2"
-            color="text.secondary"
+            color="text.primary"
             sx={{
               display: 'flex',
               alignItems: 'center',
               gap: 0.5,
+              fontFamily: '"Space Mono", monospace',
+              fontWeight: 700,
             }}
           >
             © {currentYear} Suraj Fale. Made with{' '}
@@ -47,7 +48,7 @@ const Footer = () => {
                 },
               }}
             />{' '}
-            using React & Material-UI
+            and React & Material-UI
           </Typography>
 
           <Box sx={{ display: 'flex', gap: 3 }}>
@@ -55,13 +56,16 @@ const Footer = () => {
               href="https://www.linkedin.com/in/surajfale"
               target="_blank"
               rel="noopener noreferrer"
-              color="text.secondary"
+              color="text.primary"
               underline="hover"
               sx={{
+                fontWeight: 700,
+                textTransform: 'uppercase',
                 '&:hover': {
-                  color: 'primary.main',
+                  bgcolor: 'secondary.main',
+                  color: 'text.primary',
                 },
-                transition: 'color 0.2s ease-in-out',
+                transition: 'all 0.1s ease-in-out',
               }}
             >
               LinkedIn
@@ -70,13 +74,16 @@ const Footer = () => {
               href="https://github.com/surajfale"
               target="_blank"
               rel="noopener noreferrer"
-              color="text.secondary"
+              color="text.primary"
               underline="hover"
               sx={{
+                fontWeight: 700,
+                textTransform: 'uppercase',
                 '&:hover': {
-                  color: 'primary.main',
+                  bgcolor: 'secondary.main',
+                  color: 'text.primary',
                 },
-                transition: 'color 0.2s ease-in-out',
+                transition: 'all 0.1s ease-in-out',
               }}
             >
               GitHub

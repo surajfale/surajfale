@@ -11,65 +11,24 @@ const Hero = () => {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        background: (theme) =>
-          theme.palette.mode === 'light'
-            ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-            : 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
-        color: 'white',
+        bgcolor: 'background.default',
+        color: 'text.primary',
         position: 'relative',
         overflow: 'hidden',
+        borderBottom: (theme) => `3px solid ${theme.palette.text.primary}`,
       }}
     >
-      {/* Animated background circles */}
-      <Box
-        sx={{
-          position: 'absolute',
-          width: '500px',
-          height: '500px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.1)',
-          top: '-250px',
-          right: '-250px',
-          animation: 'float 6s ease-in-out infinite',
-          '@keyframes float': {
-            '0%, 100%': { transform: 'translateY(0px)' },
-            '50%': { transform: 'translateY(20px)' },
-          },
-        }}
-      />
-      <Box
-        sx={{
-          position: 'absolute',
-          width: '300px',
-          height: '300px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.1)',
-          bottom: '-150px',
-          left: '-150px',
-          animation: 'float 8s ease-in-out infinite',
-        }}
-      />
-
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Box sx={{ textAlign: 'center' }}>
           <Typography
             variant="h1"
             component="h1"
             gutterBottom
+            className="glitch"
+            data-text={profileData.name}
             sx={{
-              fontWeight: 700,
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
-              animation: 'fadeInUp 0.8s ease-out',
-              '@keyframes fadeInUp': {
-                from: {
-                  opacity: 0,
-                  transform: 'translateY(30px)',
-                },
-                to: {
-                  opacity: 1,
-                  transform: 'translateY(0)',
-                },
-              },
+              fontSize: { xs: '3rem', md: '6rem' },
+              mb: 2,
             }}
           >
             {profileData.name}
@@ -80,10 +39,14 @@ const Hero = () => {
             component="h2"
             gutterBottom
             sx={{
-              fontWeight: 400,
-              mb: 3,
-              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
-              animation: 'fadeInUp 0.8s ease-out 0.2s both',
+              mb: 4,
+              fontSize: { xs: '1.5rem', md: '3rem' },
+              bgcolor: 'secondary.main',
+              display: 'inline-block',
+              px: 2,
+              transform: 'rotate(-2deg)',
+              border: (theme) => `2px solid ${theme.palette.text.primary}`,
+              boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
             }}
           >
             {profileData.title}
@@ -95,11 +58,9 @@ const Hero = () => {
             sx={{
               maxWidth: '800px',
               mx: 'auto',
-              mb: 5,
-              fontWeight: 300,
+              mb: 6,
               lineHeight: 1.6,
-              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
-              animation: 'fadeInUp 0.8s ease-out 0.4s both',
+              fontSize: { xs: '1rem', md: '1.25rem' },
             }}
           >
             {profileData.tagline}
@@ -107,9 +68,8 @@ const Hero = () => {
 
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
-            spacing={2}
+            spacing={3}
             justifyContent="center"
-            sx={{ animation: 'fadeInUp 0.8s ease-out 0.6s both' }}
           >
             <Button
               component="a"
@@ -121,16 +81,11 @@ const Hero = () => {
               rel="noopener noreferrer"
               aria-label="Visit LinkedIn profile"
               sx={{
-                bgcolor: '#0077B5',
-                color: 'white',
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
+                bgcolor: 'white',
+                color: 'black',
                 '&:hover': {
-                  bgcolor: '#005582',
-                  transform: 'scale(1.05)',
+                  bgcolor: '#f0f0f0',
                 },
-                transition: 'all 0.2s ease-in-out',
               }}
             >
               Connect on LinkedIn
@@ -146,16 +101,11 @@ const Hero = () => {
               rel="noopener noreferrer"
               aria-label="Visit GitHub profile"
               sx={{
-                bgcolor: '#24292E',
+                bgcolor: 'black',
                 color: 'white',
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
                 '&:hover': {
-                  bgcolor: '#1B1F23',
-                  transform: 'scale(1.05)',
+                  bgcolor: '#333',
                 },
-                transition: 'all 0.2s ease-in-out',
               }}
             >
               View GitHub
@@ -165,22 +115,17 @@ const Hero = () => {
               component="a"
               variant="contained"
               size="large"
-              startIcon={<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="dev.to" style={{ width: 24, height: 24, borderRadius: 4 }} />}
+              startIcon={<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="dev.to" style={{ width: 24, height: 24 }} />}
               href={profileData.socials.find((s) => s.name === 'dev.to')?.url || '#'}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit dev.to blog"
               sx={{
-                bgcolor: '#0A0A0A',
-                color: 'white',
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
+                bgcolor: 'white',
+                color: 'black',
                 '&:hover': {
-                  bgcolor: '#222',
-                  transform: 'scale(1.05)',
+                  bgcolor: '#f0f0f0',
                 },
-                transition: 'all 0.2s ease-in-out',
               }}
             >
               Blog on dev.to
@@ -196,16 +141,11 @@ const Hero = () => {
               rel="noopener noreferrer"
               aria-label="Visit Medium blog"
               sx={{
-                bgcolor: '#12100E',
+                bgcolor: 'black',
                 color: 'white',
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
                 '&:hover': {
-                  bgcolor: '#222',
-                  transform: 'scale(1.05)',
+                  bgcolor: '#333',
                 },
-                transition: 'all 0.2s ease-in-out',
               }}
             >
               Blog on Medium

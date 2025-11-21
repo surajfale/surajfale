@@ -6,6 +6,7 @@ import ThemeToggle from './components/ThemeToggle'
 import Home from './pages/Home'
 import Apps from './pages/Apps'
 import AppDetail from './pages/AppDetail'
+import CustomCursor from './components/CustomCursor'
 
 type ThemeMode = 'light' | 'dark'
 
@@ -24,6 +25,13 @@ function App() {
 
   const theme = useMemo(() => createAppTheme(mode), [mode])
 
+  useEffect(() => {
+    const root = document.documentElement
+    root.style.setProperty('--background-default', theme.palette.background.default)
+    root.style.setProperty('--text-primary', theme.palette.text.primary)
+    root.style.setProperty('--secondary-main', theme.palette.secondary.main)
+  }, [theme])
+
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
   }
@@ -31,6 +39,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <div className="noise-overlay" />
+      <CustomCursor />
       <BrowserRouter>
         <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <ThemeToggle mode={mode} onToggle={toggleTheme} />

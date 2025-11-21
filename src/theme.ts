@@ -1,134 +1,169 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles'
 
+// Neo-Brutalist Color Palette
+const colors = {
+  light: {
+    background: '#FFFAF0', // Off-white
+    paper: '#FFFFFF',
+    primary: '#000000', // Black
+    secondary: '#FFEB3B', // Vibrant Yellow
+    accent1: '#FF0000', // Red
+    accent2: '#0000FF', // Blue
+    text: '#000000',
+    border: '#000000',
+  },
+  dark: {
+    background: '#1a1a1a',
+    paper: '#2d2d2d',
+    primary: '#FFFFFF',
+    secondary: '#FFD700', // Gold/Yellow
+    accent1: '#FF4444',
+    accent2: '#4444FF',
+    text: '#FFFFFF',
+    border: '#FFFFFF',
+  },
+}
+
 export const createAppTheme = (mode: 'light' | 'dark') => {
+  const palette = colors[mode]
+
   const themeOptions: ThemeOptions = {
     palette: {
       mode,
-      ...(mode === 'light'
-        ? {
-            // Light mode colors
-            primary: {
-              main: '#0077B5', // LinkedIn blue
-              light: '#3399CC',
-              dark: '#005582',
-              contrastText: '#fff',
-            },
-            secondary: {
-              main: '#24292E', // GitHub dark
-              light: '#586069',
-              dark: '#1B1F23',
-              contrastText: '#fff',
-            },
-            background: {
-              default: '#F5F5F5',
-              paper: '#FFFFFF',
-            },
-            text: {
-              primary: '#1A1A1A',
-              secondary: '#4A4A4A',
-            },
-          }
-        : {
-            // Dark mode colors
-            primary: {
-              main: '#0A66C2', // LinkedIn blue (darker)
-              light: '#3399CC',
-              dark: '#004471',
-              contrastText: '#fff',
-            },
-            secondary: {
-              main: '#58A6FF', // GitHub blue
-              light: '#79B8FF',
-              dark: '#388BFD',
-              contrastText: '#0D1117',
-            },
-            background: {
-              default: '#0D1117',
-              paper: '#161B22',
-            },
-            text: {
-              primary: '#E6EDF3',
-              secondary: '#8B949E',
-            },
-          }),
+      primary: {
+        main: palette.primary,
+        contrastText: mode === 'light' ? '#FFFFFF' : '#000000',
+      },
+      secondary: {
+        main: palette.secondary,
+        contrastText: '#000000',
+      },
+      background: {
+        default: palette.background,
+        paper: palette.paper,
+      },
+      text: {
+        primary: palette.text,
+      },
     },
     typography: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: '"Space Mono", monospace',
       h1: {
-        fontSize: '3.5rem',
-        fontWeight: 700,
-        lineHeight: 1.2,
-        '@media (max-width:600px)': {
-          fontSize: '2.5rem',
-        },
+        fontFamily: '"Lexend Mega", sans-serif',
+        fontWeight: 900,
+        textTransform: 'uppercase',
+        letterSpacing: '-0.05em',
       },
       h2: {
-        fontSize: '2.5rem',
-        fontWeight: 600,
-        lineHeight: 1.3,
-        '@media (max-width:600px)': {
-          fontSize: '2rem',
-        },
+        fontFamily: '"Lexend Mega", sans-serif',
+        fontWeight: 800,
+        textTransform: 'uppercase',
+        letterSpacing: '-0.03em',
       },
       h3: {
-        fontSize: '1.75rem',
-        fontWeight: 600,
-        lineHeight: 1.4,
+        fontFamily: '"Lexend Mega", sans-serif',
+        fontWeight: 700,
+        textTransform: 'uppercase',
       },
       h4: {
-        fontSize: '1.5rem',
-        fontWeight: 500,
-        lineHeight: 1.4,
+        fontFamily: '"Lexend Mega", sans-serif',
+        fontWeight: 700,
       },
-      body1: {
-        fontSize: '1rem',
-        lineHeight: 1.7,
+      h5: {
+        fontFamily: '"Lexend Mega", sans-serif',
+        fontWeight: 600,
       },
-      body2: {
-        fontSize: '0.875rem',
-        lineHeight: 1.6,
+      h6: {
+        fontFamily: '"Lexend Mega", sans-serif',
+        fontWeight: 600,
       },
-    },
-    shape: {
-      borderRadius: 12,
+      button: {
+        fontFamily: '"Lexend Mega", sans-serif',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+      },
     },
     components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            backgroundColor: palette.background,
+            color: palette.text,
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
-            textTransform: 'none',
-            fontWeight: 600,
-            padding: '10px 24px',
-            fontSize: '1rem',
+            borderRadius: 0,
+            border: `2px solid ${palette.border}`,
+            boxShadow: `4px 4px 0px 0px ${palette.border}`,
+            transition: 'all 0.1s ease-in-out',
+            '&:hover': {
+              transform: 'translate(-2px, -2px)',
+              boxShadow: `6px 6px 0px 0px ${palette.border}`,
+            },
+            '&:active': {
+              transform: 'translate(2px, 2px)',
+              boxShadow: `0px 0px 0px 0px ${palette.border}`,
+            },
           },
           contained: {
-            boxShadow: 'none',
-            '&:hover': {
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-            },
+            boxShadow: `4px 4px 0px 0px ${palette.border}`,
+          },
+          outlined: {
+            boxShadow: `4px 4px 0px 0px ${palette.border}`,
           },
         },
       },
       MuiCard: {
         styleOverrides: {
           root: {
-            boxShadow: mode === 'light'
-              ? '0 4px 12px rgba(0, 0, 0, 0.08)'
-              : '0 4px 12px rgba(0, 0, 0, 0.3)',
-            transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-            '&:hover': {
-              transform: 'translateY(-4px)',
-              boxShadow: mode === 'light'
-                ? '0 8px 24px rgba(0, 0, 0, 0.12)'
-                : '0 8px 24px rgba(0, 0, 0, 0.4)',
-            },
+            borderRadius: 0,
+            border: `2px solid ${palette.border}`,
+            boxShadow: `8px 8px 0px 0px ${palette.border}`,
+            backgroundColor: palette.paper,
+          },
+        },
+      },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            borderRadius: 0,
+            backgroundImage: 'none', // Remove default MUI dark mode overlay
+          },
+          elevation1: {
+            boxShadow: `4px 4px 0px 0px ${palette.border}`,
+            border: `2px solid ${palette.border}`,
+          },
+          elevation2: {
+            boxShadow: `6px 6px 0px 0px ${palette.border}`,
+            border: `2px solid ${palette.border}`,
+          },
+          elevation3: {
+            boxShadow: `8px 8px 0px 0px ${palette.border}`,
+            border: `2px solid ${palette.border}`,
+          },
+        },
+      },
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            boxShadow: 'none',
+            borderBottom: `3px solid ${palette.border}`,
+            backgroundColor: palette.background,
+            color: palette.text,
           },
         },
       },
       MuiChip: {
         styleOverrides: {
           root: {
-            fontWeight: 500,
+            borderRadius: 0,
+            border: `2px solid ${palette.border}`,
+            fontWeight: 700,
+            backgroundColor: palette.secondary,
+            color: '#000000',
           },
         },
       },

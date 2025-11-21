@@ -5,6 +5,9 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import CameraAltIcon from '@mui/icons-material/CameraAlt'
 import CodeIcon from '@mui/icons-material/Code'
+import LayersIcon from '@mui/icons-material/Layers'
+import TerminalIcon from '@mui/icons-material/Terminal'
+import ArticleIcon from '@mui/icons-material/Article'
 import { profileData } from '../content/profile'
 
 const Socials = () => {
@@ -15,7 +18,9 @@ const Socials = () => {
       Facebook: <FacebookIcon fontSize="large" />,
       Instagram: <InstagramIcon fontSize="large" />,
       Camera: <CameraAltIcon fontSize="large" />,
-      StackOverflow: <CodeIcon fontSize="large" />,
+      StackOverflow: <LayersIcon fontSize="large" />,
+      DevTo: <TerminalIcon fontSize="large" />,
+      Medium: <ArticleIcon fontSize="large" />,
     }
     return iconMap[iconName] || <CodeIcon fontSize="large" />
   }
@@ -41,10 +46,23 @@ const Socials = () => {
             textAlign: 'center',
             mb: 2,
             color: 'text.primary',
+            fontWeight: 900,
+            textTransform: 'uppercase',
           }}
         >
           Let's Connect
         </Typography>
+
+        <Box
+          sx={{
+            width: 100,
+            height: 8,
+            bgcolor: 'secondary.main',
+            mx: 'auto',
+            mb: 4,
+            border: (theme) => `2px solid ${theme.palette.text.primary}`,
+          }}
+        />
 
         <Typography
           variant="body1"
@@ -52,9 +70,10 @@ const Socials = () => {
             textAlign: 'center',
             maxWidth: '700px',
             mx: 'auto',
-            mb: 6,
-            color: 'text.secondary',
+            mb: 8,
+            color: 'text.primary',
             fontSize: '1.1rem',
+            fontFamily: '"Space Mono", monospace',
           }}
         >
           Find me on various platforms. I'm most active on LinkedIn and GitHub.
@@ -65,7 +84,7 @@ const Socials = () => {
           direction="row"
           spacing={3}
           justifyContent="center"
-          sx={{ mb: 4 }}
+          sx={{ mb: 6 }}
         >
           {emphasizedSocials.map((social) => (
             <Tooltip key={social.name} title={`Visit my ${social.name}`} arrow>
@@ -77,14 +96,17 @@ const Socials = () => {
                 sx={{
                   width: 80,
                   height: 80,
-                  bgcolor: social.name === 'LinkedIn' ? '#0077B5' : '#24292E',
+                  bgcolor: social.name === 'LinkedIn' ? '#0077B5' : 'black',
                   color: 'white',
+                  borderRadius: 0,
+                  border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                  boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
                   '&:hover': {
-                    bgcolor: social.name === 'LinkedIn' ? '#005582' : '#1B1F23',
-                    transform: 'scale(1.1) rotate(5deg)',
+                    bgcolor: social.name === 'LinkedIn' ? '#005582' : '#333',
+                    transform: 'translate(-4px, -4px)',
+                    boxShadow: (theme) => `12px 12px 0px 0px ${theme.palette.text.primary}`,
                   },
-                  transition: 'all 0.3s ease-in-out',
-                  boxShadow: 3,
+                  transition: 'all 0.1s ease-in-out',
                 }}
               >
                 {getIcon(social.icon)}
@@ -96,7 +118,7 @@ const Socials = () => {
         {/* Other socials */}
         <Stack
           direction="row"
-          spacing={2}
+          spacing={3}
           justifyContent="center"
           flexWrap="wrap"
           useFlexGap
@@ -109,19 +131,20 @@ const Socials = () => {
                 rel="noopener noreferrer"
                 aria-label={`Visit ${social.name} profile`}
                 sx={{
-                  width: 56,
-                  height: 56,
+                  width: 60,
+                  height: 60,
                   bgcolor: 'background.paper',
                   color: 'text.primary',
-                  border: 1,
-                  borderColor: 'divider',
+                  borderRadius: 0,
+                  border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                  boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
                   '&:hover': {
-                    bgcolor: 'primary.main',
-                    color: 'primary.contrastText',
-                    transform: 'scale(1.1)',
-                    borderColor: 'primary.main',
+                    bgcolor: 'secondary.main',
+                    color: 'text.primary',
+                    transform: 'translate(-2px, -2px)',
+                    boxShadow: (theme) => `6px 6px 0px 0px ${theme.palette.text.primary}`,
                   },
-                  transition: 'all 0.2s ease-in-out',
+                  transition: 'all 0.1s ease-in-out',
                 }}
               >
                 {getIcon(social.icon)}

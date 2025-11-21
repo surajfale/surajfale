@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Paper, Grid, Chip, Stack } from '@mui/material'
+import { Box, Container, Typography, Paper, Grid, Chip } from '@mui/material'
 import WorkIcon from '@mui/icons-material/Work'
 import SchoolIcon from '@mui/icons-material/School'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
@@ -6,16 +6,10 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import { profileData } from '../content/profile'
 
 const About = () => {
-  const gradients = [
-    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-  ]
-
   const iconMap: Record<number, JSX.Element> = {
-    0: <WorkIcon sx={{ fontSize: 32 }} />,
-    1: <SchoolIcon sx={{ fontSize: 32 }} />,
-    2: <TrendingUpIcon sx={{ fontSize: 32 }} />,
+    0: <WorkIcon sx={{ fontSize: 32, color: 'text.primary' }} />,
+    1: <SchoolIcon sx={{ fontSize: 32, color: 'text.primary' }} />,
+    2: <TrendingUpIcon sx={{ fontSize: 32, color: 'text.primary' }} />,
   }
 
   return (
@@ -24,10 +18,8 @@ const About = () => {
       id="about"
       sx={{
         py: 10,
-        background: (theme) =>
-          theme.palette.mode === 'light'
-            ? 'linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%)'
-            : 'linear-gradient(180deg, #0D1117 0%, #161B22 100%)',
+        bgcolor: 'background.default',
+        borderBottom: (theme) => `3px solid ${theme.palette.text.primary}`,
       }}
     >
       <Container maxWidth="lg">
@@ -37,11 +29,8 @@ const About = () => {
             component="h2"
             gutterBottom
             sx={{
-              fontWeight: 700,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              fontWeight: 900,
+              textTransform: 'uppercase',
               mb: 2,
             }}
           >
@@ -50,12 +39,12 @@ const About = () => {
 
           <Box
             sx={{
-              width: 60,
-              height: 4,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: 2,
+              width: 100,
+              height: 8,
+              bgcolor: 'secondary.main',
               mx: 'auto',
               mb: 4,
+              border: (theme) => `2px solid ${theme.palette.text.primary}`,
             }}
           />
 
@@ -68,6 +57,7 @@ const About = () => {
                 fontWeight: 500,
                 lineHeight: 1.6,
                 mb: 3,
+                fontFamily: '"Space Mono", monospace',
               }}
             >
               Experienced software engineer, specializing in distributed systems, event-driven architectures, and real-time data processing.
@@ -81,109 +71,106 @@ const About = () => {
                 mb: 3,
                 px: 3,
                 py: 1.5,
-                bgcolor: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? 'rgba(102, 126, 234, 0.08)'
-                    : 'rgba(102, 126, 234, 0.15)',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'rgba(102, 126, 234, 0.2)',
+                bgcolor: 'white',
+                border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
               }}
             >
-              <AutoAwesomeIcon sx={{ color: '#667eea', fontSize: 20 }} />
+              <AutoAwesomeIcon sx={{ color: 'text.primary', fontSize: 20 }} />
               <Typography
                 variant="body1"
                 sx={{
-                  color: 'text.secondary',
+                  color: 'text.primary',
                   fontSize: '1rem',
-                  fontWeight: 500,
+                  fontWeight: 700,
                 }}
               >
                 Passionate about building robust, scalable solutions
               </Typography>
             </Box>
 
-            <Stack
-              direction="row"
-              spacing={1.5}
-              flexWrap="wrap"
-              justifyContent="center"
-              useFlexGap
-              sx={{ mb: 3 }}
-            >
+            <Box sx={{ mb: 6, overflow: 'hidden' }}>
               <Typography
                 variant="body2"
                 sx={{
-                  color: 'text.secondary',
+                  color: 'text.primary',
                   fontSize: '0.95rem',
-                  mr: 1,
-                  fontWeight: 600,
+                  fontWeight: 700,
+                  mb: 2,
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
                 }}
               >
-                Core Technologies:
+                Core Technologies
               </Typography>
-              {['Scala', 'Apache Kafka', 'Apache Spark', 'Cloud Technologies'].map((tech) => (
-                <Chip
-                  key={tech}
-                  label={tech}
-                  size="medium"
-                  sx={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    color: 'white',
-                    fontWeight: 600,
-                    fontSize: '0.875rem',
-                    px: 1,
-                    '&:hover': {
-                      background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
-                      transform: 'scale(1.05)',
-                    },
-                    transition: 'all 0.2s ease',
-                  }}
-                />
-              ))}
-            </Stack>
+              <div className="marquee-container">
+                <div className="marquee-content">
+                  {[...['Scala', 'Apache Kafka', 'Apache Spark', 'Cloud Technologies', 'Java', 'System Design'], ...['Scala', 'Apache Kafka', 'Apache Spark', 'Cloud Technologies', 'Java', 'System Design']].map((tech, index) => (
+                    <Chip
+                      key={`${tech}-${index}`}
+                      label={tech}
+                      size="medium"
+                      sx={{
+                        bgcolor: 'secondary.main',
+                        color: 'text.primary',
+                        fontWeight: 700,
+                        fontSize: '1rem',
+                        px: 2,
+                        py: 2.5,
+                        borderRadius: 0,
+                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                        boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+                        '&:hover': {
+                          bgcolor: 'secondary.dark',
+                        },
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Box>
 
-            <Stack
-              direction="row"
-              spacing={1.5}
-              flexWrap="wrap"
-              justifyContent="center"
-              useFlexGap
-            >
+            <Box sx={{ mb: 6, overflow: 'hidden' }}>
               <Typography
                 variant="body2"
                 sx={{
-                  color: 'text.secondary',
+                  color: 'text.primary',
                   fontSize: '0.95rem',
-                  mr: 1,
-                  fontWeight: 600,
+                  fontWeight: 700,
+                  mb: 2,
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
                 }}
               >
-                Currently Exploring:
+                Currently Exploring
               </Typography>
-              {['Generative AI', 'Prompt Engineering', 'LLM Integration', 'Containerization', 'Orchestration'].map((skill) => (
-                <Chip
-                  key={skill}
-                  label={skill}
-                  size="medium"
-                  variant="outlined"
-                  sx={{
-                    borderColor: '#667eea',
-                    color: 'text.primary',
-                    fontWeight: 500,
-                    fontSize: '0.875rem',
-                    px: 1,
-                    '&:hover': {
-                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                      color: 'white',
-                      borderColor: 'transparent',
-                      transform: 'scale(1.05)',
-                    },
-                    transition: 'all 0.2s ease',
-                  }}
-                />
-              ))}
-            </Stack>
+              <div className="marquee-container">
+                <div className="marquee-content">
+                  {[...['Generative AI', 'Prompt Engineering', 'LLM Integration', 'Containerization', 'Orchestration', 'Rust'], ...['Generative AI', 'Prompt Engineering', 'LLM Integration', 'Containerization', 'Orchestration', 'Rust']].map((skill, index) => (
+                    <Chip
+                      key={`${skill}-${index}`}
+                      label={skill}
+                      size="medium"
+                      variant="outlined"
+                      sx={{
+                        bgcolor: 'white',
+                        color: 'text.primary',
+                        fontWeight: 700,
+                        fontSize: '1rem',
+                        px: 2,
+                        py: 2.5,
+                        borderRadius: 0,
+                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                        boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+                        '&:hover': {
+                          bgcolor: 'secondary.main',
+                        },
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Box>
           </Box>
         </Box>
 
@@ -199,44 +186,14 @@ const About = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   textAlign: 'center',
-                  background: (theme) =>
-                    theme.palette.mode === 'light'
-                      ? '#ffffff'
-                      : 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid',
-                  borderColor: (theme) =>
-                    theme.palette.mode === 'light'
-                      ? 'rgba(0, 0, 0, 0.06)'
-                      : 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: 3,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  bgcolor: 'background.paper',
+                  border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                  boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
+                  borderRadius: 0,
+                  transition: 'all 0.1s ease',
                   '&:hover': {
-                    transform: 'translateY(-12px) scale(1.02)',
-                    boxShadow: (theme) =>
-                      theme.palette.mode === 'light'
-                        ? '0 20px 40px rgba(102, 126, 234, 0.25)'
-                        : '0 20px 40px rgba(102, 126, 234, 0.4)',
-                    borderColor: 'rgba(102, 126, 234, 0.3)',
-                    '& .icon-wrapper': {
-                      transform: 'scale(1.1) rotate(5deg)',
-                    },
-                    '&::before': {
-                      opacity: 1,
-                    },
-                  },
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: 4,
-                    background: gradients[index],
-                    opacity: 0.7,
-                    transition: 'opacity 0.3s ease',
+                    transform: 'translate(-4px, -4px)',
+                    boxShadow: (theme) => `12px 12px 0px 0px ${theme.palette.text.primary}`,
                   },
                 }}
               >
@@ -245,15 +202,15 @@ const About = () => {
                   sx={{
                     width: 80,
                     height: 80,
-                    borderRadius: '50%',
-                    background: gradients[index],
+                    borderRadius: 0,
+                    border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                    bgcolor: 'secondary.main',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: 'text.primary',
                     mb: 3,
-                    boxShadow: '0 8px 16px rgba(102, 126, 234, 0.3)',
-                    transition: 'all 0.3s ease',
+                    boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
                   }}
                 >
                   {iconMap[index]}
@@ -262,14 +219,14 @@ const About = () => {
                 <Typography
                   variant="overline"
                   sx={{
-                    background: gradients[index],
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    fontWeight: 700,
+                    color: 'text.primary',
+                    fontWeight: 900,
                     fontSize: '0.85rem',
                     letterSpacing: 1.5,
                     mb: 1,
+                    bgcolor: 'white',
+                    px: 1,
+                    border: (theme) => `1px solid ${theme.palette.text.primary}`,
                   }}
                 >
                   {highlight.year}
@@ -284,6 +241,7 @@ const About = () => {
                     color: 'text.primary',
                     mb: 2,
                     fontSize: '1.35rem',
+                    mt: 2,
                   }}
                 >
                   {highlight.title}
@@ -292,9 +250,10 @@ const About = () => {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: 'text.secondary',
+                    color: 'text.primary',
                     lineHeight: 1.8,
                     fontSize: '0.95rem',
+                    fontFamily: '"Space Mono", monospace',
                   }}
                 >
                   {highlight.description}
