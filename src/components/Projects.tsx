@@ -15,6 +15,7 @@ import {
 } from '@mui/material'
 import AppsIcon from '@mui/icons-material/Apps'
 import { profileData } from '../content/profile'
+import TiltCard from './TiltCard'
 
 const Projects = () => {
   const navigate = useNavigate()
@@ -87,103 +88,109 @@ const Projects = () => {
         <Grid container spacing={4}>
           {featuredProjects.map((project, index) => (
             <Grid item xs={12} md={6} key={project.slug}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  cursor: 'pointer',
-                  // Theme overrides handle border/shadow/bg
-                }}
-                onClick={() => navigate(`/apps/${project.slug}`)}
-              >
-                <CardMedia
-                  component="div"
+              <TiltCard sx={{ height: '100%' }}>
+                <Card
                   sx={{
-                    height: 180,
+                    height: '100%',
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: projectGradients[index % projectGradients.length],
+                    flexDirection: 'column',
+                    cursor: 'pointer',
+                    // Theme overrides handle border/shadow/bg
                   }}
-                  title={project.title}
+                  onClick={() => navigate(`/apps/${project.slug}`)}
                 >
-                  <Typography
-                    variant="h4"
+                  <CardMedia
+                    component="div"
                     sx={{
-                      color: '#FFFFFF',
-                      fontWeight: 900,
-                      px: 2,
-                      textAlign: 'center',
-                      textTransform: 'uppercase',
-                      textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                      height: 180,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: projectGradients[index % projectGradients.length],
                     }}
+                    title={project.title}
                   >
-                    {project.title}
-                  </Typography>
-                </CardMedia>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: '#FFFFFF',
+                        fontWeight: 900,
+                        px: 2,
+                        textAlign: 'center',
+                        textTransform: 'uppercase',
+                        textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                      }}
+                    >
+                      {project.title}
+                    </Typography>
+                  </CardMedia>
 
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                  <Typography gutterBottom variant="h5" component="h3" sx={{ fontWeight: 700, color: 'text.primary', mb: 2, textTransform: 'uppercase' }}>
-                    {project.title}
-                  </Typography>
+                  <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                    <Typography gutterBottom variant="h5" component="h3" sx={{ fontWeight: 700, color: 'text.primary', mb: 2, textTransform: 'uppercase' }}>
+                      {project.title}
+                    </Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      mb: 3,
-                      lineHeight: 1.7,
-                      display: '-webkit-box',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      fontFamily: '"Space Mono", monospace',
-                    }}
-                  >
-                    {project.description}
-                  </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        mb: 3,
+                        lineHeight: 1.7,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        fontFamily: '"Space Mono", monospace',
+                      }}
+                    >
+                      {project.description}
+                    </Typography>
 
-                  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                      <Chip
-                        key={techIndex}
-                        label={tech}
-                        size="small"
-                        variant="outlined"
-                        sx={{
-                          mb: 1,
-                          borderColor: 'divider',
-                        }}
-                      />
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <Chip
-                        label={`+${project.technologies.length - 3}`}
-                        size="small"
-                        sx={{
-                          mb: 1,
-                          bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.2),
-                          color: 'secondary.main',
-                        }}
-                      />
-                    )}
-                  </Stack>
-                </CardContent>
+                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                        <Chip
+                          key={techIndex}
+                          label={tech}
+                          size="small"
+                          variant="outlined"
+                          sx={{
+                            mb: 1,
+                            borderColor: 'divider',
+                          }}
+                        />
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <Chip
+                          label={`+${project.technologies.length - 3}`}
+                          size="small"
+                          sx={{
+                            mb: 1,
+                            bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+                            color: 'secondary.main',
+                          }}
+                        />
+                      )}
+                    </Stack>
+                  </CardContent>
 
-                <CardActions sx={{ p: 3, pt: 0 }}>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      navigate(`/apps/${project.slug}`)
-                    }}
-                  >
-                    View Details
-                  </Button>
-                </CardActions>
-              </Card>
+                  <CardActions sx={{ p: 3, pt: 0 }}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        navigate(`/apps/${project.slug}`)
+                      }}
+                      sx={{
+                        position: 'relative',
+                        zIndex: 10,
+                      }}
+                    >
+                      View Details
+                    </Button>
+                  </CardActions>
+                </Card>
+              </TiltCard>
             </Grid>
           ))}
         </Grid>

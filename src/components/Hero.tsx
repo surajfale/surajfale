@@ -2,6 +2,7 @@ import { Box, Container, Typography, Button, Stack, alpha } from '@mui/material'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import { profileData } from '../content/profile'
+import { DecryptText } from './DecryptText'
 
 const Hero = () => {
   return (
@@ -22,15 +23,18 @@ const Hero = () => {
             variant="h1"
             component="h1"
             gutterBottom
-            className="glitch"
-            data-text={profileData.name}
             sx={{
               fontSize: { xs: '3rem', md: '6rem' },
               mb: 2,
               textShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.5)}`,
+              minHeight: { xs: '3rem', md: '6rem' }, // Prevent layout shift
             }}
           >
-            {profileData.name}
+            <DecryptText 
+              text={profileData.name} 
+              speed={50} 
+              className="text-glow"
+            />
           </Typography>
 
           <Typography
@@ -50,7 +54,11 @@ const Hero = () => {
               textShadow: (theme) => `0 0 10px ${alpha(theme.palette.secondary.main, 0.5)}`,
             }}
           >
-            {profileData.title}
+            <DecryptText 
+              text={profileData.title} 
+              speed={30} 
+              startDelay={1000} 
+            />
           </Typography>
 
           <Typography

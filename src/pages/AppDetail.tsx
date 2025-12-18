@@ -19,6 +19,7 @@ import {
   ImageListItem,
   useMediaQuery,
   useTheme,
+  alpha,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LaunchIcon from '@mui/icons-material/Launch'
@@ -30,6 +31,7 @@ import AppsIcon from '@mui/icons-material/Apps'
 import { profileData } from '../content/profile'
 import { getProjectCategory } from '../utils/categories'
 import Footer from '../components/Footer'
+import { DecryptText } from '../components/DecryptText'
 
 const AppDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -42,14 +44,11 @@ const AppDetail = () => {
 
   if (!project) {
     return (
-      <Box component="main" sx={{ minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
+      <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Container maxWidth="lg" sx={{ flex: 1, py: 8 }}>
           <Box sx={{ textAlign: 'center', py: 8 }}>
             <Typography variant="h3" gutterBottom sx={{ fontWeight: 900, textTransform: 'uppercase' }}>
               App Not Found
-            </Typography>
-            <Typography variant="body1" color="text.primary" sx={{ mb: 4, fontFamily: '"Space Mono", monospace' }}>
-              The app you're looking for doesn't exist.
             </Typography>
             <Button variant="contained" onClick={() => navigate('/apps')}>
               Back to Apps
@@ -69,15 +68,21 @@ const AppDetail = () => {
     return 3
   }
 
-  const projectColors = ['#FFEB3B', '#FF0000', '#0000FF', '#00FF00', '#FF00FF']
+  const projectGradients = [
+    'linear-gradient(135deg, #00F0FF 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #7000FF 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #FF003C 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #FDF500 0%, #001f3f 100%)',
+  ]
+  
   const projectIndex = profileData.projects.findIndex((p) => p.slug === slug)
-  const accentColor = projectColors[projectIndex % projectColors.length]
+  const accentGradient = projectGradients[projectIndex % projectGradients.length]
 
   return (
-    <Box component="main" sx={{ minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
+    <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Container maxWidth="lg" sx={{ flex: 1, py: 4 }}>
         {/* Breadcrumbs */}
-        <Breadcrumbs sx={{ mb: 4, '& .MuiBreadcrumbs-separator': { color: 'text.primary' } }}>
+        <Breadcrumbs sx={{ mb: 4, '& .MuiBreadcrumbs-separator': { color: 'text.secondary' } }}>
           <Link
             component="button"
             variant="body1"
@@ -86,12 +91,12 @@ const AppDetail = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 0.5,
-              color: 'text.primary',
+              color: 'text.secondary',
               textDecoration: 'none',
-              '&:hover': { color: 'secondary.main', textDecoration: 'underline' },
+              '&:hover': { color: 'primary.main' },
               cursor: 'pointer',
               fontFamily: '"Space Mono", monospace',
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             <HomeIcon fontSize="small" />
@@ -105,12 +110,12 @@ const AppDetail = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 0.5,
-              color: 'text.primary',
+              color: 'text.secondary',
               textDecoration: 'none',
-              '&:hover': { color: 'secondary.main', textDecoration: 'underline' },
+              '&:hover': { color: 'primary.main' },
               cursor: 'pointer',
               fontFamily: '"Space Mono", monospace',
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             <AppsIcon fontSize="small" />
@@ -125,10 +130,12 @@ const AppDetail = () => {
         <Card
           sx={{
             mb: 4,
-            bgcolor: 'background.paper',
-            border: (theme) => `2px solid ${theme.palette.text.primary}`,
-            boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
-            borderRadius: 0,
+            bgcolor: (theme) => alpha(theme.palette.background.paper, 0.6),
+            backdropFilter: 'blur(10px)',
+            border: '1px solid',
+            borderColor: 'divider',
+            borderRadius: 2,
+            overflow: 'hidden',
           }}
         >
           <CardMedia
@@ -138,65 +145,61 @@ const AppDetail = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              bgcolor: accentColor,
+              background: accentGradient,
               position: 'relative',
-              borderBottom: (theme) => `2px solid ${theme.palette.text.primary}`,
             }}
           >
-            <Box sx={{ textAlign: 'center', color: 'black', px: 3 }}>
-              <Typography variant="h3" component="h1" sx={{ fontWeight: 900, mb: 1, textTransform: 'uppercase' }}>
-                {project.title}
+            <Box sx={{ textAlign: 'center', color: '#fff', px: 3, position: 'relative', zIndex: 1 }}>
+              <Typography variant="h3" component="h1" sx={{ fontWeight: 900, mb: 2, textTransform: 'uppercase', textShadow: '0 4px 8px rgba(0,0,0,0.5)' }}>
+                <DecryptText text={project.title} speed={40} />
               </Typography>
               <Chip
                 label={getProjectCategory(project)}
                 sx={{
-                  bgcolor: 'white',
-                  color: 'text.primary',
+                  bgcolor: 'rgba(0,0,0,0.4)',
+                  color: '#fff',
                   fontWeight: 700,
-                  borderRadius: 0,
-                  border: (theme) => `2px solid ${theme.palette.text.primary}`,
+                  backdropFilter: 'blur(4px)',
                 }}
               />
             </Box>
           </CardMedia>
 
           <CardContent sx={{ p: 4 }}>
-            <Typography variant="h6" sx={{ mb: 3, color: 'text.primary', lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
+            <Typography variant="h6" sx={{ mb: 3, color: 'text.secondary', lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
               {project.description}
             </Typography>
 
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <Button
                 variant="contained"
-                color="primary"
                 size="large"
                 startIcon={<LaunchIcon />}
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                sx={{ flex: { xs: 1, sm: 'none' }, bgcolor: 'text.primary', color: 'background.default', '&:hover': { bgcolor: 'text.primary', opacity: 0.9 } }}
+                sx={{ flex: { xs: 1, sm: 'none' }, position: 'relative', zIndex: 10 }}
               >
                 Live Preview
               </Button>
               {project.sourceUrl && (
                 <Button
                   variant="outlined"
-                  color="secondary"
                   size="large"
                   startIcon={<CodeIcon />}
                   href={project.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  sx={{ flex: { xs: 1, sm: 'none' }, bgcolor: 'white', color: 'text.primary', '&:hover': { bgcolor: 'secondary.main' } }}
+                  sx={{ flex: { xs: 1, sm: 'none' }, position: 'relative', zIndex: 10 }}
                 >
                   Source Code
                 </Button>
               )}
               <Button
-                variant="outlined"
+                variant="text"
                 startIcon={<ArrowBackIcon />}
                 onClick={() => navigate('/apps')}
-                sx={{ flex: { xs: 1, sm: 'none' }, bgcolor: 'white', color: 'text.primary', '&:hover': { bgcolor: 'secondary.main' } }}
+                sx={{ flex: { xs: 1, sm: 'none' }, color: 'text.secondary', position: 'relative', zIndex: 10 }}
               >
                 Back to Apps
               </Button>
@@ -212,7 +215,20 @@ const AppDetail = () => {
             </Typography>
             <ImageList cols={getImageListCols()} gap={16}>
               {project.screenshots.map((screenshot, index) => (
-                <ImageListItem key={index} sx={{ border: (theme) => `2px solid ${theme.palette.text.primary}`, boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}` }}>
+                <ImageListItem 
+                    key={index} 
+                    sx={{ 
+                        borderRadius: 2, 
+                        overflow: 'hidden',
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        transition: 'transform 0.3s ease',
+                        '&:hover': {
+                            transform: 'scale(1.02)',
+                            boxShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.3)}`
+                        }
+                    }}
+                >
                   <img
                     src={screenshot}
                     alt={`${project.title} screenshot ${index + 1}`}
@@ -232,9 +248,16 @@ const AppDetail = () => {
         <Grid container spacing={4}>
           {/* Features */}
           <Grid item xs={12} md={6}>
-            <Card sx={{ height: '100%', bgcolor: 'background.paper', border: (theme) => `2px solid ${theme.palette.text.primary}`, boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`, borderRadius: 0 }}>
+            <Card sx={{ 
+                height: '100%', 
+                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
+                backdropFilter: 'blur(10px)',
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'divider'
+            }}>
               <CardContent sx={{ p: 3 }}>
-                <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase' }}>
+                <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase', color: 'primary.main' }}>
                   Key Features
                 </Typography>
                 <Stack spacing={2}>
@@ -253,9 +276,16 @@ const AppDetail = () => {
 
           {/* Tech Stack */}
           <Grid item xs={12} md={6}>
-            <Card sx={{ height: '100%', bgcolor: 'background.paper', border: (theme) => `2px solid ${theme.palette.text.primary}`, boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`, borderRadius: 0 }}>
+            <Card sx={{ 
+                height: '100%', 
+                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
+                backdropFilter: 'blur(10px)',
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'divider'
+            }}>
               <CardContent sx={{ p: 3 }}>
-                <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase' }}>
+                <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase', color: 'primary.main' }}>
                   Technologies Used
                 </Typography>
                 <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>
@@ -263,18 +293,17 @@ const AppDetail = () => {
                     <Chip
                       key={index}
                       label={tech}
+                      variant="outlined"
                       sx={{
-                        bgcolor: 'secondary.main',
+                        borderColor: 'secondary.main',
                         color: 'text.primary',
-                        fontWeight: 700,
-                        borderRadius: 0,
-                        border: (theme) => `1px solid ${theme.palette.text.primary}`,
+                        fontWeight: 600,
                       }}
                     />
                   ))}
                 </Stack>
                 {project.techStackDetails && (
-                  <Typography variant="body2" color="text.primary" sx={{ lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
                     {project.techStackDetails}
                   </Typography>
                 )}
@@ -286,16 +315,23 @@ const AppDetail = () => {
         {/* Architecture Notes */}
         {project.architectureNotes && (
           <Box sx={{ mt: 4 }}>
-            <Accordion sx={{ bgcolor: 'background.paper', border: (theme) => `2px solid ${theme.palette.text.primary}`, boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`, borderRadius: 0 }}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'text.primary' }} />}>
-                <Typography variant="h5" sx={{ fontWeight: 900, textTransform: 'uppercase' }}>
+            <Accordion sx={{ 
+                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
+                backdropFilter: 'blur(10px)',
+                borderRadius: '8px !important',
+                border: '1px solid',
+                borderColor: 'divider',
+                '&::before': { display: 'none' } // Hide default divider
+            }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'primary.main' }} />}>
+                <Typography variant="h5" sx={{ fontWeight: 900, textTransform: 'uppercase', color: 'primary.main' }}>
                   Architecture & Design
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Box sx={{ lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
                   {project.architectureNotes.split('\n').map((line, index) => {
-                    // Bold headers (lines starting with **)
+                    // Bold headers
                     if (line.startsWith('**') && line.endsWith(':**')) {
                       return (
                         <Typography
@@ -315,10 +351,9 @@ const AppDetail = () => {
                         </Typography>
                       )
                     }
-                    // Bullet points (lines starting with •)
+                    // Bullet points
                     if (line.trim().startsWith('•')) {
                       const bulletText = line.replace(/^•\s*/, '')
-                      // Check if bullet contains bold text
                       const parts = bulletText.split(/(\*\*.*?\*\*)/g)
 
                       return (
@@ -334,7 +369,7 @@ const AppDetail = () => {
                           <Typography
                             component="span"
                             sx={{
-                              color: 'secondary.main',
+                              color: 'primary.main',
                               mr: 1.5,
                               fontWeight: 700,
                               fontSize: '1.2rem',
@@ -345,7 +380,7 @@ const AppDetail = () => {
                           </Typography>
                           <Typography
                             variant="body2"
-                            color="text.primary"
+                            color="text.secondary"
                             sx={{ flex: 1, lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}
                           >
                             {parts.map((part, partIndex) => {
@@ -370,16 +405,12 @@ const AppDetail = () => {
                         </Box>
                       )
                     }
-                    // Empty lines
-                    if (line.trim() === '') {
-                      return <Box key={index} sx={{ height: 8 }} />
-                    }
-                    // Regular text
+                    if (line.trim() === '') return <Box key={index} sx={{ height: 8 }} />
                     return (
                       <Typography
                         key={index}
                         variant="body2"
-                        color="text.primary"
+                        color="text.secondary"
                         sx={{ mb: 1, lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}
                       >
                         {line}
@@ -399,7 +430,6 @@ const AppDetail = () => {
             startIcon={<ArrowBackIcon />}
             onClick={() => navigate('/apps')}
             size="large"
-            sx={{ bgcolor: 'white', color: 'text.primary', '&:hover': { bgcolor: 'secondary.main' } }}
           >
             Back to All Apps
           </Button>

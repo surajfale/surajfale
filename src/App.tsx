@@ -7,6 +7,9 @@ import Home from './pages/Home'
 import Apps from './pages/Apps'
 import AppDetail from './pages/AppDetail'
 import CustomCursor from './components/CustomCursor'
+import NeuralBackground from './components/NeuralBackground'
+import CommandPalette from './components/CommandPalette'
+import SystemHUD from './components/SystemHUD'
 
 type ThemeMode = 'light' | 'dark'
 
@@ -40,10 +43,19 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="noise-overlay" />
+      <NeuralBackground />
+      {/* <div className="noise-overlay" /> */} 
+      {/* Keeping noise overlay commented out as NeuralBackground replaces it, 
+          or we can keep both for texture + particles if desired. 
+          Let's disable noise for cleaner futuristic look. */}
+      
       <CustomCursor />
+      
       <BrowserRouter>
-        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <CommandPalette toggleTheme={toggleTheme} />
+        <SystemHUD />
+        
+        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
           <ThemeToggle mode={mode} onToggle={toggleTheme} />
           <Routes>
             <Route path="/" element={<Home />} />

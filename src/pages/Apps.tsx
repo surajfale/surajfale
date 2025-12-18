@@ -23,6 +23,7 @@ import {
   ListItemText,
   ListItemButton,
   Divider,
+  alpha,
 } from '@mui/material'
 import ViewModuleIcon from '@mui/icons-material/ViewModule'
 import ViewListIcon from '@mui/icons-material/ViewList'
@@ -31,6 +32,8 @@ import CodeIcon from '@mui/icons-material/Code'
 import { profileData } from '../content/profile'
 import { getAllCategories, filterProjectsByCategory, getProjectCategory } from '../utils/categories'
 import Footer from '../components/Footer'
+import TiltCard from '../components/TiltCard'
+import { DecryptText } from '../components/DecryptText'
 import type { Project } from '../content/profile'
 
 type ViewMode = 'card' | 'list'
@@ -67,10 +70,15 @@ const Apps = () => {
     navigate(`/apps/${project.slug}`)
   }
 
-  const projectColors = ['#FFEB3B', '#FF0000', '#0000FF', '#00FF00', '#FF00FF']
+  const projectGradients = [
+    'linear-gradient(135deg, #00F0FF 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #7000FF 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #FF003C 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #FDF500 0%, #001f3f 100%)',
+  ]
 
   return (
-    <Box component="main" sx={{ minHeight: '100vh', bgcolor: 'background.default', display: 'flex', flexDirection: 'column' }}>
+    <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Container maxWidth="lg" sx={{ flex: 1, py: 8 }}>
         {/* Header */}
         <Box sx={{ mb: 6, textAlign: 'center' }}>
@@ -82,21 +90,23 @@ const Apps = () => {
               fontWeight: 900,
               textTransform: 'uppercase',
               color: 'text.primary',
+              textShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.5)}`,
             }}
           >
-            My Apps
+            <DecryptText text="My Apps" speed={50} />
           </Typography>
           <Box
             sx={{
               width: 100,
-              height: 8,
+              height: 4,
               bgcolor: 'secondary.main',
               mx: 'auto',
               mb: 4,
-              border: (theme) => `2px solid ${theme.palette.text.primary}`,
+              borderRadius: 2,
+              boxShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
             }}
           />
-          <Typography variant="body1" sx={{ color: 'text.primary', maxWidth: '600px', mx: 'auto', mt: 2, fontFamily: '"Space Mono", monospace' }}>
+          <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', mt: 2, fontFamily: '"Space Mono", monospace' }}>
             Explore my collection of applications and projects. Each app showcases different technologies and
             solutions to real-world problems.
           </Typography>
@@ -119,12 +129,14 @@ const Apps = () => {
               value={selectedCategory}
               onChange={handleCategoryChange}
               displayEmpty
+              variant="outlined"
               sx={{
-                bgcolor: 'background.paper',
-                borderRadius: 0,
-                border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
-                '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5),
+                backdropFilter: 'blur(10px)',
+                borderRadius: 2,
+                '& .MuiOutlinedInput-notchedOutline': { borderColor: 'divider' },
+                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'primary.main' },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'primary.main' },
               }}
             >
               {categories.map((category) => (
@@ -142,19 +154,19 @@ const Apps = () => {
             onChange={handleViewModeChange}
             aria-label="view mode"
             sx={{
-              bgcolor: 'background.paper',
-              borderRadius: 0,
-              border: (theme) => `2px solid ${theme.palette.text.primary}`,
-              boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+              bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5),
+              backdropFilter: 'blur(10px)',
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
               '& .MuiToggleButton-root': {
                 border: 'none',
-                borderRadius: 0,
-                color: 'text.primary',
+                color: 'text.secondary',
                 '&.Mui-selected': {
-                  bgcolor: 'secondary.main',
-                  color: 'text.primary',
+                  bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
+                  color: 'primary.main',
                   '&:hover': {
-                    bgcolor: 'secondary.dark',
+                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.3),
                   },
                 },
               },
@@ -176,169 +188,157 @@ const Apps = () => {
           <Grid container spacing={4}>
             {filteredProjects.map((project, index) => (
               <Grid item xs={12} sm={6} md={4} key={project.slug}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    bgcolor: 'background.paper',
-                    border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                    boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
-                    borderRadius: 0,
-                    '&:hover': {
-                      transform: 'translate(-4px, -4px)',
-                      boxShadow: (theme) => `12px 12px 0px 0px ${theme.palette.text.primary}`,
-                    },
-                    transition: 'all 0.1s ease',
-                  }}
-                >
-                  <CardMedia
-                    component="div"
+                <TiltCard sx={{ height: '100%' }}>
+                  <Card
                     sx={{
-                      height: 180,
+                      height: '100%',
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background: projectColors[index % projectColors.length],
-                      position: 'relative',
-                      borderBottom: (theme) => `2px solid ${theme.palette.text.primary}`,
+                      flexDirection: 'column',
+                      cursor: 'pointer',
+                      // Theme overrides handle details
                     }}
-                    title={project.title}
+                    onClick={() => navigate(`/apps/${project.slug}`)}
                   >
-                    <Typography
-                      variant="h5"
+                    <CardMedia
+                      component="div"
                       sx={{
-                        color: 'black',
-                        fontWeight: 900,
-                        textAlign: 'center',
-                        px: 2,
-                        fontSize: { xs: '1.25rem', sm: '1.5rem' },
-                        textTransform: 'uppercase',
+                        height: 180,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: projectGradients[index % projectGradients.length],
+                        position: 'relative',
                       }}
+                      title={project.title}
                     >
-                      {project.title}
-                    </Typography>
-                    <Chip
-                      label={getProjectCategory(project)}
-                      size="small"
-                      sx={{
-                        position: 'absolute',
-                        top: 8,
-                        right: 8,
-                        bgcolor: 'white',
-                        color: 'text.primary',
-                        fontWeight: 700,
-                        borderRadius: 0,
-                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                      }}
-                    />
-                  </CardMedia>
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          color: '#FFFFFF',
+                          fontWeight: 900,
+                          textAlign: 'center',
+                          px: 2,
+                          fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                          textTransform: 'uppercase',
+                          textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                        }}
+                      >
+                        {project.title}
+                      </Typography>
+                      <Chip
+                        label={getProjectCategory(project)}
+                        size="small"
+                        sx={{
+                          position: 'absolute',
+                          top: 8,
+                          right: 8,
+                          bgcolor: 'rgba(0,0,0,0.6)',
+                          color: '#fff',
+                          fontWeight: 700,
+                          backdropFilter: 'blur(4px)',
+                          border: 'none',
+                        }}
+                      />
+                    </CardMedia>
 
-                  <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                    <Typography
-                      variant="body2"
-                      color="text.primary"
-                      sx={{
-                        mb: 3,
-                        lineHeight: 1.7,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        fontFamily: '"Space Mono", monospace',
-                      }}
-                    >
-                      {project.description}
-                    </Typography>
+                    <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          mb: 3,
+                          lineHeight: 1.7,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          fontFamily: '"Space Mono", monospace',
+                        }}
+                      >
+                        {project.description}
+                      </Typography>
 
-                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                      {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                        <Chip
-                          key={techIndex}
-                          label={tech}
-                          size="small"
-                          sx={{
-                            bgcolor: 'secondary.main',
-                            color: 'text.primary',
-                            fontWeight: 700,
-                            fontSize: '0.75rem',
-                            borderRadius: 0,
-                            border: (theme) => `1px solid ${theme.palette.text.primary}`,
-                          }}
-                        />
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <Chip
-                          label={`+${project.technologies.length - 3}`}
-                          size="small"
-                          sx={{
-                            bgcolor: 'white',
-                            color: 'text.primary',
-                            fontWeight: 700,
-                            fontSize: '0.75rem',
-                            borderRadius: 0,
-                            border: (theme) => `1px solid ${theme.palette.text.primary}`,
-                          }}
-                        />
-                      )}
-                    </Stack>
-                  </CardContent>
+                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                        {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                          <Chip
+                            key={techIndex}
+                            label={tech}
+                            size="small"
+                            variant="outlined"
+                            sx={{
+                              fontSize: '0.75rem',
+                              borderColor: 'divider',
+                            }}
+                          />
+                        ))}
+                        {project.technologies.length > 3 && (
+                          <Chip
+                            label={`+${project.technologies.length - 3}`}
+                            size="small"
+                            sx={{
+                              bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+                              color: 'secondary.main',
+                              fontSize: '0.75rem',
+                              fontWeight: 700,
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    </CardContent>
 
-                  <CardActions sx={{ p: 2, pt: 0, gap: 1 }}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        navigate(`/apps/${project.slug}`)
-                      }}
-                      sx={{
-                        bgcolor: 'text.primary',
-                        color: 'background.default',
-                        '&:hover': {
-                          bgcolor: 'text.primary',
-                          opacity: 0.9,
-                        },
-                      }}
-                    >
-                      View Details
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      fullWidth
-                      startIcon={<LaunchIcon />}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
-                      }}
-                      sx={{
-                        bgcolor: 'white',
-                        color: 'text.primary',
-                        '&:hover': {
-                          bgcolor: 'secondary.main',
-                        },
-                      }}
-                    >
-                      Live
-                    </Button>
-                  </CardActions>
-                </Card>
+                                      <CardActions sx={{ p: 2, pt: 0, gap: 1 }}>
+                                        <Button
+                                          variant="contained"
+                                          fullWidth
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            navigate(`/apps/${project.slug}`)
+                                          }}
+                                          sx={{
+                                            position: 'relative',
+                                            zIndex: 10,
+                                          }}
+                                        >
+                                          Details
+                                        </Button>
+                                        <Button
+                                          variant="outlined"
+                                          fullWidth
+                                          startIcon={<LaunchIcon />}
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
+                                          }}
+                                          sx={{
+                                            position: 'relative',
+                                            zIndex: 10,
+                                          }}
+                                        >
+                                          Live
+                                        </Button>
+                                      </CardActions>                  </Card>
+                </TiltCard>
               </Grid>
             ))}
           </Grid>
         ) : (
-          <List sx={{ bgcolor: 'background.paper', borderRadius: 0, border: (theme) => `2px solid ${theme.palette.text.primary}`, boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}` }}>
+          <List sx={{ 
+              bgcolor: 'background.paper', 
+              borderRadius: 2, 
+              border: '1px solid',
+              borderColor: 'divider',
+              backdropFilter: 'blur(10px)',
+              overflow: 'hidden'
+            }}>
             {filteredProjects.map((project, index) => (
               <Box key={project.slug}>
                 <ListItem
                   disablePadding
                   sx={{
+                    transition: 'background-color 0.2s',
                     '&:hover': {
-                      bgcolor: 'secondary.light',
+                      bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05),
                     },
-                    transition: 'background-color 0.1s ease-in-out',
                   }}
                 >
                   <ListItemButton onClick={() => handleProjectClick(project)} sx={{ py: 3 }}>
@@ -346,17 +346,17 @@ const Apps = () => {
                       sx={{
                         width: 80,
                         height: 80,
-                        borderRadius: 0,
-                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                        bgcolor: projectColors[index % projectColors.length],
+                        borderRadius: 2,
+                        background: projectGradients[index % projectGradients.length],
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         mr: 3,
                         flexShrink: 0,
+                        boxShadow: (theme) => `0 4px 10px ${alpha(theme.palette.common.black, 0.2)}`,
                       }}
                     >
-                      <Typography variant="h6" sx={{ color: 'black', fontWeight: 900, textAlign: 'center', px: 1 }}>
+                      <Typography variant="h6" sx={{ color: 'white', fontWeight: 900, textAlign: 'center', px: 1, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                         {project.title.split(' ').map((w) => w[0]).join('').slice(0, 2)}
                       </Typography>
                     </Box>
@@ -370,12 +370,10 @@ const Apps = () => {
                             label={getProjectCategory(project)}
                             size="small"
                             sx={{
-                              bgcolor: 'secondary.main',
-                              color: 'text.primary',
+                              bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.1),
+                              color: 'secondary.main',
                               fontWeight: 700,
                               height: 24,
-                              borderRadius: 0,
-                              border: (theme) => `1px solid ${theme.palette.text.primary}`,
                             }}
                           />
                         </Box>
@@ -384,7 +382,7 @@ const Apps = () => {
                         <Box>
                           <Typography
                             variant="body2"
-                            color="text.primary"
+                            color="text.secondary"
                             sx={{
                               mb: 1,
                               display: '-webkit-box',
@@ -402,13 +400,10 @@ const Apps = () => {
                                 key={techIndex}
                                 label={tech}
                                 size="small"
+                                variant="outlined"
                                 sx={{
-                                  bgcolor: 'white',
-                                  color: 'text.primary',
                                   fontSize: '0.7rem',
                                   height: 20,
-                                  borderRadius: 0,
-                                  border: (theme) => `1px solid ${theme.palette.text.primary}`,
                                   fontWeight: 700,
                                 }}
                               />
@@ -418,12 +413,10 @@ const Apps = () => {
                                 label={`+${project.technologies.length - 4}`}
                                 size="small"
                                 sx={{
-                                  bgcolor: 'white',
-                                  color: 'text.primary',
+                                  bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+                                  color: 'secondary.main',
                                   fontSize: '0.7rem',
                                   height: 20,
-                                  borderRadius: 0,
-                                  border: (theme) => `1px solid ${theme.palette.text.primary}`,
                                   fontWeight: 700,
                                 }}
                               />
@@ -441,7 +434,6 @@ const Apps = () => {
                           e.stopPropagation()
                           window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
                         }}
-                        sx={{ bgcolor: 'white', color: 'text.primary', '&:hover': { bgcolor: 'secondary.main' } }}
                       >
                         Live
                       </Button>
@@ -454,7 +446,6 @@ const Apps = () => {
                             e.stopPropagation()
                             window.open(project.sourceUrl, '_blank', 'noopener,noreferrer')
                           }}
-                          sx={{ bgcolor: 'black', color: 'white', '&:hover': { bgcolor: '#333' } }}
                         >
                           Code
                         </Button>
@@ -462,7 +453,7 @@ const Apps = () => {
                     </Box>
                   </ListItemButton>
                 </ListItem>
-                {index < filteredProjects.length - 1 && <Divider sx={{ borderColor: 'text.primary', borderBottomWidth: 2 }} />}
+                {index < filteredProjects.length - 1 && <Divider />}
               </Box>
             ))}
           </List>
@@ -470,7 +461,7 @@ const Apps = () => {
 
         {filteredProjects.length === 0 && (
           <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography variant="h6" color="text.primary" sx={{ fontFamily: '"Space Mono", monospace' }}>
+            <Typography variant="h6" color="text.secondary" sx={{ fontFamily: '"Space Mono", monospace' }}>
               No apps found in this category.
             </Typography>
           </Box>
