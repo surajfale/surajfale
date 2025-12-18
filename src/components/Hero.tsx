@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Button, Stack } from '@mui/material'
+import { Box, Container, Typography, Button, Stack, alpha } from '@mui/material'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import { profileData } from '../content/profile'
@@ -11,11 +11,9 @@ const Hero = () => {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        bgcolor: 'background.default',
-        color: 'text.primary',
         position: 'relative',
         overflow: 'hidden',
-        borderBottom: (theme) => `3px solid ${theme.palette.text.primary}`,
+        // Background controlled by theme globally
       }}
     >
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
@@ -29,6 +27,7 @@ const Hero = () => {
             sx={{
               fontSize: { xs: '3rem', md: '6rem' },
               mb: 2,
+              textShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.5)}`,
             }}
           >
             {profileData.name}
@@ -41,12 +40,14 @@ const Hero = () => {
             sx={{
               mb: 4,
               fontSize: { xs: '1.5rem', md: '3rem' },
-              bgcolor: 'secondary.main',
+              color: 'secondary.main',
               display: 'inline-block',
-              px: 2,
-              transform: 'rotate(-2deg)',
-              border: (theme) => `2px solid ${theme.palette.text.primary}`,
-              boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+              px: 3,
+              py: 1,
+              background: (theme) => alpha(theme.palette.secondary.main, 0.1),
+              borderRadius: 2,
+              backdropFilter: 'blur(5px)',
+              textShadow: (theme) => `0 0 10px ${alpha(theme.palette.secondary.main, 0.5)}`,
             }}
           >
             {profileData.title}
@@ -61,6 +62,7 @@ const Hero = () => {
               mb: 6,
               lineHeight: 1.6,
               fontSize: { xs: '1rem', md: '1.25rem' },
+              color: 'text.secondary',
             }}
           >
             {profileData.tagline}
@@ -73,20 +75,13 @@ const Hero = () => {
           >
             <Button
               component="a"
-              variant="contained"
+              variant="outlined"
               size="large"
               startIcon={<LinkedInIcon />}
               href={profileData.socials.find((s) => s.name === 'LinkedIn')?.url || '#'}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit LinkedIn profile"
-              sx={{
-                bgcolor: 'white',
-                color: 'black',
-                '&:hover': {
-                  bgcolor: '#f0f0f0',
-                },
-              }}
             >
               Connect on LinkedIn
             </Button>
@@ -100,53 +95,32 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit GitHub profile"
-              sx={{
-                bgcolor: 'black',
-                color: 'white',
-                '&:hover': {
-                  bgcolor: '#333',
-                },
-              }}
             >
               View GitHub
             </Button>
 
             <Button
               component="a"
-              variant="contained"
+              variant="outlined"
               size="large"
-              startIcon={<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="dev.to" style={{ width: 24, height: 24 }} />}
+              startIcon={<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="dev.to" style={{ width: 24, height: 24, filter: 'invert(1)' }} />}
               href={profileData.socials.find((s) => s.name === 'dev.to')?.url || '#'}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit dev.to blog"
-              sx={{
-                bgcolor: 'white',
-                color: 'black',
-                '&:hover': {
-                  bgcolor: '#f0f0f0',
-                },
-              }}
             >
               Blog on dev.to
             </Button>
 
             <Button
               component="a"
-              variant="contained"
+              variant="outlined"
               size="large"
-              startIcon={<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg" alt="Medium" style={{ width: 24, height: 24 }} />}
+              startIcon={<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg" alt="Medium" style={{ width: 24, height: 24, filter: 'invert(1)' }} />}
               href={profileData.socials.find((s) => s.name === 'Medium')?.url || '#'}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit Medium blog"
-              sx={{
-                bgcolor: 'black',
-                color: 'white',
-                '&:hover': {
-                  bgcolor: '#333',
-                },
-              }}
             >
               Blog on Medium
             </Button>

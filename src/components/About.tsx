@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Paper, Grid, Chip } from '@mui/material'
+import { Box, Container, Typography, Paper, Grid, Chip, alpha } from '@mui/material'
 import WorkIcon from '@mui/icons-material/Work'
 import SchoolIcon from '@mui/icons-material/School'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
@@ -7,9 +7,9 @@ import { profileData } from '../content/profile'
 
 const About = () => {
   const iconMap: Record<number, JSX.Element> = {
-    0: <WorkIcon sx={{ fontSize: 32, color: 'text.primary' }} />,
-    1: <SchoolIcon sx={{ fontSize: 32, color: 'text.primary' }} />,
-    2: <TrendingUpIcon sx={{ fontSize: 32, color: 'text.primary' }} />,
+    0: <WorkIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
+    1: <SchoolIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
+    2: <TrendingUpIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
   }
 
   return (
@@ -18,8 +18,7 @@ const About = () => {
       id="about"
       sx={{
         py: 10,
-        bgcolor: 'background.default',
-        borderBottom: (theme) => `3px solid ${theme.palette.text.primary}`,
+        // Background handled globally or use a subtle gradient here
       }}
     >
       <Container maxWidth="lg">
@@ -32,6 +31,7 @@ const About = () => {
               fontWeight: 900,
               textTransform: 'uppercase',
               mb: 2,
+              textShadow: (theme) => `0 0 10px ${alpha(theme.palette.text.primary, 0.3)}`,
             }}
           >
             About Me
@@ -40,11 +40,12 @@ const About = () => {
           <Box
             sx={{
               width: 100,
-              height: 8,
-              bgcolor: 'secondary.main',
+              height: 4,
+              bgcolor: 'primary.main',
               mx: 'auto',
               mb: 4,
-              border: (theme) => `2px solid ${theme.palette.text.primary}`,
+              borderRadius: 2,
+              boxShadow: (theme) => `0 0 10px ${theme.palette.primary.main}`,
             }}
           />
 
@@ -52,7 +53,7 @@ const About = () => {
             <Typography
               variant="h6"
               sx={{
-                color: 'text.primary',
+                color: 'text.secondary',
                 fontSize: '1.25rem',
                 fontWeight: 500,
                 lineHeight: 1.6,
@@ -71,12 +72,14 @@ const About = () => {
                 mb: 3,
                 px: 3,
                 py: 1.5,
-                bgcolor: 'white',
-                border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5),
+                borderRadius: 4,
+                backdropFilter: 'blur(5px)',
+                border: '1px solid',
+                borderColor: 'divider',
               }}
             >
-              <AutoAwesomeIcon sx={{ color: 'text.primary', fontSize: 20 }} />
+              <AutoAwesomeIcon sx={{ color: 'secondary.main', fontSize: 20 }} />
               <Typography
                 variant="body1"
                 sx={{
@@ -93,12 +96,13 @@ const About = () => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: 'text.primary',
+                  color: 'text.secondary',
                   fontSize: '0.95rem',
                   fontWeight: 700,
                   mb: 2,
                   textAlign: 'center',
                   textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
                 }}
               >
                 Core Technologies
@@ -111,18 +115,10 @@ const About = () => {
                       label={tech}
                       size="medium"
                       sx={{
-                        bgcolor: 'secondary.main',
-                        color: 'text.primary',
                         fontWeight: 700,
                         fontSize: '1rem',
                         px: 2,
                         py: 2.5,
-                        borderRadius: 0,
-                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                        boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
-                        '&:hover': {
-                          bgcolor: 'secondary.dark',
-                        },
                       }}
                     />
                   ))}
@@ -134,12 +130,13 @@ const About = () => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: 'text.primary',
+                  color: 'text.secondary',
                   fontSize: '0.95rem',
                   fontWeight: 700,
                   mb: 2,
                   textAlign: 'center',
                   textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
                 }}
               >
                 Currently Exploring
@@ -153,18 +150,10 @@ const About = () => {
                       size="medium"
                       variant="outlined"
                       sx={{
-                        bgcolor: 'white',
-                        color: 'text.primary',
                         fontWeight: 700,
                         fontSize: '1rem',
                         px: 2,
                         py: 2.5,
-                        borderRadius: 0,
-                        border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                        boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
-                        '&:hover': {
-                          bgcolor: 'secondary.main',
-                        },
                       }}
                     />
                   ))}
@@ -186,15 +175,7 @@ const About = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   textAlign: 'center',
-                  bgcolor: 'background.paper',
-                  border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                  boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
-                  borderRadius: 0,
-                  transition: 'all 0.1s ease',
-                  '&:hover': {
-                    transform: 'translate(-4px, -4px)',
-                    boxShadow: (theme) => `12px 12px 0px 0px ${theme.palette.text.primary}`,
-                  },
+                  // Theme overrides handle the rest
                 }}
               >
                 <Box
@@ -202,15 +183,13 @@ const About = () => {
                   sx={{
                     width: 80,
                     height: 80,
-                    borderRadius: 0,
-                    border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                    bgcolor: 'secondary.main',
+                    borderRadius: '50%',
+                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'text.primary',
                     mb: 3,
-                    boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+                    boxShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.2)}`,
                   }}
                 >
                   {iconMap[index]}
@@ -219,14 +198,11 @@ const About = () => {
                 <Typography
                   variant="overline"
                   sx={{
-                    color: 'text.primary',
+                    color: 'secondary.main',
                     fontWeight: 900,
                     fontSize: '0.85rem',
                     letterSpacing: 1.5,
                     mb: 1,
-                    bgcolor: 'white',
-                    px: 1,
-                    border: (theme) => `1px solid ${theme.palette.text.primary}`,
                   }}
                 >
                   {highlight.year}
@@ -250,7 +226,7 @@ const About = () => {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: 'text.primary',
+                    color: 'text.secondary',
                     lineHeight: 1.8,
                     fontSize: '0.95rem',
                     fontFamily: '"Space Mono", monospace',

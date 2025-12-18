@@ -38,18 +38,18 @@ export interface Profile {
 
 export const profileData: Profile = {
   name: 'Suraj Fale',
-  title: 'Lead Architect',
-  tagline: 'Lead Architect — System Design, Multi-project Delivery, Scala & Kafka | Generative AI & Prompt Engineering',
+  title: 'Principal Engineer',
+  tagline: 'Principal Engineer — System Design, Multi-project Delivery, Scala & Kafka | Generative AI & Prompt Engineering',
 
-  about: `Lead Architect with experience designing and delivering large-scale distributed systems across multiple projects. I lead architecture, system design, implementation, and cross-team delivery while mentoring engineers and driving technical direction.
+  about: `Principal Engineer with experience designing and delivering large-scale distributed systems across multiple projects. I drive technical strategy, system design, implementation, and cross-team delivery while mentoring engineers and shaping technical direction.
     I focus on resilient event-driven architectures, real-time data processing, and pragmatic system design using Scala, Java, Apache Kafka, Apache Spark, and cloud-native patterns.
     I'm also exploring Generative AI, Prompt Engineering, and LLM integration to bring practical AI features into production services.`,
 
   highlights: [
     {
       year: 'Present',
-      title: 'Lead Architect',
-      description: 'Leading multiple software projects end-to-end: architecture, design, implementation, and delivery; mentoring engineering teams and aligning technical strategy with business goals.',
+      title: 'Principal Engineer',
+      description: 'Driving technical strategy and high-level architecture across multiple projects; leading cross-team delivery, mentoring engineering leads, and aligning long-term technical vision with business goals.',
     },
     {
       year: '2020',

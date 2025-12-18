@@ -29,6 +29,7 @@ function App() {
     const root = document.documentElement
     root.style.setProperty('--background-default', theme.palette.background.default)
     root.style.setProperty('--text-primary', theme.palette.text.primary)
+    root.style.setProperty('--primary-main', theme.palette.primary.main)
     root.style.setProperty('--secondary-main', theme.palette.secondary.main)
   }, [theme])
 

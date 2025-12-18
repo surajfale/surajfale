@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from '@mui/material'
+import { IconButton, Tooltip, alpha } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 
@@ -18,27 +18,26 @@ const ThemeToggle = ({ mode, onToggle }: ThemeToggleProps) => {
           top: 20,
           right: 20,
           zIndex: 1000,
-          bgcolor: 'background.paper',
-          borderRadius: 0,
-          border: '2px solid',
-          borderColor: 'text.primary',
-          boxShadow: (theme) => `4px 4px 0px 0px ${theme.palette.text.primary}`,
+          bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5),
+          backdropFilter: 'blur(10px)',
+          borderRadius: '50%',
+          border: '1px solid',
+          borderColor: 'divider',
+          width: 48,
+          height: 48,
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           '&:hover': {
-            bgcolor: 'secondary.main',
-            transform: 'translate(-2px, -2px)',
-            boxShadow: (theme) => `6px 6px 0px 0px ${theme.palette.text.primary}`,
+            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
+            transform: 'rotate(180deg)',
+            boxShadow: (theme) => `0 0 15px ${alpha(theme.palette.primary.main, 0.5)}`,
+            borderColor: 'primary.main',
           },
-          '&:active': {
-            transform: 'translate(0px, 0px)',
-            boxShadow: 'none',
-          },
-          transition: 'all 0.1s ease-in-out',
         }}
       >
         {mode === 'dark' ? (
-          <Brightness7Icon sx={{ color: 'text.primary' }} />
+          <Brightness7Icon sx={{ color: 'secondary.main' }} />
         ) : (
-          <Brightness4Icon sx={{ color: 'text.primary' }} />
+          <Brightness4Icon sx={{ color: 'primary.main' }} />
         )}
       </IconButton>
     </Tooltip>

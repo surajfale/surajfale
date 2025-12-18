@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### 2025-12-18 00:23:05 - 8a8c7a5 [LOCAL]
+
+feat(profile): update title and description to reflect new role
+
+- Changed title from Lead Architect to Principal Engineer
+- Updated project descriptions to align with new responsibilities
+- Enhanced visual elements across components for consistency### 2025-12-18
+
+feat(theme): complete UI overhaul to a Futuristic / Cyberpunk theme
+- Implemented a new color palette (Neon Cyan, Magenta, Deep Space Blue)
+- Added Glassmorphism effects and glowing UI elements
+- Refactored all components for better dark/light mode compatibility
+- Replaced the square custom cursor with a smooth, dual-element circle cursor
+
+feat(profile): update role to Principal Engineer
+- Updated title, tagline, and about section to reflect the promotion
+- Revised career highlights and README to reflect Principal-level responsibilities
+
 ### 2025-11-03 23:40:56 - e791fc3 [PUSHED]
 
 feat(docs): update portfolio and README for role and project highlights

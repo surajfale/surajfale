@@ -26,28 +26,27 @@ body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--background-default);
-  border-left: 2px solid var(--text-primary);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--secondary-main);
-  border: 2px solid var(--text-primary);
-  box-shadow: 2px 2px 0px 0px var(--text-primary);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-primary);
+  background: var(--primary-main);
+  box-shadow: 0 0 10px var(--primary-main);
 }
 
 /* Selection */
 ::selection {
-  background-color: var(--text-primary);
-  color: var(--secondary-main);
+  background-color: var(--primary-main);
+  color: #000000;
 }
 
 /* Glitch Effect */
@@ -69,14 +68,14 @@ body {
 
 .glitch::before {
   left: 2px;
-  text-shadow: -2px 0 #ff00c1;
+  text-shadow: -2px 0 #BC13FE; /* Neon Purple */
   clip: rect(44px, 450px, 56px, 0);
   animation: glitch-anim-1 5s infinite linear alternate-reverse;
 }
 
 .glitch::after {
   left: -2px;
-  text-shadow: -2px 0 #00fff9;
+  text-shadow: -2px 0 #00F0FF; /* Neon Cyan */
   clip: rect(44px, 450px, 56px, 0);
   animation: glitch-anim-2 5s infinite linear alternate-reverse;
 }

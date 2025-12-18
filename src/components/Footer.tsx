@@ -10,8 +10,10 @@ const Footer = () => {
       sx={{
         py: 4,
         bgcolor: 'background.paper',
-        borderTop: (theme) => `3px solid ${theme.palette.text.primary}`,
+        borderTop: '1px solid',
+        borderColor: 'divider',
         mt: 'auto',
+        backdropFilter: 'blur(10px)',
       }}
     >
       <Container maxWidth="lg">
@@ -27,20 +29,21 @@ const Footer = () => {
         >
           <Typography
             variant="body2"
-            color="text.primary"
+            color="text.secondary"
             sx={{
               display: 'flex',
               alignItems: 'center',
               gap: 0.5,
               fontFamily: '"Space Mono", monospace',
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             © {currentYear} Suraj Fale. Made with{' '}
             <FavoriteIcon
               sx={{
                 fontSize: '1rem',
-                color: 'error.main',
+                color: 'accent1',
+                filter: 'drop-shadow(0 0 5px red)',
                 animation: 'heartbeat 1.5s ease-in-out infinite',
                 '@keyframes heartbeat': {
                   '0%, 100%': { transform: 'scale(1)' },
@@ -57,15 +60,16 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               color="text.primary"
-              underline="hover"
+              underline="none"
               sx={{
                 fontWeight: 700,
                 textTransform: 'uppercase',
+                transition: 'all 0.3s ease',
                 '&:hover': {
-                  bgcolor: 'secondary.main',
-                  color: 'text.primary',
+                  color: 'secondary.main',
+                  textShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
+                  transform: 'translateY(-2px)',
                 },
-                transition: 'all 0.1s ease-in-out',
               }}
             >
               LinkedIn
@@ -75,15 +79,16 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               color="text.primary"
-              underline="hover"
+              underline="none"
               sx={{
                 fontWeight: 700,
                 textTransform: 'uppercase',
+                transition: 'all 0.3s ease',
                 '&:hover': {
-                  bgcolor: 'secondary.main',
-                  color: 'text.primary',
+                  color: 'primary.main',
+                  textShadow: (theme) => `0 0 10px ${theme.palette.primary.main}`,
+                  transform: 'translateY(-2px)',
                 },
-                transition: 'all 0.1s ease-in-out',
               }}
             >
               GitHub

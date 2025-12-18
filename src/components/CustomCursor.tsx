@@ -1,44 +1,42 @@
 import { useEffect, useRef, useState } from 'react'
-import { Box } from '@mui/material'
+import { Box, alpha } from '@mui/material'
 
 const CustomCursor = () => {
-    const cursorRef = useRef<HTMLDivElement>(null)
+    const mainCursorRef = useRef<HTMLDivElement>(null)
+    const ringCursorRef = useRef<HTMLDivElement>(null)
     const [isHovering, setIsHovering] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
-        const cursor = cursorRef.current
-        if (!cursor) return
+        const mainCursor = mainCursorRef.current
+        const ringCursor = ringCursorRef.current
+        if (!mainCursor || !ringCursor) return
 
         let animationFrameId: number
         let mouseX = 0
         let mouseY = 0
-        let cursorX = 0
-        let cursorY = 0
+        let ringX = 0
+        let ringY = 0
 
         const updatePosition = (e: MouseEvent) => {
             mouseX = e.clientX
             mouseY = e.clientY
+            
+            // Move main cursor instantly for snappy feel
+            mainCursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`
+            
             if (!isVisible) setIsVisible(true)
         }
 
         const animate = () => {
-            // Smooth lerp for lag-free but fluid movement
-            // Increasing the lerp factor to 0.2 for snappier response, or 1 for instant
-            // User said "laggy", so let's make it instant or very fast.
-            // Let's try direct assignment first for maximum performance, or a very high lerp.
-            // Actually, the "lag" might be the React render cycle. 
-            // Let's do a simple lerp:
-            const lerp = 0.2
-            cursorX += (mouseX - cursorX) * lerp
-            cursorY += (mouseY - cursorY) * lerp
+            // Smooth lerp for the trailing ring
+            const lerp = 0.15
+            ringX += (mouseX - ringX) * lerp
+            ringY += (mouseY - ringY) * lerp
 
-            // If close enough, snap to avoid endless calculation
-            if (Math.abs(mouseX - cursorX) < 0.1) cursorX = mouseX
-            if (Math.abs(mouseY - cursorY) < 0.1) cursorY = mouseY
-
-            if (cursor) {
-                cursor.style.transform = `translate(${cursorX - 16}px, ${cursorY - 16}px) scale(${cursor.dataset.hover === 'true' ? 1.5 : 1})`
+            if (ringCursor) {
+                const scale = ringCursor.dataset.hover === 'true' ? 1.5 : 1
+                ringCursor.style.transform = `translate(${ringX - 16}px, ${ringY - 16}px) scale(${scale})`
             }
 
             animationFrameId = requestAnimationFrame(animate)
@@ -59,13 +57,13 @@ const CustomCursor = () => {
 
             if (isClickable) {
                 setIsHovering(true)
-                if (cursor) cursor.dataset.hover = 'true'
+                if (ringCursor) ringCursor.dataset.hover = 'true'
             }
         }
 
         const handleHoverEnd = () => {
             setIsHovering(false)
-            if (cursor) cursor.dataset.hover = 'false'
+            if (ringCursor) ringCursor.dataset.hover = 'false'
         }
 
         window.addEventListener('mousemove', updatePosition)
@@ -74,7 +72,6 @@ const CustomCursor = () => {
         document.addEventListener('mouseover', handleHoverStart)
         document.addEventListener('mouseout', handleHoverEnd)
 
-        // Start animation loop
         animate()
 
         return () => {
@@ -87,38 +84,51 @@ const CustomCursor = () => {
         }
     }, [isVisible])
 
-    // Don't render on touch devices
     if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
         return null
     }
 
     return (
-        <Box
-            ref={cursorRef}
-            data-hover={isHovering}
-            sx={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '32px',
-                height: '32px',
-                border: '2px solid #ffffff', // Always white for difference mode to work (White on White = Black)
-                borderRadius: 0,
-                pointerEvents: 'none',
-                zIndex: 9999,
-                transition: 'background-color 0.1s', // Remove transform transition to avoid conflict with JS animation
-                // Actually, if we update transform via JS every frame, CSS transition on transform might fight it.
-                // Let's remove transform from transition and only transition background-color.
-                // But we want scale to transition.
-                // We can separate the scaler? Or just let JS handle scale too?
-                // JS handles scale in the transform string: `scale(...)`.
-                // So we should REMOVE 'transform' from CSS transition to avoid conflict/lag.
-                backgroundColor: isHovering ? 'secondary.main' : 'transparent',
-                mixBlendMode: 'difference',
-                display: isVisible ? 'block' : 'none',
-                // We need to ensure the initial position is off-screen or 0,0
-            }}
-        />
+        <>
+            {/* Inner Dot - Snappy */}
+            <Box
+                ref={mainCursorRef}
+                sx={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '8px',
+                    height: '8px',
+                    bgcolor: 'primary.main',
+                    borderRadius: '50%',
+                    pointerEvents: 'none',
+                    zIndex: 10000,
+                    display: isVisible ? 'block' : 'none',
+                    boxShadow: (theme) => `0 0 10px ${theme.palette.primary.main}`,
+                }}
+            />
+            {/* Outer Ring - Trailing */}
+            <Box
+                ref={ringCursorRef}
+                data-hover={isHovering}
+                sx={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '32px',
+                    height: '32px',
+                    border: '1.5px solid',
+                    borderColor: isHovering ? 'secondary.main' : 'primary.main',
+                    borderRadius: '50%',
+                    pointerEvents: 'none',
+                    zIndex: 9999,
+                    display: isVisible ? 'block' : 'none',
+                    transition: 'border-color 0.3s, background-color 0.3s',
+                    backgroundColor: isHovering ? (theme) => alpha(theme.palette.secondary.main, 0.2) : 'transparent',
+                    boxShadow: (theme) => isHovering ? `0 0 20px ${alpha(theme.palette.secondary.main, 0.4)}` : 'none',
+                }}
+            />
+        </>
     )
 }
 

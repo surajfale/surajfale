@@ -4,7 +4,7 @@ This document provides comprehensive context and guidelines for AI agents workin
 
 ## 1. Project Identity
 - **Name**: Suraj Fale Portfolio
-- **Purpose**: Professional portfolio website for Suraj Fale, a Lead Architect specializing in Scala, Kafka, and Distributed Systems.
+- **Purpose**: Professional portfolio website for Suraj Fale, a Principal Engineer specializing in Scala, Kafka, and Distributed Systems.
 - **Type**: Single Page Application (SPA)
 - **Live URL**: https://surajfale.netlify.app
 

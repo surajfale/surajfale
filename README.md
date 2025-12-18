@@ -2,7 +2,7 @@
 
 # 👋 Hi, I'm Suraj Fale
 
-### Lead Architect | System Design & Architecture | Scala & Kafka | Generative AI & Prompt Engineering
+### Principal Engineer | System Design & Architecture | Scala & Kafka | Generative AI & Prompt Engineering
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/surajfale)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/surajfale)
@@ -18,12 +18,12 @@
 
 ## 🚀 About Me
 
-I'm a Lead Architect focused on designing and delivering large-scale distributed systems and leading multiple software projects from architecture through delivery. I enjoy solving complex systems problems and mentoring teams to build maintainable, scalable solutions.
+I'm a Principal Engineer focused on driving technical strategy, designing large-scale distributed systems, and leading multiple software projects from architecture through delivery. I enjoy solving complex systems problems and mentoring engineers to build maintainable, scalable solutions.
 
-- 🔭 Currently leading architecture and delivery of **Scala and Apache Kafka** projects
+- 🔭 Currently driving technical strategy and delivery of **Scala and Apache Kafka** projects
 - 🤖 **Exploring Generative AI, Prompt Engineering, and LLM integration**
 - 🌱 Learning **AI/ML, containerization (Docker/Kubernetes), and orchestration architectures**
-- 💼 Leading architecture and delivery of **enterprise-scale distributed systems**
+- 💼 Leading cross-team delivery and technical vision for **enterprise-scale distributed systems**
 - 🎓 **Java Certified** by HackerRank (2020)
 - 💡 Passionate about **clean code, system design, and performance optimization**
 - 🌐 Portfolio: [surajfale.com](https://surajfale.com)
@@ -60,12 +60,12 @@ I'm a Lead Architect focused on designing and delivering large-scale distributed
 
 ## 💼 Professional Experience
 
-**Lead Architect** | Current
+**Principal Engineer** | Current
 
-- Leading multiple software projects end-to-end: architecture, design, implementation, and delivery
-- Building and overseeing real-time data processing pipelines with Apache Kafka
+- Driving technical strategy and high-level architecture across multiple projects
+- Overseeing enterprise-scale real-time data processing pipelines with Apache Kafka
 - Designing microservices and platform components with Scala and modern architectural patterns
-- Mentoring engineers and aligning technical strategy with business goals
+- Mentoring engineering leads and aligning long-term technical vision with business goals
 
 ---
 

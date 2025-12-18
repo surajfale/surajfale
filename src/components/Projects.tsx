@@ -11,6 +11,7 @@ import {
   Chip,
   Stack,
   Grid,
+  alpha,
 } from '@mui/material'
 import AppsIcon from '@mui/icons-material/Apps'
 import { profileData } from '../content/profile'
@@ -21,17 +22,28 @@ const Projects = () => {
   // Show only featured projects (first 2-3)
   const featuredProjects = profileData.projects.slice(0, 2)
 
-  // accent colors for project headers (solid blocks instead of images)
-  const projectColors = ['#FFEB3B', '#FF0000', '#0000FF', '#00FF00', '#FF00FF']
+  // Neon gradients for project headers
+  const projectGradients = [
+    'linear-gradient(135deg, #00F0FF 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #7000FF 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #FF003C 0%, #001f3f 100%)',
+    'linear-gradient(135deg, #FDF500 0%, #001f3f 100%)',
+  ]
 
   return (
-    <Box component="section" id="projects" sx={{ py: 10, bgcolor: 'background.paper', borderBottom: (theme) => `3px solid ${theme.palette.text.primary}` }}>
+    <Box component="section" id="projects" sx={{ py: 10 }}>
       <Container maxWidth="lg">
         <Typography
           variant="h2"
           component="h2"
           gutterBottom
-          sx={{ textAlign: 'center', mb: 2, color: 'text.primary', fontWeight: 900, textTransform: 'uppercase' }}
+          sx={{
+            textAlign: 'center',
+            mb: 2,
+            fontWeight: 900,
+            textTransform: 'uppercase',
+            textShadow: (theme) => `0 0 10px ${alpha(theme.palette.text.primary, 0.3)}`,
+          }}
         >
           Featured Projects
         </Typography>
@@ -39,11 +51,12 @@ const Projects = () => {
         <Box
           sx={{
             width: 100,
-            height: 8,
+            height: 4,
             bgcolor: 'secondary.main',
             mx: 'auto',
             mb: 4,
-            border: (theme) => `2px solid ${theme.palette.text.primary}`,
+            borderRadius: 2,
+            boxShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
           }}
         />
 
@@ -54,15 +67,13 @@ const Projects = () => {
             maxWidth: '800px',
             mx: 'auto',
             mb: 8,
-            color: 'text.primary',
+            color: 'text.secondary',
             fontSize: '1.1rem',
             lineHeight: 1.8,
             fontFamily: '"Space Mono", monospace',
             '& span': {
-              bgcolor: 'secondary.main',
-              color: 'text.primary',
+              color: 'primary.main',
               fontWeight: 700,
-              px: 0.5,
             },
           }}
         >
@@ -81,16 +92,8 @@ const Projects = () => {
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  bgcolor: 'background.default',
                   cursor: 'pointer',
-                  border: (theme) => `2px solid ${theme.palette.text.primary}`,
-                  boxShadow: (theme) => `8px 8px 0px 0px ${theme.palette.text.primary}`,
-                  borderRadius: 0,
-                  '&:hover': {
-                    transform: 'translate(-4px, -4px)',
-                    boxShadow: (theme) => `12px 12px 0px 0px ${theme.palette.text.primary}`,
-                  },
-                  transition: 'all 0.1s ease',
+                  // Theme overrides handle border/shadow/bg
                 }}
                 onClick={() => navigate(`/apps/${project.slug}`)}
               >
@@ -101,12 +104,21 @@ const Projects = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: projectColors[index % projectColors.length],
-                    borderBottom: (theme) => `2px solid ${theme.palette.text.primary}`,
+                    background: projectGradients[index % projectGradients.length],
                   }}
                   title={project.title}
                 >
-                  <Typography variant="h4" sx={{ color: 'black', fontWeight: 900, px: 2, textAlign: 'center', textTransform: 'uppercase' }}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: '#FFFFFF',
+                      fontWeight: 900,
+                      px: 2,
+                      textAlign: 'center',
+                      textTransform: 'uppercase',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                    }}
+                  >
                     {project.title}
                   </Typography>
                 </CardMedia>
@@ -118,7 +130,7 @@ const Projects = () => {
 
                   <Typography
                     variant="body2"
-                    color="text.primary"
+                    color="text.secondary"
                     sx={{
                       mb: 3,
                       lineHeight: 1.7,
@@ -138,13 +150,10 @@ const Projects = () => {
                         key={techIndex}
                         label={tech}
                         size="small"
+                        variant="outlined"
                         sx={{
-                          bgcolor: 'white',
-                          color: 'text.primary',
-                          fontWeight: 700,
                           mb: 1,
-                          borderRadius: 0,
-                          border: (theme) => `1px solid ${theme.palette.text.primary}`,
+                          borderColor: 'divider',
                         }}
                       />
                     ))}
@@ -153,12 +162,9 @@ const Projects = () => {
                         label={`+${project.technologies.length - 3}`}
                         size="small"
                         sx={{
-                          bgcolor: 'secondary.main',
-                          color: 'text.primary',
-                          fontWeight: 700,
                           mb: 1,
-                          borderRadius: 0,
-                          border: (theme) => `1px solid ${theme.palette.text.primary}`,
+                          bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+                          color: 'secondary.main',
                         }}
                       />
                     )}
@@ -168,19 +174,10 @@ const Projects = () => {
                 <CardActions sx={{ p: 3, pt: 0 }}>
                   <Button
                     variant="contained"
-                    color="primary"
                     fullWidth
                     onClick={(e) => {
                       e.stopPropagation()
                       navigate(`/apps/${project.slug}`)
-                    }}
-                    sx={{
-                      bgcolor: 'text.primary',
-                      color: 'background.default',
-                      '&:hover': {
-                        bgcolor: 'text.primary',
-                        opacity: 0.9,
-                      },
                     }}
                   >
                     View Details
@@ -194,7 +191,7 @@ const Projects = () => {
         {/* View All Apps Button */}
         <Box sx={{ textAlign: 'center', mt: 8 }}>
           <Button
-            variant="contained"
+            variant="outlined"
             color="secondary"
             size="large"
             startIcon={<AppsIcon />}
@@ -203,13 +200,6 @@ const Projects = () => {
               px: 4,
               py: 1.5,
               fontSize: '1.1rem',
-              bgcolor: 'secondary.main',
-              color: 'text.primary',
-              '&:hover': {
-                bgcolor: 'secondary.dark',
-                transform: 'translate(-2px, -2px)',
-                boxShadow: (theme) => `6px 6px 0px 0px ${theme.palette.text.primary}`,
-              },
             }}
           >
             View All Apps
