@@ -167,7 +167,7 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
                 <SearchIcon sx={{ color: 'text.secondary' }} />
               </InputAdornment>
             ),
-            sx: { fontSize: '1.2rem', fontFamily: '"Space Mono", monospace' },
+            sx: { fontSize: '1.2rem' },
           }}
         />
       </Box>
@@ -200,7 +200,7 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
                 </ListItemIcon>
                 <ListItemText
                   primary={
-                    <Typography variant="body1" sx={{ fontWeight: 600, fontFamily: '"Space Mono", monospace' }}>
+                    <Typography variant="body1" sx={{ fontWeight: 600 }}>
                       {cmd.title}
                     </Typography>
                   }

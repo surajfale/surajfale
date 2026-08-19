@@ -34,7 +34,6 @@ const Footer = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 0.5,
-              fontFamily: '"Space Mono", monospace',
               fontWeight: 500,
             }}
           >
@@ -42,16 +41,15 @@ const Footer = () => {
             <FavoriteIcon
               sx={{
                 fontSize: '1rem',
-                color: 'accent1',
-                filter: 'drop-shadow(0 0 5px red)',
+                color: '#EC4899',
                 animation: 'heartbeat 1.5s ease-in-out infinite',
                 '@keyframes heartbeat': {
                   '0%, 100%': { transform: 'scale(1)' },
-                  '50%': { transform: 'scale(1.2)' },
+                  '50%': { transform: 'scale(1.15)' },
                 },
               }}
             />{' '}
-            and React & Material-UI
+            and React &amp; Material-UI
           </Typography>
 
           <Box sx={{ display: 'flex', gap: 3 }}>
@@ -59,17 +57,12 @@ const Footer = () => {
               href="https://www.linkedin.com/in/surajfale"
               target="_blank"
               rel="noopener noreferrer"
-              color="text.primary"
+              color="text.secondary"
               underline="none"
               sx={{
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  color: 'secondary.main',
-                  textShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
-                  transform: 'translateY(-2px)',
-                },
+                fontWeight: 600,
+                transition: 'color 0.2s ease',
+                '&:hover': { color: 'primary.main' },
               }}
             >
               LinkedIn
@@ -78,17 +71,12 @@ const Footer = () => {
               href="https://github.com/surajfale"
               target="_blank"
               rel="noopener noreferrer"
-              color="text.primary"
+              color="text.secondary"
               underline="none"
               sx={{
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  color: 'primary.main',
-                  textShadow: (theme) => `0 0 10px ${theme.palette.primary.main}`,
-                  transform: 'translateY(-2px)',
-                },
+                fontWeight: 600,
+                transition: 'color 0.2s ease',
+                '&:hover': { color: 'primary.main' },
               }}
             >
               GitHub

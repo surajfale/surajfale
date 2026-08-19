@@ -1,28 +1,25 @@
 import { createTheme, ThemeOptions, alpha } from '@mui/material/styles'
 
-// Futuristic / Cyberpunk Color Palette
 const colors = {
   light: {
-    background: '#F0F2F5',
-    paper: 'rgba(255, 255, 255, 0.7)',
-    primary: '#00F0FF', // Neon Cyan
-    secondary: '#7000FF', // Neon Purple
-    accent1: '#FF003C', // Cyberpunk Red
-    accent2: '#FDF500', // Neon Yellow
-    text: '#1A1A1A',
-    textSecondary: '#4A4A4A',
-    border: 'rgba(0, 0, 0, 0.1)',
+    background: '#F7F9FB',
+    paper: 'rgba(255, 255, 255, 0.85)',
+    primary: '#0077B5', // LinkedIn blue
+    secondary: '#24292E', // GitHub dark
+    accent1: '#EC4899', // gradient pink
+    text: '#1A1F24',
+    textSecondary: '#57606A',
+    border: 'rgba(15, 23, 42, 0.1)',
   },
   dark: {
-    background: '#050511', // Deep Space Blue/Black
-    paper: 'rgba(20, 20, 35, 0.6)',
-    primary: '#00F0FF', // Neon Cyan
-    secondary: '#BC13FE', // Neon Purple/Magenta
-    accent1: '#FF003C',
-    accent2: '#FDF500',
-    text: '#E0E0E0',
-    textSecondary: '#A0A0A0',
-    border: 'rgba(0, 240, 255, 0.2)',
+    background: '#0D1117',
+    paper: 'rgba(22, 27, 34, 0.85)',
+    primary: '#3FA9F5', // brightened LinkedIn blue for dark contrast
+    secondary: '#8B949E',
+    accent1: '#F472B6',
+    text: '#E6EDF3',
+    textSecondary: '#9BA6B2',
+    border: 'rgba(255, 255, 255, 0.1)',
   },
 }
 
@@ -35,7 +32,7 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
       mode,
       primary: {
         main: palette.primary,
-        contrastText: '#000000',
+        contrastText: '#FFFFFF',
       },
       secondary: {
         main: palette.secondary,
@@ -52,42 +49,14 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
       divider: palette.border,
     },
     typography: {
-      fontFamily: '"Space Mono", monospace',
-      h1: {
-        fontFamily: '"Lexend Mega", sans-serif',
-        fontWeight: 800,
-        textTransform: 'uppercase',
-        letterSpacing: '-0.02em',
-      },
-      h2: {
-        fontFamily: '"Lexend Mega", sans-serif',
-        fontWeight: 700,
-        textTransform: 'uppercase',
-        letterSpacing: '-0.01em',
-      },
-      h3: {
-        fontFamily: '"Lexend Mega", sans-serif',
-        fontWeight: 700,
-        textTransform: 'uppercase',
-      },
-      h4: {
-        fontFamily: '"Lexend Mega", sans-serif',
-        fontWeight: 600,
-      },
-      h5: {
-        fontFamily: '"Lexend Mega", sans-serif',
-        fontWeight: 600,
-      },
-      h6: {
-        fontFamily: '"Lexend Mega", sans-serif',
-        fontWeight: 600,
-      },
-      button: {
-        fontFamily: '"Lexend Mega", sans-serif',
-        fontWeight: 600,
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em',
-      },
+      fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+      h1: { fontWeight: 800, letterSpacing: '-0.02em' },
+      h2: { fontWeight: 700, letterSpacing: '-0.01em' },
+      h3: { fontWeight: 700 },
+      h4: { fontWeight: 600 },
+      h5: { fontWeight: 600 },
+      h6: { fontWeight: 600 },
+      button: { fontWeight: 600, textTransform: 'none' },
     },
     shape: {
       borderRadius: 12,
@@ -98,57 +67,34 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
           body: {
             backgroundColor: palette.background,
             color: palette.text,
-            backgroundImage: isDark 
-              ? `radial-gradient(circle at 50% 0%, ${alpha(palette.secondary, 0.15)} 0%, transparent 50%),
-                 radial-gradient(circle at 0% 100%, ${alpha(palette.primary, 0.1)} 0%, transparent 50%)`
-              : `radial-gradient(circle at 50% 0%, ${alpha(palette.primary, 0.05)} 0%, transparent 50%)`,
-            backgroundAttachment: 'fixed',
           },
         },
       },
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 4,
+            borderRadius: 10,
             padding: '10px 24px',
-            position: 'relative',
-            overflow: 'hidden',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              background: `linear-gradient(45deg, transparent 5%, ${alpha(palette.primary, 0.1)} 50%, transparent 95%)`,
-              transform: 'translateX(-100%)',
-              transition: 'transform 0.6s',
-            },
+            transition: 'all 0.2s ease',
+            boxShadow: 'none',
             '&:hover': {
-              transform: 'translateY(-2px)',
-              boxShadow: `0 0 15px ${alpha(palette.primary, 0.4)}`,
-              '&::before': {
-                transform: 'translateX(100%)',
-              },
+              transform: 'translateY(-1px)',
+              boxShadow: `0 4px 14px ${alpha(palette.primary, 0.25)}`,
             },
           },
           contained: {
-            backgroundColor: isDark ? palette.primary : palette.text,
-            color: isDark ? '#000000' : '#FFFFFF',
-            boxShadow: `0 4px 10px ${alpha(isDark ? palette.primary : palette.text, 0.3)}`,
+            backgroundColor: palette.primary,
+            color: '#FFFFFF',
             '&:hover': {
-              backgroundColor: isDark ? palette.primary : palette.text,
+              backgroundColor: palette.primary,
             },
           },
           outlined: {
-            borderColor: palette.primary,
-            color: palette.primary,
-            borderWidth: '2px',
+            borderColor: palette.border,
+            color: palette.text,
             '&:hover': {
-              borderWidth: '2px',
-              backgroundColor: alpha(palette.primary, 0.1),
-              boxShadow: `0 0 10px ${alpha(palette.primary, 0.4)}`,
+              borderColor: palette.primary,
+              backgroundColor: alpha(palette.primary, 0.08),
             },
           },
         },
@@ -159,12 +105,11 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
             backgroundColor: palette.paper,
             backdropFilter: 'blur(10px)',
             border: `1px solid ${palette.border}`,
-            boxShadow: `0 8px 32px ${alpha('#000000', 0.2)}`,
-            transition: 'all 0.3s ease',
+            boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.35)' : '0 8px 24px rgba(15,23,42,0.06)',
+            transition: 'all 0.25s ease',
             '&:hover': {
-              transform: 'translateY(-5px)',
-              borderColor: palette.primary,
-              boxShadow: `0 12px 40px ${alpha(palette.primary, 0.2)}`,
+              transform: 'translateY(-3px)',
+              borderColor: alpha(palette.primary, 0.4),
             },
           },
         },
@@ -178,7 +123,7 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
             border: `1px solid ${palette.border}`,
           },
           elevation1: {
-            boxShadow: `0 4px 20px ${alpha('#000000', 0.1)}`,
+            boxShadow: isDark ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(15,23,42,0.05)',
           },
         },
       },
@@ -197,12 +142,11 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           root: {
             border: `1px solid ${palette.border}`,
-            backgroundColor: alpha(palette.primary, 0.1),
-            color: isDark ? palette.primary : palette.text,
+            backgroundColor: alpha(palette.primary, 0.08),
+            color: palette.text,
             fontWeight: 600,
             '&:hover': {
-              backgroundColor: alpha(palette.primary, 0.2),
-              boxShadow: `0 0 10px ${alpha(palette.primary, 0.3)}`,
+              backgroundColor: alpha(palette.primary, 0.16),
             },
           },
           outlined: {
