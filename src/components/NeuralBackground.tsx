@@ -125,14 +125,24 @@ const NeuralBackground = () => {
       animationFrameId = requestAnimationFrame(animate)
     }
 
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId)
+      } else {
+        animate()
+      }
+    }
+
     init()
     window.addEventListener('resize', handleResize)
     window.addEventListener('mousemove', handleMouseMove)
-    animate()
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    if (!document.hidden) animate()
 
     return () => {
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       cancelAnimationFrame(animationFrameId)
     }
   }, [isDark, prefersReducedMotion])
