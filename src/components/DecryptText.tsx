@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 interface DecryptTextProps {
   text: string
@@ -20,18 +21,25 @@ export const DecryptText = ({
   const [displayText, setDisplayText] = useState(text)
   const [isScrambling, setIsScrambling] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
-  
+  const prefersReducedMotion = useReducedMotion()
+
   const frameRef = useRef<number>(0)
   const iterationRef = useRef<number>(0)
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setDisplayText(text)
+      setHasStarted(true)
+      return
+    }
+
     const timeoutId = setTimeout(() => {
       setHasStarted(true)
       setIsScrambling(true)
     }, startDelay)
 
     return () => clearTimeout(timeoutId)
-  }, [startDelay])
+  }, [startDelay, prefersReducedMotion, text])
 
   useEffect(() => {
     if (!isScrambling) return

@@ -106,32 +106,6 @@ const Hero = () => {
             >
               View GitHub
             </Button>
-
-            <Button
-              component="a"
-              variant="outlined"
-              size="large"
-              startIcon={<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="dev.to" style={{ width: 24, height: 24, filter: 'invert(1)' }} />}
-              href={profileData.socials.find((s) => s.name === 'dev.to')?.url || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Visit dev.to blog"
-            >
-              Blog on dev.to
-            </Button>
-
-            <Button
-              component="a"
-              variant="outlined"
-              size="large"
-              startIcon={<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg" alt="Medium" style={{ width: 24, height: 24, filter: 'invert(1)' }} />}
-              href={profileData.socials.find((s) => s.name === 'Medium')?.url || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Visit Medium blog"
-            >
-              Blog on Medium
-            </Button>
           </Stack>
         </Box>
       </Container>

@@ -5,7 +5,7 @@ const colors = {
   light: {
     background: '#F0F2F5',
     paper: 'rgba(255, 255, 255, 0.7)',
-    primary: '#00F0FF', // Neon Cyan
+    primary: '#00767F', // Deep cyan — same hue as dark mode's neon, but WCAG AA (~5.4:1 on white) since it's used as button/chip/cursor text & borders
     secondary: '#7000FF', // Neon Purple
     accent1: '#FF003C', // Cyberpunk Red
     accent2: '#FDF500', // Neon Yellow
