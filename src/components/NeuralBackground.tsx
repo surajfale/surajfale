@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useTheme } from '@mui/material'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 interface Particle {
   x: number
@@ -13,8 +14,11 @@ const NeuralBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
+    if (prefersReducedMotion) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -36,7 +40,7 @@ const NeuralBackground = () => {
     const lineColor = isDark ? '0, 240, 255' : '0, 0, 0' // RGB values for rgba
 
     // Mouse tracking
-    let mouse = { x: -1000, y: -1000 }
+    const mouse = { x: -1000, y: -1000 }
 
     const init = () => {
       width = window.innerWidth
@@ -131,7 +135,11 @@ const NeuralBackground = () => {
       window.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [isDark])
+  }, [isDark, prefersReducedMotion])
+
+  if (prefersReducedMotion) {
+    return null
+  }
 
   return (
     <canvas

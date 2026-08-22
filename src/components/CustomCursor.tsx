@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { Box, alpha } from '@mui/material'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 const CustomCursor = () => {
     const mainCursorRef = useRef<HTMLDivElement>(null)
     const ringCursorRef = useRef<HTMLDivElement>(null)
     const [isHovering, setIsHovering] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
+    const prefersReducedMotion = useReducedMotion()
 
     useEffect(() => {
+        if (prefersReducedMotion) return
+
         const mainCursor = mainCursorRef.current
         const ringCursor = ringCursorRef.current
         if (!mainCursor || !ringCursor) return
@@ -82,7 +86,11 @@ const CustomCursor = () => {
             document.removeEventListener('mouseout', handleHoverEnd)
             cancelAnimationFrame(animationFrameId)
         }
-    }, [isVisible])
+    }, [isVisible, prefersReducedMotion])
+
+    if (prefersReducedMotion) {
+        return null
+    }
 
     if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
         return null
