@@ -21,20 +21,20 @@
     "@mui/material": "^5.15.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^7.9.5"
+    "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^9.15.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.12.0",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.15.0",
-    "vite": "^5.1.0"
+    "vite": "^6.4.3"
   },
   "keywords": [
     "portfolio",
@@ -46,7 +46,18 @@
   "license": "MIT",
   "pnpm": {
     "overrides": {
-      "esbuild": "^0.25.0"
+      "esbuild": "^0.25.0",
+      "js-yaml": "^4.3.1",
+      "ajv": "^6.14.0",
+      "flatted": "^3.4.2",
+      "yaml": "^1.10.3",
+      "postcss": "^8.5.23",
+      "rollup": "^4.59.0",
+      "nanoid": "^3.3.18",
+      "@babel/core": "^7.29.6",
+      "minimatch": "^9.0.7",
+      "brace-expansion": "^2.1.4",
+      "picomatch@<2.3.2": ">=2.3.2"
     }
   }
 }
