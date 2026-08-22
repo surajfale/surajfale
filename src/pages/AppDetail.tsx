@@ -32,6 +32,7 @@ import { profileData } from '../content/profile'
 import { getProjectCategory } from '../utils/categories'
 import Footer from '../components/Footer'
 import { DecryptText } from '../components/DecryptText'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 const AppDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -41,6 +42,11 @@ const AppDetail = () => {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
 
   const project = profileData.projects.find((p) => p.slug === slug)
+
+  usePageMeta({
+    title: project?.title ?? 'App Not Found',
+    description: project?.description,
+  })
 
   if (!project) {
     return (

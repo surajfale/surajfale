@@ -34,12 +34,18 @@ import { getAllCategories, filterProjectsByCategory, getProjectCategory } from '
 import Footer from '../components/Footer'
 import TiltCard from '../components/TiltCard'
 import { DecryptText } from '../components/DecryptText'
+import { usePageMeta } from '../hooks/usePageMeta'
 import type { Project } from '../content/profile'
 
 type ViewMode = 'card' | 'list'
 
 const Apps = () => {
   const navigate = useNavigate()
+
+  usePageMeta({
+    title: 'My Apps',
+    description: 'A collection of applications and projects by Suraj Fale, spanning React, TypeScript, Rust, and more.',
+  })
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
     const saved = localStorage.getItem('apps-view-mode') as ViewMode | null
     return saved || 'card'

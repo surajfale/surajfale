@@ -11,6 +11,7 @@ import CustomCursor from './components/CustomCursor'
 import NeuralBackground from './components/NeuralBackground'
 import CommandPalette from './components/CommandPalette'
 import SystemHUD from './components/SystemHUD'
+import ErrorBoundary from './components/ErrorBoundary'
 
 type ThemeMode = 'light' | 'dark'
 
@@ -58,12 +59,14 @@ function App() {
         
         <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
           <ThemeToggle mode={mode} onToggle={toggleTheme} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/apps" element={<Apps />} />
-            <Route path="/apps/:slug" element={<AppDetail />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/apps" element={<Apps />} />
+              <Route path="/apps/:slug" element={<AppDetail />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ErrorBoundary>
         </Box>
       </BrowserRouter>
     </ThemeProvider>
