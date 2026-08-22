@@ -253,7 +253,7 @@ export const profileData: Profile = {
       title: 'Git Commit MCP Server',
       description: 'A lightweight MCP server that automates Conventional Commit message generation, changelog updates, and optional git pushes. Ideal for AI-assisted, well-formed commit messages and automated changelog management.',
       technologies: ['Python 3.10+', 'MCP Protocol', 'Git'],
-      liveUrl: 'https://test.pypi.org/project/git-commit-mcp-server/',
+      liveUrl: 'https://pypi.org/project/git-commit-mcp-server/',
       sourceUrl: 'https://github.com/surajfale/git-mcp-server',
       image: '/project-git-mcp-server.png',
       slug: 'git-commit-mcp-server',
