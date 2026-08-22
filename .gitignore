@@ -42,3 +42,7 @@ coverage
 
 # Netlify
 .netlify
+
+# Python (skill scripts)
+__pycache__
+*.pyc
