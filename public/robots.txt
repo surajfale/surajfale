@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://surajfale.netlify.app/sitemap.xml

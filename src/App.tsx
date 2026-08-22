@@ -6,6 +6,7 @@ import ThemeToggle from './components/ThemeToggle'
 import Home from './pages/Home'
 import Apps from './pages/Apps'
 import AppDetail from './pages/AppDetail'
+import NotFound from './pages/NotFound'
 import CustomCursor from './components/CustomCursor'
 import NeuralBackground from './components/NeuralBackground'
 import CommandPalette from './components/CommandPalette'
@@ -61,6 +62,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/apps" element={<Apps />} />
             <Route path="/apps/:slug" element={<AppDetail />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
       </BrowserRouter>
