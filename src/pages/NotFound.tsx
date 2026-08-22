@@ -3,9 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
 import { DecryptText } from '../components/DecryptText'
 import Footer from '../components/Footer'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 const NotFound = () => {
   const navigate = useNavigate()
+
+  usePageMeta({
+    title: 'Page Not Found',
+    description: 'This page could not be found.',
+  })
 
   return (
     <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
