@@ -17,6 +17,7 @@ import AppsIcon from '@mui/icons-material/Apps'
 import { profileData } from '../content/profile'
 import TiltCard from './TiltCard'
 import Reveal from './Reveal'
+import SectionHeading from './SectionHeading'
 
 const Projects = () => {
   const navigate = useNavigate()
@@ -35,32 +36,7 @@ const Projects = () => {
   return (
     <Box component="section" id="projects" sx={{ py: 10 }}>
       <Container maxWidth="lg">
-        <Typography
-          variant="h2"
-          component="h2"
-          gutterBottom
-          sx={{
-            textAlign: 'center',
-            mb: 2,
-            fontWeight: 900,
-            textTransform: 'uppercase',
-            textShadow: (theme) => `0 0 10px ${alpha(theme.palette.text.primary, 0.3)}`,
-          }}
-        >
-          Featured Projects
-        </Typography>
-
-        <Box
-          sx={{
-            width: 100,
-            height: 4,
-            bgcolor: 'secondary.main',
-            mx: 'auto',
-            mb: 4,
-            borderRadius: 2,
-            boxShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
-          }}
-        />
+        <SectionHeading eyebrow="02 / Selected Work" title="Featured Projects" color="secondary" />
 
         <Typography
           variant="body1"

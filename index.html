@@ -29,6 +29,25 @@
     <link rel="canonical" href="https://surajfale.netlify.app/" />
     <title>Suraj Fale - Software Engineer Portfolio</title>
 
+    <!-- Set theme mode synchronously to avoid a flash of the wrong background before React mounts -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme-mode');
+          var mode = saved === 'light' || saved === 'dark'
+            ? saved
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme-mode', mode);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme-mode', 'dark');
+        }
+      })();
+    </script>
+    <style>
+      html[data-theme-mode='dark'] body { background-color: #050511; color: #E0E0E0; }
+      html[data-theme-mode='light'] body { background-color: #F0F2F5; color: #1A1A1A; }
+    </style>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
