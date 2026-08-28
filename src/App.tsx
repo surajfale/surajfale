@@ -36,7 +36,10 @@ function App() {
     root.style.setProperty('--text-primary', theme.palette.text.primary)
     root.style.setProperty('--primary-main', theme.palette.primary.main)
     root.style.setProperty('--secondary-main', theme.palette.secondary.main)
-  }, [theme])
+    // Keep in sync with the pre-paint attribute set in index.html so the body
+    // background/color set there don't get stuck on the mode picked at initial load.
+    root.setAttribute('data-theme-mode', mode)
+  }, [theme, mode])
 
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
