@@ -46,3 +46,6 @@ coverage
 # Python (skill scripts)
 __pycache__
 *.pyc
+
+# Transient build artifact from scripts/generate-llms-txt.mjs
+scripts/.profile-generated-*.mjs
