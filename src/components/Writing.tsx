@@ -129,23 +129,6 @@ const Writing = () => {
       <Container maxWidth="lg">
         <SectionHeading eyebrow="03 / Latest Writing" title="From the Blog" color="secondary" />
 
-        <Typography
-          variant="body1"
-          sx={{
-            textAlign: 'center',
-            maxWidth: '700px',
-            mx: 'auto',
-            mb: 8,
-            color: 'text.secondary',
-            fontSize: '1.1rem',
-            fontFamily: '"Space Mono", monospace',
-            '& span': { color: 'primary.main', fontWeight: 700 },
-          }}
-        >
-          Up to five recent posts per platform — synced from <span>Dev.to</span> and{' '}
-          <span>Medium</span>, plus a hand-picked <span>LinkedIn</span> selection.
-        </Typography>
-
         <Stack spacing={7}>
           {feed.map(({ platform, posts }, rowIndex) => {
             const meta = PLATFORM_META[platform]
