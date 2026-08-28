@@ -33,7 +33,8 @@ import { profileData } from '../content/profile'
 import { getAllCategories, filterProjectsByCategory, getProjectCategory } from '../utils/categories'
 import Footer from '../components/Footer'
 import TiltCard from '../components/TiltCard'
-import { DecryptText } from '../components/DecryptText'
+import Reveal from '../components/Reveal'
+import SectionHeading from '../components/SectionHeading'
 import { usePageMeta } from '../hooks/usePageMeta'
 import type { Project } from '../content/profile'
 
@@ -87,32 +88,9 @@ const Apps = () => {
     <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Container maxWidth="lg" sx={{ flex: 1, py: 8 }}>
         {/* Header */}
-        <Box sx={{ mb: 6, textAlign: 'center' }}>
-          <Typography
-            variant="h2"
-            component="h1"
-            gutterBottom
-            sx={{
-              fontWeight: 900,
-              textTransform: 'uppercase',
-              color: 'text.primary',
-              textShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.5)}`,
-            }}
-          >
-            <DecryptText text="My Apps" speed={50} />
-          </Typography>
-          <Box
-            sx={{
-              width: 100,
-              height: 4,
-              bgcolor: 'secondary.main',
-              mx: 'auto',
-              mb: 4,
-              borderRadius: 2,
-              boxShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
-            }}
-          />
-          <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', mt: 2, fontFamily: '"Space Mono", monospace' }}>
+        <Box sx={{ mb: 6 }}>
+          <SectionHeading eyebrow="Index" title="My Apps" color="secondary" component="h1" />
+          <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', mt: -3, fontFamily: '"Space Mono", monospace' }}>
             Explore my collection of applications and projects. Each app showcases different technologies and
             solutions to real-world problems.
           </Typography>
@@ -194,6 +172,7 @@ const Apps = () => {
           <Grid container spacing={4}>
             {filteredProjects.map((project, index) => (
               <Grid item xs={12} sm={6} md={4} key={project.slug}>
+                <Reveal delayMs={(index % 6) * 80}>
                 <TiltCard sx={{ height: '100%' }}>
                   <Card
                     sx={{
@@ -322,8 +301,10 @@ const Apps = () => {
                                         >
                                           Live
                                         </Button>
-                                      </CardActions>                  </Card>
+                                      </CardActions>
+                  </Card>
                 </TiltCard>
+                </Reveal>
               </Grid>
             ))}
           </Grid>
@@ -338,6 +319,7 @@ const Apps = () => {
             }}>
             {filteredProjects.map((project, index) => (
               <Box key={project.slug}>
+                <Reveal delayMs={(index % 8) * 50}>
                 <ListItem
                   disablePadding
                   sx={{
@@ -459,6 +441,7 @@ const Apps = () => {
                     </Box>
                   </ListItemButton>
                 </ListItem>
+                </Reveal>
                 {index < filteredProjects.length - 1 && <Divider />}
               </Box>
             ))}

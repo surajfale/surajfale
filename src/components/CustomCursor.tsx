@@ -11,10 +11,13 @@ const CustomCursor = () => {
 
     useEffect(() => {
         if (prefersReducedMotion) return
+        if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return
 
         const mainCursor = mainCursorRef.current
         const ringCursor = ringCursorRef.current
         if (!mainCursor || !ringCursor) return
+
+        document.body.classList.add('custom-cursor-active')
 
         let animationFrameId: number
         let mouseX = 0
@@ -79,6 +82,7 @@ const CustomCursor = () => {
         animate()
 
         return () => {
+            document.body.classList.remove('custom-cursor-active')
             window.removeEventListener('mousemove', updatePosition)
             document.removeEventListener('mouseenter', handleMouseEnter)
             document.removeEventListener('mouseleave', handleMouseLeave)

@@ -11,15 +11,16 @@ body {
   font-family: 'Space Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FFFAF0;
-  color: #000000;
-  cursor: none;
-  /* Hide default cursor */
 }
 
-/* Restore cursor for touch devices */
+/* Native cursor is hidden only once CustomCursor has actually mounted and taken over */
+body.custom-cursor-active {
+  cursor: none;
+}
+
+/* Safety net: never hide the cursor on touch/coarse pointers */
 @media (pointer: coarse) {
-  body {
+  body.custom-cursor-active {
     cursor: auto;
   }
 }

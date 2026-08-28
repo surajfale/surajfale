@@ -1,5 +1,12 @@
 import { createTheme, ThemeOptions, alpha } from '@mui/material/styles'
 
+// Shared glow helpers so every component tunes the neon aesthetic the same way
+export const glowShadow = (color: string, opacity = 0.4, blur = 15) =>
+  `0 0 ${blur}px ${alpha(color, opacity)}`
+
+export const glowText = (color: string, opacity = 0.5, blur = 10) =>
+  `0 0 ${blur}px ${alpha(color, opacity)}`
+
 // Futuristic / Cyberpunk Color Palette
 const colors = {
   light: {
