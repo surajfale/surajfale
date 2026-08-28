@@ -32,12 +32,12 @@ export const curatedWriting: WritingPost[] = [
   {
     platform: 'linkedin',
     status: 'curated',
-    title: 'Add your pinned LinkedIn post here',
-    url: 'https://www.linkedin.com/in/surajfale',
+    title: 'Debugging a RAG Pipeline From My Phone, With Claude',
+    url: 'https://www.linkedin.com/posts/surajfale_grocery-list-smart-voice-shopping-lists-activity-7467796201359294464-jxBO',
     excerpt:
-      'Replace this entry in src/content/writing.ts with a LinkedIn post you want to highlight — title, link, and a short excerpt.',
-    publishedAt: new Date().toISOString(),
-    tags: [],
+      'A late-night RAG bug in a learning project turned out to be chunk limitations and aggregation, not just retrieval — diagnosed and fixed entirely from my phone with Claude, no laptop required.',
+    publishedAt: '2026-08-27',
+    tags: ['rag', 'claude', 'genai'],
   },
 ]
 
