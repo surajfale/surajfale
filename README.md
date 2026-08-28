@@ -27,6 +27,7 @@ I'm a Principal Engineer focused on driving technical strategy, designing large-
 - 🎓 **Java Certified** by HackerRank (2020)
 - 💡 Passionate about **clean code, system design, and performance optimization**
 - 🌐 Portfolio: [surajfale.com](https://surajfale.com)
+- 🤖 AI agent? See [llms.txt](https://surajfale.netlify.app/llms.txt) for a structured summary of this profile
 
 ---
 
