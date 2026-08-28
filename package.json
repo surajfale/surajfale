@@ -6,9 +6,10 @@
   "packageManager": "pnpm@8.15.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "node scripts/fetch-writing.mjs && tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "sync:writing": "node scripts/fetch-writing.mjs"
   },
   "engines": {
     "node": ">=18.0.0",

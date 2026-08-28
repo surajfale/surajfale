@@ -41,7 +41,7 @@ const Socials = () => {
       }}
     >
       <Container maxWidth="lg">
-        <SectionHeading eyebrow="03 / Elsewhere" title="Let's Connect" color="primary" />
+        <SectionHeading eyebrow="04 / Elsewhere" title="Let's Connect" color="primary" />
 
         <Typography
           variant="body1"
