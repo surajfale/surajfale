@@ -12,7 +12,7 @@ const OUT_PATH = path.join(__dirname, '..', 'src', 'content', 'writing.generated
 const DEVTO_USERNAME = 'surajfale'
 const MEDIUM_USERNAME = 'surajfale'
 const FETCH_TIMEOUT_MS = 8000
-const MAX_POSTS_PER_SOURCE = 3
+const MAX_POSTS_PER_SOURCE = 5
 
 async function fetchWithTimeout(url) {
   const controller = new AbortController()

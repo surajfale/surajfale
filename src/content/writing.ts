@@ -18,14 +18,16 @@ export interface WritingPost {
   }
 }
 
-export interface WritingSlot {
+export interface PlatformFeed {
   platform: WritingPlatform
-  post: WritingPost | null
+  posts: WritingPost[]
 }
 
-// LinkedIn doesn't expose a public feed of personal posts, so this is
+const MAX_POSTS_PER_PLATFORM = 5
+
+// LinkedIn doesn't expose a public feed of personal posts, so these are
 // pinned by hand instead of synced by scripts/fetch-writing.mjs.
-// Replace with a real post whenever you want to swap the highlight.
+// Add up to 5 entries here — newest first isn't required, they're sorted below.
 export const curatedWriting: WritingPost[] = [
   {
     platform: 'linkedin',
@@ -41,13 +43,15 @@ export const curatedWriting: WritingPost[] = [
 
 const generatedWriting = generated as { devto: WritingPost[]; medium: WritingPost[]; generatedAt: string | null }
 
-const latestOf = (posts: WritingPost[]): WritingPost | null =>
-  [...posts].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())[0] ?? null
+const newestFirst = (posts: WritingPost[]): WritingPost[] =>
+  [...posts]
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, MAX_POSTS_PER_PLATFORM)
 
-export const getWritingFeed = (): WritingSlot[] => [
-  { platform: 'devto', post: latestOf(generatedWriting.devto) },
-  { platform: 'medium', post: latestOf(generatedWriting.medium) },
-  { platform: 'linkedin', post: curatedWriting[0] ?? null },
+export const getWritingFeed = (): PlatformFeed[] => [
+  { platform: 'devto', posts: newestFirst(generatedWriting.devto) },
+  { platform: 'medium', posts: newestFirst(generatedWriting.medium) },
+  { platform: 'linkedin', posts: newestFirst(curatedWriting) },
 ]
 
 export const writingGeneratedAt = generatedWriting.generatedAt
