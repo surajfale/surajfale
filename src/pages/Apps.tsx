@@ -36,6 +36,7 @@ import TiltCard from '../components/TiltCard'
 import Reveal from '../components/Reveal'
 import SectionHeading from '../components/SectionHeading'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { fullViewportHeight, transitionFor, hoverOnly } from '../theme'
 import type { Project } from '../content/profile'
 
 type ViewMode = 'card' | 'list'
@@ -85,7 +86,7 @@ const Apps = () => {
   ]
 
   return (
-    <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box component="main" sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column' }}>
       <Container maxWidth="lg" sx={{ flex: 1, py: 8 }}>
         {/* Header */}
         <Box sx={{ mb: 6 }}>
@@ -323,9 +324,11 @@ const Apps = () => {
                 <ListItem
                   disablePadding
                   sx={{
-                    transition: 'background-color 0.2s',
-                    '&:hover': {
-                      bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05),
+                    transition: transitionFor(['background-color'], '200ms', 'ease'),
+                    [hoverOnly]: {
+                      '&:hover': {
+                        bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05),
+                      },
                     },
                   }}
                 >

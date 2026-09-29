@@ -33,6 +33,7 @@ import { getProjectCategory } from '../utils/categories'
 import Footer from '../components/Footer'
 import { DecryptText } from '../components/DecryptText'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { fullViewportHeight, transitionFor, hoverOnly } from '../theme'
 
 const AppDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -50,7 +51,7 @@ const AppDetail = () => {
 
   if (!project) {
     return (
-      <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Box component="main" sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column' }}>
         <Container maxWidth="lg" sx={{ flex: 1, py: 8 }}>
           <Box sx={{ textAlign: 'center', py: 8 }}>
             <Typography variant="h3" gutterBottom sx={{ fontWeight: 900, textTransform: 'uppercase' }}>
@@ -85,7 +86,7 @@ const AppDetail = () => {
   const accentGradient = projectGradients[projectIndex % projectGradients.length]
 
   return (
-    <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box component="main" sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column' }}>
       <Container maxWidth="lg" sx={{ flex: 1, py: 4 }}>
         {/* Breadcrumbs */}
         <Breadcrumbs sx={{ mb: 4, '& .MuiBreadcrumbs-separator': { color: 'text.secondary' } }}>
@@ -228,10 +229,12 @@ const AppDetail = () => {
                         overflow: 'hidden',
                         border: '1px solid',
                         borderColor: 'divider',
-                        transition: 'transform 0.3s ease',
-                        '&:hover': {
-                            transform: 'scale(1.02)',
-                            boxShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.3)}`
+                        transition: transitionFor(['transform', 'box-shadow']),
+                        [hoverOnly]: {
+                            '&:hover': {
+                                transform: 'scale(1.02)',
+                                boxShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.3)}`
+                            }
                         }
                     }}
                 >

@@ -4,6 +4,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import { DecryptText } from '../components/DecryptText'
 import Footer from '../components/Footer'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { fullViewportHeight } from '../theme'
 
 const NotFound = () => {
   const navigate = useNavigate()
@@ -14,7 +15,7 @@ const NotFound = () => {
   })
 
   return (
-    <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box component="main" sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column' }}>
       <Container
         maxWidth="md"
         sx={{

@@ -1,5 +1,8 @@
 import { Box, Container, Typography, Link } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import { transitionFor, hoverOnly } from '../theme'
+
+const linkTransition = transitionFor(['transform', 'color', 'text-shadow'])
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -64,11 +67,13 @@ const Footer = () => {
               sx={{
                 fontWeight: 700,
                 textTransform: 'uppercase',
-                transition: 'all 0.3s ease',
+                transition: linkTransition,
                 '&:hover': {
                   color: 'secondary.main',
                   textShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
-                  transform: 'translateY(-2px)',
+                },
+                [hoverOnly]: {
+                  '&:hover': { transform: 'translateY(-2px)' },
                 },
               }}
             >
@@ -83,11 +88,13 @@ const Footer = () => {
               sx={{
                 fontWeight: 700,
                 textTransform: 'uppercase',
-                transition: 'all 0.3s ease',
+                transition: linkTransition,
                 '&:hover': {
                   color: 'primary.main',
                   textShadow: (theme) => `0 0 10px ${theme.palette.primary.main}`,
-                  transform: 'translateY(-2px)',
+                },
+                [hoverOnly]: {
+                  '&:hover': { transform: 'translateY(-2px)' },
                 },
               }}
             >
