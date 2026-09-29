@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a modern single-page portfolio website for Suraj Fale built with React, TypeScript, and Material-UI. The site showcases professional experience (Scala/Kafka/Spark specialist), projects with live demos, and social links with emphasis on LinkedIn and GitHub. The portfolio highlights expertise in distributed systems and exploration of Generative AI & Prompt Engineering.
+This is a modern single-page portfolio website for Suraj Fale built with React, TypeScript, and Material-UI. The site showcases professional experience (Big Data & Streaming specialist: Apache Spark and Apache Kafka, in Scala and Java), projects with live demos, and social links with emphasis on LinkedIn and GitHub. The portfolio highlights expertise in distributed systems and exploration of Generative AI & Prompt Engineering.
 
 ## Technology Stack
 
@@ -56,7 +56,7 @@ netlify deploy --prod  # Deploy to production
 **Content Management:**
 - All content centralized in `src/content/profile.ts` with TypeScript interfaces
 - Profile data includes: name, title, tagline, about, highlights (3 cards), socials (6 platforms), projects (2 featured)
-- Core technologies emphasized: Scala, Apache Kafka, Apache Spark, Cloud Technologies
+- Core technologies emphasized: Apache Spark, Apache Kafka (platforms) with Scala, Java (languages), plus Cloud Technologies
 - Currently exploring: Generative AI, Prompt Engineering, LLM Integration, Containerization, Orchestration
 - No personal contact information (email, phone, location) per privacy requirements
 
@@ -91,7 +91,7 @@ netlify deploy --prod  # Deploy to production
 ## Making Content Changes
 
 Edit `src/content/profile.ts` to update:
-- **Personal info**: name, title, tagline (includes core tech + Gen AI exploration)
+- **Personal info**: name, title, tagline (Big Data & Streaming with Spark/Kafka in Scala & Java + Gen AI exploration); `llms.txt` is generated from this file via `pnpm sync:llms`
 - **About text**: Background, specialization, technologies used
 - **Highlights** (3 cards):  role, Java certification, continuous learning
 - **Projects** (2 featured): Voice Grocery App, Dev Tools Collection (liveUrl, sourceUrl, tech stack)
@@ -144,8 +144,10 @@ All components implement:
 - No personal contact info anywhere in code
 
 **Portfolio Content Focus:**
-- Core expertise: Scala, Java, Python (core strengths in README)
-- Technologies: Apache Kafka, Apache Spark (featured prominently)
+- Headline positioning: "Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java" — keep README headline and `profile.ts` tagline in sync, then run `pnpm sync:llms`
+- Core languages: Scala, Java (core strengths in README); Python and JavaScript are "Also Proficient"
+- Technologies: Apache Spark, Apache Kafka (featured prominently, own "Big Data & Streaming" README section)
+- Never pair a language with a platform as peers (e.g. "Scala & Kafka"): platforms are Spark/Kafka, languages are Scala/Java
 - Current focus: Generative AI, Prompt Engineering, LLM integration
 - Projects: 4 live demos (Voice Grocery App, Dev Tools, Notes Tasks, Git Commit MCP Server)
 
