@@ -133,6 +133,8 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
     <Dialog
       open={open}
       onClose={() => setOpen(false)}
+      // Summoned by ⌘K dozens of times a day: appear instantly, no fade
+      transitionDuration={0}
       maxWidth="sm"
       fullWidth
       PaperProps={{
