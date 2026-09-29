@@ -2,7 +2,7 @@
 
 # 👋 Hi, I'm Suraj Fale
 
-### Principal Engineer | System Design & Architecture | Scala & Kafka | Generative AI & Prompt Engineering
+### Principal Engineer | System Design & Architecture | Apache Spark & Apache Kafka with Scala & Java | Generative AI & Prompt Engineering
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/surajfale)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/surajfale)
