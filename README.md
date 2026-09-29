@@ -2,7 +2,12 @@
 
 # 👋 Hi, I'm Suraj Fale
 
-### Principal Engineer | System Design & Architecture | Apache Spark & Apache Kafka with Scala & Java | Generative AI & Prompt Engineering
+### Principal Engineer | System Design & Architecture | Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java | Generative AI & Prompt Engineering
+
+![Apache Spark](https://img.shields.io/badge/Apache_Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
+![Scala](https://img.shields.io/badge/Scala-DC322F?style=for-the-badge&logo=scala&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/surajfale)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/surajfale)
@@ -20,7 +25,7 @@
 
 I'm a Principal Engineer focused on driving technical strategy, designing large-scale distributed systems, and leading multiple software projects from architecture through delivery. I enjoy solving complex systems problems and mentoring engineers to build maintainable, scalable solutions.
 
-- 🔭 Currently driving technical strategy and delivery of **Scala and Apache Kafka** projects
+- 🔭 Currently driving technical strategy and delivery of **Apache Spark and Apache Kafka** projects, built in **Scala and Java**
 - 🤖 **Exploring Generative AI, Prompt Engineering, and LLM integration**
 - 🌱 Learning **AI/ML, containerization (Docker/Kubernetes), and orchestration architectures**
 - 💼 Leading cross-team delivery and technical vision for **enterprise-scale distributed systems**
@@ -33,21 +38,24 @@ I'm a Principal Engineer focused on driving technical strategy, designing large-
 
 ## 🛠️ Tech Stack
 
+### Big Data & Streaming
+
+![Apache Spark](https://img.shields.io/badge/Apache_Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
+
 ### Languages
 
 **Core Strengths:**
 
 ![Scala](https://img.shields.io/badge/Scala-DC322F?style=for-the-badge&logo=scala&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
 **Also Proficient:**
 
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
 ### Frameworks & Technologies
-![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-231F20?style=flat-square&logo=apache-kafka&logoColor=white)
-![Apache Spark](https://img.shields.io/badge/Apache_Spark-E25A1C?style=flat-square&logo=apache-spark&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white)
@@ -64,8 +72,8 @@ I'm a Principal Engineer focused on driving technical strategy, designing large-
 **Principal Engineer** | Current
 
 - Driving technical strategy and high-level architecture across multiple projects
-- Overseeing enterprise-scale real-time data processing pipelines with Apache Kafka
-- Designing microservices and platform components with Scala and modern architectural patterns
+- Overseeing enterprise-scale batch and real-time data pipelines with **Apache Spark** and **Apache Kafka**
+- Designing microservices and platform components in **Scala** and **Java** with modern architectural patterns
 - Mentoring engineering leads and aligning long-term technical vision with business goals
 
 ---

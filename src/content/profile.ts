@@ -39,7 +39,7 @@ export interface Profile {
 export const profileData: Profile = {
   name: 'Suraj Fale',
   title: 'Principal Engineer',
-  tagline: 'Principal Engineer — System Design, Multi-project Delivery, Apache Spark & Apache Kafka with Scala & Java | Generative AI & Prompt Engineering',
+  tagline: 'Principal Engineer — System Design, Multi-project Delivery, Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java | Generative AI & Prompt Engineering',
 
   about: `Principal Engineer with experience designing and delivering large-scale distributed systems across multiple projects. I drive technical strategy, system design, implementation, and cross-team delivery while mentoring engineers and shaping technical direction.
     I focus on resilient event-driven architectures, real-time data processing, and pragmatic system design using Scala, Java, Apache Kafka, Apache Spark, and cloud-native patterns.
