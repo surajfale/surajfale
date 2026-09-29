@@ -3,13 +3,14 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import { profileData } from '../content/profile'
 import { DecryptText } from './DecryptText'
+import { fullViewportHeight } from '../theme'
 
 const Hero = () => {
   return (
     <Box
       component="section"
       sx={{
-        minHeight: '100vh',
+        ...fullViewportHeight,
         display: 'flex',
         alignItems: 'center',
         position: 'relative',

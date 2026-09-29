@@ -11,7 +11,9 @@ import ArticleIcon from '@mui/icons-material/Article'
 import { profileData } from '../content/profile'
 import SectionHeading from './SectionHeading'
 import Reveal from './Reveal'
-import { glowShadow } from '../theme'
+import { glowShadow, transitionFor, hoverOnly } from '../theme'
+
+const iconTransition = transitionFor(['transform', 'box-shadow', 'border-color', 'color'])
 
 const Socials = () => {
   const getIcon = (iconName: string) => {
@@ -85,12 +87,16 @@ const Socials = () => {
                       border: '1px solid',
                       borderColor: (theme) => alpha(social.name === 'LinkedIn' ? brandColor : theme.palette.secondary.main, 0.4),
                       backdropFilter: 'blur(10px)',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      '&:hover': {
-                        transform: 'translateY(-6px) scale(1.05)',
-                        borderColor: social.name === 'LinkedIn' ? brandColor : 'secondary.main',
-                        boxShadow: (theme) =>
-                          glowShadow(social.name === 'LinkedIn' ? brandColor : theme.palette.secondary.main, 0.5, 28),
+                      transition: iconTransition,
+                      '&:active': { transform: 'scale(0.95)' },
+                      [hoverOnly]: {
+                        '&:hover': {
+                          transform: 'translateY(-6px) scale(1.05)',
+                          borderColor: social.name === 'LinkedIn' ? brandColor : 'secondary.main',
+                          boxShadow: (theme) =>
+                            glowShadow(social.name === 'LinkedIn' ? brandColor : theme.palette.secondary.main, 0.5, 28),
+                        },
+                        '&:hover:active': { transform: 'translateY(-6px) scale(1)' },
                       },
                     }}
                   >
@@ -126,12 +132,16 @@ const Socials = () => {
                     border: '1px solid',
                     borderColor: 'divider',
                     backdropFilter: 'blur(10px)',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    '&:hover': {
-                      color: 'primary.main',
-                      transform: 'translateY(-4px) scale(1.05)',
-                      borderColor: 'primary.main',
-                      boxShadow: (theme) => glowShadow(theme.palette.primary.main, 0.4, 20),
+                    transition: iconTransition,
+                    '&:active': { transform: 'scale(0.95)' },
+                    [hoverOnly]: {
+                      '&:hover': {
+                        color: 'primary.main',
+                        transform: 'translateY(-4px) scale(1.05)',
+                        borderColor: 'primary.main',
+                        boxShadow: (theme) => glowShadow(theme.palette.primary.main, 0.4, 20),
+                      },
+                      '&:hover:active': { transform: 'translateY(-4px) scale(1)' },
                     },
                   }}
                 >

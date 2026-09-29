@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider, CssBaseline, Box } from '@mui/material'
-import { createAppTheme } from './theme'
+import { createAppTheme, fullViewportHeight } from './theme'
 import ThemeToggle from './components/ThemeToggle'
 import Home from './pages/Home'
 import Apps from './pages/Apps'
@@ -60,7 +60,7 @@ function App() {
         <CommandPalette toggleTheme={toggleTheme} />
         <SystemHUD />
         
-        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
+        <Box sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
           <ThemeToggle mode={mode} onToggle={toggleTheme} />
           <ErrorBoundary>
             <Routes>

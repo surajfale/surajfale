@@ -4,154 +4,144 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a modern single-page portfolio website for Suraj Fale built with React, TypeScript, and Material-UI. The site showcases professional experience (Scala/Kafka/Spark specialist), projects with live demos, and social links with emphasis on LinkedIn and GitHub. The portfolio highlights expertise in distributed systems and exploration of Generative AI & Prompt Engineering.
+This repo is two things at once:
+
+1. **Suraj Fale's GitHub profile README** (`README.md`, shown on github.com/surajfale from `main`).
+2. **The portfolio website** (https://surajfale.netlify.app): a React + TypeScript + Material-UI SPA with a neon/cyberpunk aesthetic.
+
+Suraj is a Principal Engineer positioned as a **Big Data & Streaming specialist: Apache Spark and Apache Kafka, in Scala and Java**, with a focus on system design and distributed systems, while exploring Generative AI & Prompt Engineering.
 
 ## Technology Stack
 
-- **Framework:** React 18 with TypeScript
-- **Build Tool:** Vite 5
-- **Package Manager:** pnpm 8+ (required)
-- **UI Library:** Material-UI (MUI) v5
-- **Styling:** Emotion (CSS-in-JS)
-- **Linting:** ESLint 9 with flat config (eslint.config.js)
+- **Framework:** React 18 with TypeScript (strict)
+- **Routing:** React Router v7 (`BrowserRouter`)
+- **Build Tool:** Vite 6
+- **Package Manager:** pnpm 8+ (required; `packageManager: pnpm@8.15.0`)
+- **UI Library:** Material-UI (MUI) v5 + MUI icons
+- **Styling:** Emotion (CSS-in-JS via `sx`), plus global CSS in `src/index.css`
+- **Fonts:** Lexend Mega (headings/buttons) and Space Mono (body), loaded from Google Fonts in `index.css`
+- **Linting:** ESLint 9 with flat config (`eslint.config.js`, not .eslintrc)
 - **Deployment:** Netlify
 
 ## Project Structure
 
 ```
 src/
-├── components/        # React components
-│   ├── Hero.tsx      # Hero section with CTAs
-│   ├── About.tsx     # Career highlights
-│   ├── Projects.tsx  # Project showcase
-│   ├── Socials.tsx   # Social media links
-│   ├── Footer.tsx    # Footer
-│   └── ThemeToggle.tsx # Dark mode toggle
+├── pages/                 # Routes (see App.tsx)
+│   ├── Home.tsx           # "/"          Hero → About → Projects → Writing → Socials → Footer
+│   ├── Apps.tsx           # "/apps"      All projects, category filter, card/list toggle
+│   ├── AppDetail.tsx      # "/apps/:slug" Project detail, features, screenshots
+│   └── NotFound.tsx       # "*"
+├── components/
+│   ├── Hero.tsx           # Name/title (DecryptText scramble), tagline, LinkedIn/GitHub CTAs
+│   ├── About.tsx          # Summary, tech marquees (Core Technologies / Currently Exploring), 3 highlight cards
+│   ├── Projects.tsx       # 2 featured projects (TiltCard) + "View All Apps"
+│   ├── Writing.tsx        # Latest posts from dev.to / Medium / LinkedIn
+│   ├── Socials.tsx        # LinkedIn/GitHub emphasized, others secondary
+│   ├── Footer.tsx
+│   ├── SectionHeading.tsx # Eyebrow + title + glow bar used by every section
+│   ├── Reveal.tsx         # IntersectionObserver fade/slide-in wrapper
+│   ├── TiltCard.tsx       # 3D mouse-tilt + glow wrapper for cards
+│   ├── DecryptText.tsx    # Text scramble effect
+│   ├── NeuralBackground.tsx # Fixed canvas particle network (global)
+│   ├── CustomCursor.tsx   # Dot + trailing ring cursor (fine pointers only, global)
+│   ├── CommandPalette.tsx # ⌘K / Ctrl+K palette (global)
+│   ├── SystemHUD.tsx      # Bottom-right HUD: section + scroll progress (md+ only, global)
+│   ├── ThemeToggle.tsx    # Fixed light/dark toggle
+│   └── ErrorBoundary.tsx
 ├── content/
-│   └── profile.ts    # Centralized content configuration
-├── App.tsx           # Main app with theme provider
-├── theme.ts          # MUI theme configuration (light/dark)
-└── main.tsx          # Entry point
+│   ├── profile.ts         # Single source of truth: profile, highlights, socials, projects
+│   ├── writing.ts         # Merges generated feeds + hand-pinned LinkedIn posts
+│   └── writing.generated.json # Written by scripts/fetch-writing.mjs — do not hand-edit
+├── hooks/
+│   ├── useReducedMotion.ts # prefers-reduced-motion as reactive state
+│   └── usePageMeta.ts     # Per-route title/description/OG/Twitter meta
+├── utils/categories.ts    # Project category derivation + filtering
+├── theme.ts               # MUI light/dark themes + glow and motion helpers
+├── index.css              # Fonts, marquee/glitch keyframes, global reduced-motion rule
+├── App.tsx                # ThemeProvider, global effects, router
+└── main.tsx
+scripts/
+├── fetch-writing.mjs      # Build-time dev.to + Medium fetch → writing.generated.json (never throws)
+└── generate-llms-txt.mjs  # profile.ts → llms.txt + public/llms.txt
 ```
 
 ## Common Commands
 
 ```bash
-# Development
 pnpm install        # Install dependencies
-pnpm dev            # Start dev server at http://localhost:5173
-pnpm build          # Build for production
+pnpm dev            # Dev server at http://localhost:5173
+pnpm build          # fetch-writing → generate-llms-txt → tsc → vite build
 pnpm preview        # Preview production build
+pnpm lint           # ESLint (max-warnings 0)
+pnpm sync:writing   # Refresh writing.generated.json only
+pnpm sync:llms      # Regenerate llms.txt from profile.ts only
 
-# Code Quality
-pnpm lint           # Run ESLint
-
-# Deployment
-netlify deploy      # Deploy to Netlify (requires Netlify CLI)
-netlify deploy --prod  # Deploy to production
+netlify deploy      # Deploy preview (requires Netlify CLI)
+netlify deploy --prod
 ```
 
 ## Key Architecture Decisions
 
 **Content Management:**
-- All content centralized in `src/content/profile.ts` with TypeScript interfaces
-- Profile data includes: name, title, tagline, about, highlights (3 cards), socials (6 platforms), projects (2 featured)
-- Core technologies emphasized: Scala, Apache Kafka, Apache Spark, Cloud Technologies
-- Currently exploring: Generative AI, Prompt Engineering, LLM Integration, Containerization, Orchestration
+- All site content lives in `src/content/profile.ts` (typed by `Profile`, `Project`, `SocialLink`, `CareerHighlight`)
+- Profile data: name, title, tagline, about, highlights (3 cards: Principal Engineer, Java Certification, Continuous Learning), socials (8), projects (5)
+- Projects carry a `slug` used by `/apps/:slug`; `Projects.tsx` features the first 2
+- `llms.txt` / `public/llms.txt` are generated from `profile.ts`: after editing profile content run `pnpm sync:llms` (the build also does it)
+- Writing feed: dev.to and Medium are fetched at build time; LinkedIn posts are pinned by hand in `writing.ts` (no public API)
+- Core technologies emphasized: Apache Spark, Apache Kafka (platforms) with Scala, Java (languages), plus Cloud Technologies
 - No personal contact information (email, phone, location) per privacy requirements
 
-**Theme System:**
-- Custom light/dark themes via MUI ThemeProvider (`src/theme.ts`)
-- Theme persisted in localStorage with system preference detection
-- Primary: LinkedIn blue (#0077B5), Secondary: GitHub dark (#24292E)
-- Modern gradient accents throughout (purple-pink, pink-red, blue-cyan)
-- WCAG AA compliant color contrast ratios
+**Theme System (`src/theme.ts`):**
+- Neon/cyberpunk palette. Dark: background `#050511`, primary neon cyan `#00F0FF`, secondary neon purple `#BC13FE`. Light: background `#F0F2F5`, primary deep cyan `#00767F` (WCAG AA as text), secondary `#7000FF`. Accents: red `#FF003C`, yellow `#FDF500`
+- Glassmorphism via MUI overrides: semi-transparent `paper` + `backdropFilter: blur(10px)` on Card/Paper/AppBar
+- Mode persisted in `localStorage` (`theme-mode`), defaulting to system preference. `index.html` sets `data-theme-mode` before first paint to avoid a flash; `App.tsx` keeps it in sync
+- Shared helpers — use these instead of hand-writing values:
+  - `glowShadow(color, opacity, blur)` / `glowText(...)` for neon glows
+  - `motion` tokens: `easeOut` `cubic-bezier(0.23, 1, 0.32, 1)`, `easeInOut` `cubic-bezier(0.77, 0, 0.175, 1)`, `press` 160ms, `base` 240ms
+  - `transitionFor(['transform', 'box-shadow'], duration?, easing?)` builds a transition string
+  - `hoverOnly` media query key (`(hover: hover) and (pointer: fine)`) for hover lifts/glows
+  - `fullViewportHeight` spreads `minHeight: 100vh` with a `100svh` override
 
-**Component Architecture:**
-- Single-page application with scroll sections (Hero → About → Projects → Socials → Footer)
-- **About section**: Modern glassmorphism design with gradient-filled icon circles, interactive hover effects, chip-based tech stack display
-- **Hero**: Gradient background with animated circles, prominent LinkedIn/GitHub CTAs
-- **Projects**: Cards with live preview buttons, tech tags, thumbnail placeholders
-- **Socials**: LinkedIn/GitHub emphasized (larger), other platforms secondary
-- **Footer**: Centered layout with animated heart icon
+**Global effects (mounted in `App.tsx`):** `NeuralBackground`, `CustomCursor`, `CommandPalette`, `SystemHUD`, `ThemeToggle`. All motion-heavy ones return `null` under reduced motion; the cursor also skips coarse pointers.
 
-**Styling Patterns:**
-- Extensive use of gradient backgrounds and gradient text (backgroundClip: 'text')
-- Glassmorphism effects: semi-transparent backgrounds with backdrop blur
-- Smooth transitions with cubic-bezier easing
-- Hover effects: translateY, scale, rotate, shadow changes
-- Respects `prefers-reduced-motion` for accessibility
+## Motion & Interaction Rules
 
-**Deployment:**
-- Netlify auto-deployment on push to main
-- Configuration in `netlify.toml` (Node 20, pnpm 8.15.0)
-- SPA redirect rules and security headers configured
-- Build: TypeScript compilation → Vite bundling → dist/
-
-## Making Content Changes
-
-Edit `src/content/profile.ts` to update:
-- **Personal info**: name, title, tagline (includes core tech + Gen AI exploration)
-- **About text**: Background, specialization, technologies used
-- **Highlights** (3 cards):  role, Java certification, continuous learning
-- **Projects** (2 featured): Voice Grocery App, Dev Tools Collection (liveUrl, sourceUrl, tech stack)
-- **Socials** (6 platforms): LinkedIn/GitHub (emphasized: true), Stack Overflow, Facebook, Instagram, Snapchat
-
-**Important**: The About component breaks down the about text into:
-1. Passion badge with sparkle icon
-2. "Core Technologies" section with gradient-filled chips
-3. "Currently Exploring" section with outlined chips (fills on hover)
-
-## Styling and Theming
-
-**Color System:**
-- Primary: LinkedIn blue (#0077B5) - CTAs, accents
-- Secondary: GitHub dark (#24292E) - buttons, text
-- Gradients: Purple-pink, pink-red, blue-cyan for highlights
-- Background: Subtle gradients (light → white, dark → darker)
-
-**Modern Design Elements:**
-- Gradient text using backgroundClip + WebkitTextFillColor: transparent
-- Glassmorphism: rgba backgrounds with backdropFilter: blur(10px)
-- Circular gradient-filled icon containers (80x80px) with box-shadow
-- Top accent bars on cards (4px gradient strip, full opacity on hover)
-- Interactive chips with gradient fills/outlines
-
-**Animation Patterns:**
-- Cards: translateY(-12px) scale(1.02) on hover
-- Icons: scale(1.1) rotate(5deg) on parent hover
-- Transitions: 0.4s cubic-bezier(0.4, 0, 0.2, 1)
-- Heartbeat animation on footer heart icon
-- Respects prefers-reduced-motion
+- **Never `transition: all`** — list properties with `transitionFor`
+- **Gate hover movement/glow behind `hoverOnly`** so taps on touch devices don't leave elements stuck in hover. Plain color changes may stay ungated
+- Pressable elements get `:active` feedback (`scale(0.95–0.97)`); combine with the hover lift under `&:hover:active`
+- Entrances/hover use `motion.easeOut`; on-screen movement uses `motion.easeInOut`; UI transitions stay under 300ms (Reveal uses 350ms, fine for scroll reveals)
+- Keyboard-summoned UI is instant: the command palette has `transitionDuration={0}`
+- Use `fullViewportHeight` instead of `100vh`
+- Animate `transform`/`opacity`, not layout properties
+- Respect reduced motion: JS via `useReducedMotion()`; CSS via the global rule in `index.css`
 
 ## Accessibility Requirements
 
-All components implement:
-- Semantic HTML elements
-- ARIA labels for icon buttons and links
-- Keyboard navigation support
-- Visible focus indicators
+- Semantic HTML (`main`, `section`, `footer`, one `h1` per page via `SectionHeading component="h1"` or Hero)
+- ARIA labels on icon buttons and links
+- Keyboard navigation and visible focus indicators
 - Alt text for images
-- External links open in new tabs with `rel="noopener noreferrer"`
+- External links: `target="_blank"` and `rel="noopener noreferrer"`
+- WCAG AA contrast in both themes (why light-mode primary is `#00767F`, not neon cyan)
 
-## Development Notes
+## README / GitHub Profile
 
-**Code Standards:**
-- TypeScript strict mode enabled
-- ESLint 9 with flat config (eslint.config.js, not .eslintrc)
-- All external links: `target="_blank"` and `rel="noopener noreferrer"`
-- Components: Mobile-first responsive design
-- No personal contact info anywhere in code
+- `README.md` uses **CRLF line endings** — preserve them when editing (write with CRLF or re-convert), or the diff rewrites every line
+- Layout: headline → core-stack badges (Spark, Kafka, Scala, Java) → social badges → About → Tech Stack (Big Data & Streaming, Languages, Frameworks, Tools) → Experience → Featured Projects → Stats → Certifications → Connect
+- Badges are shields.io with Simple Icons slugs (`apachespark`, `apachekafka`, `scala`, `openjdk`); `for-the-badge` for core items, `flat-square` for secondary
 
-**Portfolio Content Focus:**
-- Core expertise: Scala, Java, Python (core strengths in README)
-- Technologies: Apache Kafka, Apache Spark (featured prominently)
+## Portfolio Content Focus
+
+- Headline positioning: "Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java" — keep README headline and `profile.ts` tagline in sync, then run `pnpm sync:llms`
+- Core languages: Scala, Java (core strengths in README); Python and JavaScript are "Also Proficient"
+- Technologies: Apache Spark, Apache Kafka (featured prominently, own "Big Data & Streaming" README section)
+- Never pair a language with a platform as peers (e.g. "Scala & Kafka"): platforms are Spark/Kafka, languages are Scala/Java
 - Current focus: Generative AI, Prompt Engineering, LLM integration
-- Projects: 4 live demos (Voice Grocery App, Dev Tools, Notes Tasks, Git Commit MCP Server)
+- Projects (5): Git Commit MCP Server, Notes & Tasks Web Application, Rusty Clipboard, Voice Enabled Grocery App, Developer Tools Collection
 
-**Design Philosophy:**
-- Modern, gradient-heavy aesthetic
-- Visual hierarchy through size, color, animation
-- Scannable content (chips, badges, cards vs long paragraphs)
-- Glassmorphism and depth through shadows/blur
-- Smooth, delightful interactions
+## Deployment
+
+- Netlify auto-deploys on push to `main`
+- `netlify.toml`: Node 20, pnpm 8.15.0, `pnpm run build`, publish `dist`
+- SPA fallback redirect (`/*` → `/index.html`), security headers, immutable caching for `/assets/*`

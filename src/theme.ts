@@ -7,6 +7,27 @@ export const glowShadow = (color: string, opacity = 0.4, blur = 15) =>
 export const glowText = (color: string, opacity = 0.5, blur = 10) =>
   `0 0 ${blur}px ${alpha(color, opacity)}`
 
+// Shared motion tokens so every component eases the same way
+export const motion = {
+  easeOut: 'cubic-bezier(0.23, 1, 0.32, 1)', // entrances, hover lifts
+  easeInOut: 'cubic-bezier(0.77, 0, 0.175, 1)', // on-screen movement
+  press: '160ms',
+  base: '240ms',
+}
+
+// Build a transition string for specific properties (never `all`)
+export const transitionFor = (props: string[], duration = motion.base, easing = motion.easeOut) =>
+  props.map((p) => `${p} ${duration} ${easing}`).join(', ')
+
+// Touch devices fire hover on tap and leave it stuck; only lift on real pointers
+export const hoverOnly = '@media (hover: hover) and (pointer: fine)'
+
+// 100vh on mobile includes the collapsible address bar, pushing content under it
+export const fullViewportHeight = {
+  minHeight: '100vh',
+  '@supports (height: 100svh)': { minHeight: '100svh' },
+}
+
 // Futuristic / Cyberpunk Color Palette
 const colors = {
   light: {
@@ -120,7 +141,10 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
             padding: '10px 24px',
             position: 'relative',
             overflow: 'hidden',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: [
+              transitionFor(['transform'], motion.press),
+              transitionFor(['box-shadow', 'background-color', 'border-color', 'color']),
+            ].join(', '),
             '&::before': {
               content: '""',
               position: 'absolute',
@@ -130,13 +154,22 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
               height: '100%',
               background: `linear-gradient(45deg, transparent 5%, ${alpha(palette.primary, 0.1)} 50%, transparent 95%)`,
               transform: 'translateX(-100%)',
-              transition: 'transform 0.6s',
+              transition: `transform 600ms ${motion.easeOut}`,
             },
-            '&:hover': {
-              transform: 'translateY(-2px)',
-              boxShadow: `0 0 15px ${alpha(palette.primary, 0.4)}`,
-              '&::before': {
-                transform: 'translateX(100%)',
+            // Press feedback on every device, including touch
+            '&:active': {
+              transform: 'scale(0.97)',
+            },
+            [hoverOnly]: {
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: `0 0 15px ${alpha(palette.primary, 0.4)}`,
+                '&::before': {
+                  transform: 'translateX(100%)',
+                },
+              },
+              '&:hover:active': {
+                transform: 'translateY(-2px) scale(0.97)',
               },
             },
           },
@@ -154,8 +187,12 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
             borderWidth: '2px',
             '&:hover': {
               borderWidth: '2px',
-              backgroundColor: alpha(palette.primary, 0.1),
-              boxShadow: `0 0 10px ${alpha(palette.primary, 0.4)}`,
+            },
+            [hoverOnly]: {
+              '&:hover': {
+                backgroundColor: alpha(palette.primary, 0.1),
+                boxShadow: `0 0 10px ${alpha(palette.primary, 0.4)}`,
+              },
             },
           },
         },
@@ -167,11 +204,13 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
             backdropFilter: 'blur(10px)',
             border: `1px solid ${palette.border}`,
             boxShadow: `0 8px 32px ${alpha('#000000', 0.2)}`,
-            transition: 'all 0.3s ease',
-            '&:hover': {
-              transform: 'translateY(-5px)',
-              borderColor: palette.primary,
-              boxShadow: `0 12px 40px ${alpha(palette.primary, 0.2)}`,
+            transition: transitionFor(['transform', 'box-shadow', 'border-color']),
+            [hoverOnly]: {
+              '&:hover': {
+                transform: 'translateY(-5px)',
+                borderColor: palette.primary,
+                boxShadow: `0 12px 40px ${alpha(palette.primary, 0.2)}`,
+              },
             },
           },
         },

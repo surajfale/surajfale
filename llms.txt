@@ -1,6 +1,6 @@
 # Suraj Fale
 
-> Principal Engineer — System Design, Multi-project Delivery, Scala & Kafka | Generative AI & Prompt Engineering
+> Principal Engineer — System Design, Multi-project Delivery, Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java | Generative AI & Prompt Engineering
 
 This file helps AI agents and LLMs accurately summarize, cite, or evaluate this site and its owner. It is a plain-text index, not an access-control mechanism — it grants no permissions and enforces nothing; see `/robots.txt` for crawling rules.
 Generated from src/content/profile.ts — do not hand-edit; run `pnpm sync:llms` instead.

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, ReactNode } from 'react'
 import { Box } from '@mui/material'
 import { useReducedMotion } from '../hooks/useReducedMotion'
+import { motion } from '../theme'
 
 interface RevealProps {
   children: ReactNode
@@ -45,7 +46,7 @@ const Reveal = ({ children, delayMs = 0 }: RevealProps) => {
         transform: revealed ? 'translateY(0)' : 'translateY(12px)',
         transition: prefersReducedMotion
           ? 'none'
-          : `opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delayMs}ms, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delayMs}ms`,
+          : `opacity 350ms ${motion.easeOut} ${delayMs}ms, transform 350ms ${motion.easeOut} ${delayMs}ms`,
       }}
     >
       {children}

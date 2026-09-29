@@ -1,6 +1,7 @@
 import { IconButton, Tooltip, alpha } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
+import { motion, transitionFor, hoverOnly } from '../theme'
 
 interface ThemeToggleProps {
   mode: 'light' | 'dark'
@@ -25,12 +26,23 @@ const ThemeToggle = ({ mode, onToggle }: ThemeToggleProps) => {
           borderColor: 'divider',
           width: 48,
           height: 48,
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          '&:hover': {
-            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
-            transform: 'rotate(180deg)',
-            boxShadow: (theme) => `0 0 15px ${alpha(theme.palette.primary.main, 0.5)}`,
-            borderColor: 'primary.main',
+          transition: [
+            transitionFor(['transform'], '400ms', motion.easeInOut),
+            transitionFor(['background-color', 'box-shadow', 'border-color']),
+          ].join(', '),
+          '&:active': {
+            transform: 'scale(0.95)',
+          },
+          [hoverOnly]: {
+            '&:hover': {
+              bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
+              transform: 'rotate(180deg)',
+              boxShadow: (theme) => `0 0 15px ${alpha(theme.palette.primary.main, 0.5)}`,
+              borderColor: 'primary.main',
+            },
+            '&:hover:active': {
+              transform: 'rotate(180deg) scale(0.95)',
+            },
           },
         }}
       >

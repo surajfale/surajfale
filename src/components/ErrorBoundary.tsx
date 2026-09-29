@@ -1,6 +1,7 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
 import { Box, Container, Typography, Button, alpha } from '@mui/material'
 import RefreshIcon from '@mui/icons-material/Refresh'
+import { fullViewportHeight } from '../theme'
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -30,7 +31,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       <Box
         component="main"
         sx={{
-          minHeight: '100vh',
+          ...fullViewportHeight,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
