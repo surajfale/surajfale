@@ -80,7 +80,7 @@ const Hero = () => {
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={3}
-            justifyContent="center"
+            sx={{ justifyContent: 'center' }}
           >
             <Button
               component="a"

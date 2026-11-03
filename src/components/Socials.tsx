@@ -65,10 +65,8 @@ const Socials = () => {
         <Stack
           direction="row"
           spacing={3}
-          justifyContent="center"
-          flexWrap="wrap"
           useFlexGap
-          sx={{ mb: 6 }}
+          sx={{ justifyContent: 'center', flexWrap: 'wrap', mb: 6 }}
         >
           {emphasizedSocials.map((social, index) => {
             const brandColor = social.name === 'LinkedIn' ? '#0A9FB5' : 'currentColor'
@@ -113,9 +111,8 @@ const Socials = () => {
         <Stack
           direction="row"
           spacing={2.5}
-          justifyContent="center"
-          flexWrap="wrap"
           useFlexGap
+          sx={{ justifyContent: 'center', flexWrap: 'wrap' }}
         >
           {otherSocials.map((social, index) => (
             <Reveal key={social.name} delayMs={index * 60}>

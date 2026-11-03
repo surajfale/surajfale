@@ -64,7 +64,7 @@ const Projects = () => {
         {/* Featured Project Cards */}
         <Grid container spacing={4}>
           {featuredProjects.map((project, index) => (
-            <Grid item xs={12} md={6} key={project.slug}>
+            <Grid size={{ xs: 12, md: 6 }} key={project.slug}>
               <Reveal delayMs={index * 100}>
                 <TiltCard sx={{ height: '100%' }}>
                   <Card
@@ -124,7 +124,7 @@ const Projects = () => {
                         {project.description}
                       </Typography>
 
-                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
                         {project.technologies.slice(0, 3).map((tech, techIndex) => (
                           <Chip
                             key={techIndex}

@@ -5,7 +5,7 @@ import {
   DialogContent,
   TextField,
   List,
-  ListItem,
+  ListItemButton,
   ListItemText,
   ListItemIcon,
   Box,
@@ -133,22 +133,24 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
       transitionDuration={0}
       maxWidth="sm"
       fullWidth
-      PaperProps={{
-        sx: {
-          bgcolor: 'background.paper',
-          backgroundImage: 'none',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid',
-          borderColor: 'primary.main',
-          borderRadius: 2,
-          boxShadow: (theme) => `0 0 50px ${alpha(theme.palette.primary.main, 0.2)}`,
-          overflow: 'hidden',
+      slotProps={{
+        paper: {
+          sx: {
+            bgcolor: 'background.paper',
+            backgroundImage: 'none',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid',
+            borderColor: 'primary.main',
+            borderRadius: 2,
+            boxShadow: (theme) => `0 0 50px ${alpha(theme.palette.primary.main, 0.2)}`,
+            overflow: 'hidden',
+          },
         },
-      }}
-      TransitionProps={{
-        onEnter: () => {
-          setQuery('')
-          setSelectedIndex(0)
+        transition: {
+          onEnter: () => {
+            setQuery('')
+            setSelectedIndex(0)
+          },
         },
       }}
     >
@@ -164,14 +166,16 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
           }}
           onKeyDown={handleKeyDown}
           variant="standard"
-          InputProps={{
-            disableUnderline: true,
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: 'text.secondary' }} />
-              </InputAdornment>
-            ),
-            sx: { fontSize: '1.2rem', fontFamily: '"Space Mono", monospace' },
+          slotProps={{
+            input: {
+              disableUnderline: true,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ color: 'text.secondary' }} />
+                </InputAdornment>
+              ),
+              sx: { fontSize: '1.2rem', fontFamily: '"Space Mono", monospace' },
+            },
           }}
         />
       </Box>
@@ -180,9 +184,8 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
         <List sx={{ py: 0 }}>
           {filteredCommands.length > 0 ? (
             filteredCommands.map((cmd, index) => (
-              <ListItem
+              <ListItemButton
                 key={cmd.id}
-                button
                 selected={index === selectedIndex}
                 onClick={() => {
                   cmd.action()
@@ -215,7 +218,7 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
                   }
                 />
                 {index === selectedIndex && <KeyboardReturnIcon sx={{ fontSize: 16, color: 'text.disabled' }} />}
-              </ListItem>
+              </ListItemButton>
             ))
           ) : (
             <Box sx={{ p: 4, textAlign: 'center', color: 'text.secondary' }}>

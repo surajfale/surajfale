@@ -144,7 +144,7 @@ const About = () => {
 
         <Grid container spacing={4}>
           {profileData.highlights.map((highlight, index) => (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid size={{ xs: 12, md: 4 }} key={index}>
               <Reveal delayMs={index * 100}>
                 <Paper
                   elevation={0}
