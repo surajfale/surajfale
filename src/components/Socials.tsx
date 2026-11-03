@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Box, Container, Typography, IconButton, Stack, Tooltip, alpha } from '@mui/material'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -17,7 +18,7 @@ const iconTransition = transitionFor(['transform', 'box-shadow', 'border-color',
 
 const Socials = () => {
   const getIcon = (iconName: string) => {
-    const iconMap: Record<string, JSX.Element> = {
+    const iconMap: Record<string, ReactElement> = {
       LinkedIn: <LinkedInIcon fontSize="large" />,
       GitHub: <GitHubIcon fontSize="large" />,
       Facebook: <FacebookIcon fontSize="large" />,

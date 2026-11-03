@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, type ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Dialog,
@@ -30,7 +30,7 @@ interface Command {
   id: string
   title: string
   subtitle?: string
-  icon: JSX.Element
+  icon: ReactElement
   action: () => void
   shortcut?: string
 }

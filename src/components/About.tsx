@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Box, Container, Typography, Paper, Grid, Chip, alpha } from '@mui/material'
 import WorkIcon from '@mui/icons-material/Work'
 import SchoolIcon from '@mui/icons-material/School'
@@ -8,7 +9,7 @@ import SectionHeading from './SectionHeading'
 import Reveal from './Reveal'
 
 const About = () => {
-  const iconMap: Record<number, JSX.Element> = {
+  const iconMap: Record<number, ReactElement> = {
     0: <WorkIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
     1: <SchoolIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
     2: <TrendingUpIcon sx={{ fontSize: 32, color: 'primary.main' }} />,

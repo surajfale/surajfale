@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import {
   Box,
   Container,
@@ -20,7 +21,7 @@ import SectionHeading from './SectionHeading'
 
 const PLATFORM_META: Record<
   WritingPlatform,
-  { label: string; icon: JSX.Element; gradient: string; statusLabel: string }
+  { label: string; icon: ReactElement; gradient: string; statusLabel: string }
 > = {
   devto: {
     label: 'DEV',
