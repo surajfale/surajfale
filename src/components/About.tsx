@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Box, Container, Typography, Paper, Grid, Chip, alpha } from '@mui/material'
 import WorkIcon from '@mui/icons-material/Work'
 import SchoolIcon from '@mui/icons-material/School'
@@ -8,7 +9,7 @@ import SectionHeading from './SectionHeading'
 import Reveal from './Reveal'
 
 const About = () => {
-  const iconMap: Record<number, JSX.Element> = {
+  const iconMap: Record<number, ReactElement> = {
     0: <WorkIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
     1: <SchoolIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
     2: <TrendingUpIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
@@ -143,7 +144,7 @@ const About = () => {
 
         <Grid container spacing={4}>
           {profileData.highlights.map((highlight, index) => (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid size={{ xs: 12, md: 4 }} key={index}>
               <Reveal delayMs={index * 100}>
                 <Paper
                   elevation={0}

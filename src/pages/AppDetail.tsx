@@ -158,7 +158,7 @@ const AppDetail = () => {
           >
             <Box sx={{ textAlign: 'center', color: '#fff', px: 3, position: 'relative', zIndex: 1 }}>
               <Typography variant="h3" component="h1" sx={{ fontWeight: 900, mb: 2, textTransform: 'uppercase', textShadow: '0 4px 8px rgba(0,0,0,0.5)' }}>
-                <DecryptText text={project.title} speed={40} />
+                <DecryptText text={project.title} />
               </Typography>
               <Chip
                 label={getProjectCategory(project)}
@@ -256,7 +256,7 @@ const AppDetail = () => {
 
         <Grid container spacing={4}>
           {/* Features */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card sx={{ 
                 height: '100%', 
                 bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
@@ -284,7 +284,7 @@ const AppDetail = () => {
           </Grid>
 
           {/* Tech Stack */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card sx={{ 
                 height: '100%', 
                 bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
@@ -297,7 +297,7 @@ const AppDetail = () => {
                 <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase', color: 'primary.main' }}>
                   Technologies Used
                 </Typography>
-                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>
+                <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap', mb: 3 }}>
                   {project.technologies.map((tech, index) => (
                     <Chip
                       key={index}

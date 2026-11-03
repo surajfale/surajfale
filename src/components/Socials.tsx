@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { Box, Container, Typography, IconButton, Stack, Tooltip, alpha } from '@mui/material'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -17,7 +18,7 @@ const iconTransition = transitionFor(['transform', 'box-shadow', 'border-color',
 
 const Socials = () => {
   const getIcon = (iconName: string) => {
-    const iconMap: Record<string, JSX.Element> = {
+    const iconMap: Record<string, ReactElement> = {
       LinkedIn: <LinkedInIcon fontSize="large" />,
       GitHub: <GitHubIcon fontSize="large" />,
       Facebook: <FacebookIcon fontSize="large" />,
@@ -64,10 +65,8 @@ const Socials = () => {
         <Stack
           direction="row"
           spacing={3}
-          justifyContent="center"
-          flexWrap="wrap"
           useFlexGap
-          sx={{ mb: 6 }}
+          sx={{ justifyContent: 'center', flexWrap: 'wrap', mb: 6 }}
         >
           {emphasizedSocials.map((social, index) => {
             const brandColor = social.name === 'LinkedIn' ? '#0A9FB5' : 'currentColor'
@@ -112,9 +111,8 @@ const Socials = () => {
         <Stack
           direction="row"
           spacing={2.5}
-          justifyContent="center"
-          flexWrap="wrap"
           useFlexGap
+          sx={{ justifyContent: 'center', flexWrap: 'wrap' }}
         >
           {otherSocials.map((social, index) => (
             <Reveal key={social.name} delayMs={index * 60}>

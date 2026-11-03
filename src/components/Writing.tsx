@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import {
   Box,
   Container,
@@ -12,7 +13,7 @@ import TerminalIcon from '@mui/icons-material/Terminal'
 import ArticleIcon from '@mui/icons-material/Article'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
 import { getWritingFeed, WritingPlatform, WritingPost } from '../content/writing'
 import TiltCard from './TiltCard'
 import Reveal from './Reveal'
@@ -20,7 +21,7 @@ import SectionHeading from './SectionHeading'
 
 const PLATFORM_META: Record<
   WritingPlatform,
-  { label: string; icon: JSX.Element; gradient: string; statusLabel: string }
+  { label: string; icon: ReactElement; gradient: string; statusLabel: string }
 > = {
   devto: {
     label: 'DEV',
@@ -79,7 +80,7 @@ const PostCard = ({ post, platformLabel }: { post: WritingPost; platformLabel: s
           {post.excerpt}
         </Typography>
         {post.tags.length > 0 && (
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+          <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap', mb: 2 }}>
             {post.tags.slice(0, 2).map((tag) => (
               <Chip key={tag} label={tag} size="small" variant="outlined" sx={{ mb: 1, borderColor: 'divider' }} />
             ))}
@@ -87,19 +88,17 @@ const PostCard = ({ post, platformLabel }: { post: WritingPost; platformLabel: s
         )}
         <Stack
           direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ mt: 'auto', pt: 2, borderTop: '1px solid', borderColor: 'divider' }}
+          sx={{ justifyContent: 'space-between', alignItems: 'center', mt: 'auto', pt: 2, borderTop: '1px solid', borderColor: 'divider' }}
         >
           <Stack direction="row" spacing={2}>
             {typeof post.stats?.reactions === 'number' && (
-              <Stack direction="row" spacing={0.5} alignItems="center" sx={{ color: 'text.secondary' }}>
+              <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center', color: 'text.secondary' }}>
                 <ThumbUpIcon sx={{ fontSize: 14 }} />
                 <Typography variant="caption">{post.stats.reactions}</Typography>
               </Stack>
             )}
             {typeof post.stats?.comments === 'number' && (
-              <Stack direction="row" spacing={0.5} alignItems="center" sx={{ color: 'text.secondary' }}>
+              <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center', color: 'text.secondary' }}>
                 <ChatBubbleOutlineIcon sx={{ fontSize: 14 }} />
                 <Typography variant="caption">{post.stats.comments}</Typography>
               </Stack>
@@ -135,8 +134,8 @@ const Writing = () => {
             return (
               <Reveal key={platform} delayMs={rowIndex * 100}>
                 <Box>
-                  <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2.5 }}>
-                    <Stack direction="row" spacing={1.5} alignItems="center">
+                  <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2.5 }}>
+                    <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
                       <Box
                         sx={{
                           width: 36,

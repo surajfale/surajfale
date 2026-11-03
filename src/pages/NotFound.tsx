@@ -55,7 +55,7 @@ const NotFound = () => {
             textShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.5)}`,
           }}
         >
-          <DecryptText text="Signal Lost" speed={40} />
+          <DecryptText text="Signal Lost" />
         </Typography>
 
         <Box

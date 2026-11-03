@@ -172,7 +172,7 @@ const Apps = () => {
         {viewMode === 'card' ? (
           <Grid container spacing={4}>
             {filteredProjects.map((project, index) => (
-              <Grid item xs={12} sm={6} md={4} key={project.slug}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={project.slug}>
                 <Reveal delayMs={(index % 6) * 80}>
                 <TiltCard sx={{ height: '100%' }}>
                   <Card
@@ -244,7 +244,7 @@ const Apps = () => {
                         {project.description}
                       </Typography>
 
-                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
                         {project.technologies.slice(0, 3).map((tech, techIndex) => (
                           <Chip
                             key={techIndex}
@@ -385,7 +385,7 @@ const Apps = () => {
                           >
                             {project.description}
                           </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                          <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
                             {project.technologies.slice(0, 4).map((tech, techIndex) => (
                               <Chip
                                 key={techIndex}

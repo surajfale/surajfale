@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 interface DecryptTextProps {
   text: string
-  speed?: number
+  /** Total time (ms) from first scramble to fully revealed text. */
+  duration?: number
   className?: string
   startDelay?: number
   revealDirection?: 'start' | 'end' | 'random'
@@ -12,78 +13,65 @@ interface DecryptTextProps {
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
 
+// The first `revealed` characters show through; the rest are random glyphs.
+const scramble = (text: string, revealed: number) =>
+  text
+    .split('')
+    .map((char, index) => {
+      if (char === ' ') return ' '
+      if (index < revealed) return char
+      return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
+    })
+    .join('')
+
 export const DecryptText = ({
   text,
-  speed = 30,
+  duration = 200,
   className,
   startDelay = 0,
 }: DecryptTextProps) => {
   const [displayText, setDisplayText] = useState(text)
-  const [isScrambling, setIsScrambling] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
-  const frameRef = useRef<number>(0)
-  const iterationRef = useRef<number>(0)
-
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setDisplayText(text)
-      setHasStarted(true)
-      return
-    }
+    if (prefersReducedMotion) return
 
+    let frameId = 0
+
+    // Time-based, so the reveal takes `duration` ms regardless of frame rate.
     const timeoutId = setTimeout(() => {
+      const start = performance.now()
+      // Scramble before the first paint so the final text never flashes.
+      setDisplayText(scramble(text, 0))
       setHasStarted(true)
-      setIsScrambling(true)
+
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1)
+        if (progress >= 1) {
+          setDisplayText(text)
+          return
+        }
+        setDisplayText(scramble(text, Math.floor(progress * text.length)))
+        frameId = requestAnimationFrame(tick)
+      }
+      frameId = requestAnimationFrame(tick)
     }, startDelay)
 
-    return () => clearTimeout(timeoutId)
-  }, [startDelay, prefersReducedMotion, text])
-
-  useEffect(() => {
-    if (!isScrambling) return
-
-    const scramble = () => {
-      setDisplayText(() => {
-        const result = text.split('').map((char, index) => {
-          if (char === ' ') return ' '
-
-          if (index < iterationRef.current / 3) {
-            return text[index]
-          }
-          return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
-        })
-
-        return result.join('')
-      })
-
-      iterationRef.current += 1
-
-      if (iterationRef.current / 3 > text.length) {
-        setIsScrambling(false)
-        setDisplayText(text)
-      } else {
-        frameRef.current = requestAnimationFrame(scramble)
-      }
-    }
-    
-    // Use interval to control speed more easily than RAF if needed, 
-    // but here we combine RAF for smooth updates with the iteration counter logic.
-    // Actually, let's just use setInterval for simple speed control as originally planned?
-    // The previous code mixed RAF and setInterval. Let's stick to setInterval for the "speed" prop to work as milliseconds per frame.
-    
-    const intervalId = setInterval(scramble, speed)
-
     return () => {
-      clearInterval(intervalId)
-      cancelAnimationFrame(frameRef.current)
+      clearTimeout(timeoutId)
+      cancelAnimationFrame(frameId)
     }
-  }, [isScrambling, text, speed])
+  }, [text, duration, startDelay, prefersReducedMotion])
+
+  // Reduced motion: show the final text immediately, no state round-trip.
+  if (prefersReducedMotion) {
+    return <span className={className}>{text}</span>
+  }
 
   return (
     <span className={className}>
-      {hasStarted ? displayText : text.split('').map(() => ' ').join('')} 
+      {hasStarted ? displayText : text.split('').map(() => ' ').join('')}
     </span>
   )
 }

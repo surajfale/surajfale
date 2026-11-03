@@ -33,7 +33,6 @@ const Hero = () => {
           >
             <DecryptText 
               text={profileData.name} 
-              speed={50} 
               className="text-glow"
             />
           </Typography>
@@ -57,7 +56,6 @@ const Hero = () => {
           >
             <DecryptText 
               text={profileData.title} 
-              speed={30} 
               startDelay={1000} 
             />
           </Typography>
@@ -80,7 +78,7 @@ const Hero = () => {
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={3}
-            justifyContent="center"
+            sx={{ justifyContent: 'center' }}
           >
             <Button
               component="a"

@@ -9,13 +9,13 @@ This document provides comprehensive context and guidelines for AI agents workin
 - **Live URL**: https://surajfale.netlify.app
 
 ## 2. Technology Stack
-- **Core**: React 18, TypeScript 5.3
-- **Build Tool**: Vite 5.1
+- **Core**: React 19, TypeScript 6.0
+- **Build Tool**: Vite 8 (Rolldown)
 - **Package Manager**: pnpm 8+ (Strictly enforce this)
-- **UI Framework**: Material-UI (MUI) v5
+- **UI Framework**: Material-UI (MUI) v9
 - **Styling Engine**: Emotion (CSS-in-JS)
 - **Routing**: React Router DOM v7 (though mostly single-page scroll)
-- **Linting**: ESLint 9 (Flat Config)
+- **Linting**: ESLint 10 (Flat Config)
 - **Deployment**: Netlify
 
 ## 3. Project Structure
