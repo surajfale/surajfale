@@ -13,14 +13,14 @@ Suraj is a Principal Engineer positioned as a **Big Data & Streaming specialist:
 
 ## Technology Stack
 
-- **Framework:** React 18 with TypeScript (strict)
+- **Framework:** React 19 with TypeScript 6.0 (strict)
 - **Routing:** React Router v7 (`BrowserRouter`)
-- **Build Tool:** Vite 6
+- **Build Tool:** Vite 8 (Rolldown bundler)
 - **Package Manager:** pnpm 8+ (required; `packageManager: pnpm@8.15.0`)
-- **UI Library:** Material-UI (MUI) v5 + MUI icons
+- **UI Library:** Material-UI (MUI) v9 + MUI icons
 - **Styling:** Emotion (CSS-in-JS via `sx`), plus global CSS in `src/index.css`
 - **Fonts:** Lexend Mega (headings/buttons) and Space Mono (body), loaded from Google Fonts in `index.css`
-- **Linting:** ESLint 9 with flat config (`eslint.config.js`, not .eslintrc)
+- **Linting:** ESLint 10 with flat config (`eslint.config.js`, not .eslintrc); `eslint-plugin-react-hooks` 7 includes the React Compiler rules (e.g. no `setState` directly in an effect)
 - **Deployment:** Netlify
 
 ## Project Structure
@@ -105,6 +105,14 @@ netlify deploy --prod
 
 **Global effects (mounted in `App.tsx`):** `NeuralBackground`, `CustomCursor`, `CommandPalette`, `SystemHUD`, `ThemeToggle`. All motion-heavy ones return `null` under reduced motion; the cursor also skips coarse pointers.
 
+## Upgrade Gotchas
+
+- **TypeScript is pinned `~6.0`**: `typescript-eslint` supports `typescript <6.1.0`, and its parser can't run on TS 7 (native compiler) yet
+- **MUI 9 APIs**: `Grid` takes `size={{ xs, md }}` (no `item`/`xs` props); `Stack` layout props (`justifyContent`, `alignItems`, `flexWrap`) go in `sx`; `PaperProps`/`TransitionProps`/`InputProps` are `slotProps.paper`/`.transition`/`.input`; clickable list rows are `ListItemButton`
+- **Vite 8 CJS interop**: with `"type": "module"`, default imports from CommonJS packages follow Node semantics. A CJS-only dependency can build cleanly and still render a blank page, so check a `vite preview` build in a browser after dependency changes (the dev server pre-bundles and hides it)
+- **Code splitting**: Rolldown has no object-form `manualChunks`; chunks are `build.rolldownOptions.output.codeSplitting.groups` in `vite.config.ts`
+- `@mui/codemod` 9.x crashes on startup (yargs); 7.x works but reformats files (quotes, semicolons, CRLF→LF), so review its diff or migrate by hand
+
 ## Motion & Interaction Rules
 
 - **Never `transition: all`** — list properties with `transitionFor`
@@ -143,5 +151,5 @@ netlify deploy --prod
 ## Deployment
 
 - Netlify auto-deploys on push to `main`
-- `netlify.toml`: Node 20, pnpm 8.15.0, `pnpm run build`, publish `dist`
+- `netlify.toml`: Node 22, pnpm 8.15.0, `pnpm run build`, publish `dist`
 - SPA fallback redirect (`/*` → `/index.html`), security headers, immutable caching for `/assets/*`
