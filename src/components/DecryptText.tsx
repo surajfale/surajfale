@@ -3,7 +3,8 @@ import { useReducedMotion } from '../hooks/useReducedMotion'
 
 interface DecryptTextProps {
   text: string
-  speed?: number
+  /** Total time (ms) from first scramble to fully revealed text. */
+  duration?: number
   className?: string
   startDelay?: number
   revealDirection?: 'start' | 'end' | 'random'
@@ -12,20 +13,20 @@ interface DecryptTextProps {
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
 
-// Characters before iteration / 3 are revealed; the rest are random glyphs.
-const scramble = (text: string, iteration: number) =>
+// The first `revealed` characters show through; the rest are random glyphs.
+const scramble = (text: string, revealed: number) =>
   text
     .split('')
     .map((char, index) => {
       if (char === ' ') return ' '
-      if (index < iteration / 3) return char
+      if (index < revealed) return char
       return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
     })
     .join('')
 
 export const DecryptText = ({
   text,
-  speed = 30,
+  duration = 200,
   className,
   startDelay = 0,
 }: DecryptTextProps) => {
@@ -36,28 +37,32 @@ export const DecryptText = ({
   useEffect(() => {
     if (prefersReducedMotion) return
 
-    let iteration = 0
-    let intervalId: ReturnType<typeof setInterval> | undefined
+    let frameId = 0
 
-    // One interval drives the effect, so `speed` really is ms per frame.
+    // Time-based, so the reveal takes `duration` ms regardless of frame rate.
     const timeoutId = setTimeout(() => {
+      const start = performance.now()
+      // Scramble before the first paint so the final text never flashes.
+      setDisplayText(scramble(text, 0))
       setHasStarted(true)
-      intervalId = setInterval(() => {
-        if (iteration / 3 > text.length) {
-          clearInterval(intervalId)
+
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1)
+        if (progress >= 1) {
           setDisplayText(text)
           return
         }
-        setDisplayText(scramble(text, iteration))
-        iteration += 1
-      }, speed)
+        setDisplayText(scramble(text, Math.floor(progress * text.length)))
+        frameId = requestAnimationFrame(tick)
+      }
+      frameId = requestAnimationFrame(tick)
     }, startDelay)
 
     return () => {
       clearTimeout(timeoutId)
-      clearInterval(intervalId)
+      cancelAnimationFrame(frameId)
     }
-  }, [text, speed, startDelay, prefersReducedMotion])
+  }, [text, duration, startDelay, prefersReducedMotion])
 
   // Reduced motion: show the final text immediately, no state round-trip.
   if (prefersReducedMotion) {

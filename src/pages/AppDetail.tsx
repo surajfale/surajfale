@@ -158,7 +158,7 @@ const AppDetail = () => {
           >
             <Box sx={{ textAlign: 'center', color: '#fff', px: 3, position: 'relative', zIndex: 1 }}>
               <Typography variant="h3" component="h1" sx={{ fontWeight: 900, mb: 2, textTransform: 'uppercase', textShadow: '0 4px 8px rgba(0,0,0,0.5)' }}>
-                <DecryptText text={project.title} speed={40} />
+                <DecryptText text={project.title} />
               </Typography>
               <Chip
                 label={getProjectCategory(project)}

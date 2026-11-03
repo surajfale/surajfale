@@ -33,7 +33,6 @@ const Hero = () => {
           >
             <DecryptText 
               text={profileData.name} 
-              speed={50} 
               className="text-glow"
             />
           </Typography>
@@ -57,7 +56,6 @@ const Hero = () => {
           >
             <DecryptText 
               text={profileData.title} 
-              speed={30} 
               startDelay={1000} 
             />
           </Typography>
