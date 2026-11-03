@@ -13,7 +13,7 @@
     "sync:llms": "node scripts/generate-llms-txt.mjs"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.0.0",
     "pnpm": ">=8.0.0"
   },
   "dependencies": {
