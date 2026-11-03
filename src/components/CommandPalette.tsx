@@ -107,10 +107,6 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [query])
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault()
@@ -150,7 +146,10 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
         },
       }}
       TransitionProps={{
-        onEnter: () => setQuery(''),
+        onEnter: () => {
+          setQuery('')
+          setSelectedIndex(0)
+        },
       }}
     >
       <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
@@ -159,7 +158,10 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
           autoFocus
           placeholder="Type a command or search..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value)
+            setSelectedIndex(0)
+          }}
           onKeyDown={handleKeyDown}
           variant="standard"
           InputProps={{

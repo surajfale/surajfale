@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 interface DecryptTextProps {
@@ -12,6 +12,17 @@ interface DecryptTextProps {
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
 
+// Characters before iteration / 3 are revealed; the rest are random glyphs.
+const scramble = (text: string, iteration: number) =>
+  text
+    .split('')
+    .map((char, index) => {
+      if (char === ' ') return ' '
+      if (index < iteration / 3) return char
+      return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
+    })
+    .join('')
+
 export const DecryptText = ({
   text,
   speed = 30,
@@ -19,71 +30,43 @@ export const DecryptText = ({
   startDelay = 0,
 }: DecryptTextProps) => {
   const [displayText, setDisplayText] = useState(text)
-  const [isScrambling, setIsScrambling] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
-  const frameRef = useRef<number>(0)
-  const iterationRef = useRef<number>(0)
-
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setDisplayText(text)
-      setHasStarted(true)
-      return
-    }
+    if (prefersReducedMotion) return
 
+    let iteration = 0
+    let intervalId: ReturnType<typeof setInterval> | undefined
+
+    // One interval drives the effect, so `speed` really is ms per frame.
     const timeoutId = setTimeout(() => {
       setHasStarted(true)
-      setIsScrambling(true)
+      intervalId = setInterval(() => {
+        if (iteration / 3 > text.length) {
+          clearInterval(intervalId)
+          setDisplayText(text)
+          return
+        }
+        setDisplayText(scramble(text, iteration))
+        iteration += 1
+      }, speed)
     }, startDelay)
 
-    return () => clearTimeout(timeoutId)
-  }, [startDelay, prefersReducedMotion, text])
-
-  useEffect(() => {
-    if (!isScrambling) return
-
-    const scramble = () => {
-      setDisplayText(() => {
-        const result = text.split('').map((char, index) => {
-          if (char === ' ') return ' '
-
-          if (index < iterationRef.current / 3) {
-            return text[index]
-          }
-          return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
-        })
-
-        return result.join('')
-      })
-
-      iterationRef.current += 1
-
-      if (iterationRef.current / 3 > text.length) {
-        setIsScrambling(false)
-        setDisplayText(text)
-      } else {
-        frameRef.current = requestAnimationFrame(scramble)
-      }
-    }
-    
-    // Use interval to control speed more easily than RAF if needed, 
-    // but here we combine RAF for smooth updates with the iteration counter logic.
-    // Actually, let's just use setInterval for simple speed control as originally planned?
-    // The previous code mixed RAF and setInterval. Let's stick to setInterval for the "speed" prop to work as milliseconds per frame.
-    
-    const intervalId = setInterval(scramble, speed)
-
     return () => {
+      clearTimeout(timeoutId)
       clearInterval(intervalId)
-      cancelAnimationFrame(frameRef.current)
     }
-  }, [isScrambling, text, speed])
+  }, [text, speed, startDelay, prefersReducedMotion])
+
+  // Reduced motion: show the final text immediately, no state round-trip.
+  if (prefersReducedMotion) {
+    return <span className={className}>{text}</span>
+  }
 
   return (
     <span className={className}>
-      {hasStarted ? displayText : text.split('').map(() => ' ').join('')} 
+      {hasStarted ? displayText : text.split('').map(() => ' ').join('')}
     </span>
   )
 }
