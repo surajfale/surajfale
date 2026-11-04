@@ -6,7 +6,7 @@
   "packageManager": "pnpm@8.15.0",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/fetch-writing.mjs && node scripts/generate-llms-txt.mjs && tsc && vite build",
+    "build": "node scripts/fetch-writing.mjs && node scripts/generate-llms-txt.mjs && tsc && vite build && node scripts/check-csp.mjs",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "sync:writing": "node scripts/fetch-writing.mjs",
@@ -55,7 +55,7 @@
       "postcss": "^8.5.23",
       "nanoid": "^3.3.18",
       "minimatch": "^11.0.1",
-      "picomatch@<2.3.2": ">=2.3.2"
+      "picomatch@<2.3.2": "^2.3.2"
     }
   }
 }

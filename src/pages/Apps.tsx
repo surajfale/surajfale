@@ -49,8 +49,8 @@ const Apps = () => {
     description: 'A collection of applications and projects by Suraj Fale, spanning React, TypeScript, Rust, and more.',
   })
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
-    const saved = localStorage.getItem('apps-view-mode') as ViewMode | null
-    return saved || 'card'
+    const saved = localStorage.getItem('apps-view-mode')
+    return saved === 'card' || saved === 'list' ? saved : 'card'
   })
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
 

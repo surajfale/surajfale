@@ -85,7 +85,7 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
         title: 'GitHub',
         subtitle: 'Visit my GitHub profile',
         icon: <GitHubIcon />,
-        action: () => window.open('https://github.com/surajfale', '_blank'),
+        action: () => window.open('https://github.com/surajfale', '_blank', 'noopener,noreferrer'),
       },
     ],
     [navigate, toggleTheme]
