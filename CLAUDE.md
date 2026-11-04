@@ -16,6 +16,7 @@ Suraj is a Principal Engineer positioned as a **Big Data & Streaming specialist:
 - **Framework:** React 19 with TypeScript 6.0 (strict)
 - **Routing:** React Router v7 (`BrowserRouter`)
 - **Build Tool:** Vite 8 (Rolldown bundler)
+- **Runtime:** Node 24 LTS for dev and build only (`engines: >=24`, `.nvmrc`, Netlify `NODE_VERSION`); the deployed site is static
 - **Package Manager:** pnpm 8+ (required; `packageManager: pnpm@8.15.0`)
 - **UI Library:** Material-UI (MUI) v9 + MUI icons
 - **Styling:** Emotion (CSS-in-JS via `sx`), plus global CSS in `src/index.css`
@@ -152,7 +153,7 @@ netlify deploy --prod
 ## Deployment
 
 - Netlify auto-deploys on push to `main`
-- `netlify.toml`: Node 22, pnpm 8.15.0, `pnpm run build`, publish `dist`
+- `netlify.toml`: Node 24 (LTS), pnpm 8.15.0, `pnpm run build`, publish `dist`
 - SPA fallback redirect (`/*` → `/index.html`), security headers, immutable caching for `/assets/*`
 - `PNPM_FLAGS = "--frozen-lockfile"`: a stale `pnpm-lock.yaml` fails the deploy
 
