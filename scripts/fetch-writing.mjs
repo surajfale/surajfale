@@ -14,6 +14,42 @@ const MEDIUM_USERNAME = 'surajfale'
 const FETCH_TIMEOUT_MS = 8000
 const MAX_POSTS_PER_SOURCE = 5
 
+// Feed URLs end up in an <a href> on the site. Only keep https links on the
+// platform's own hosts, so a compromised or malformed feed can't inject a
+// javascript:/data: URL or point readers at an unrelated site.
+const ALLOWED_POST_HOSTS = {
+  devto: ['dev.to'],
+  medium: ['medium.com'],
+}
+
+function safePostUrl(raw, platform) {
+  if (typeof raw !== 'string') return null
+  let url
+  try {
+    url = new URL(raw.trim())
+  } catch {
+    return null
+  }
+  if (url.protocol !== 'https:') return null
+  const host = url.hostname.toLowerCase()
+  const allowed = ALLOWED_POST_HOSTS[platform].some((h) => host === h || host.endsWith(`.${h}`))
+  return allowed ? url.href : null
+}
+
+// Drop any post whose URL failed the allowlist rather than rendering a dead link.
+function keepSafe(posts, platform) {
+  const safe = []
+  for (const post of posts) {
+    const url = safePostUrl(post.url, platform)
+    if (url) {
+      safe.push({ ...post, url })
+    } else {
+      console.warn(`[fetch-writing] ${platform}: dropped post with disallowed URL`)
+    }
+  }
+  return safe
+}
+
 async function fetchWithTimeout(url) {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
@@ -30,7 +66,7 @@ async function fetchDevTo() {
   )
   if (!res.ok) throw new Error(`dev.to responded ${res.status}`)
   const articles = await res.json()
-  return articles.slice(0, MAX_POSTS_PER_SOURCE).map((article) => ({
+  const posts = articles.slice(0, MAX_POSTS_PER_SOURCE).map((article) => ({
     platform: 'devto',
     status: 'live',
     title: article.title,
@@ -44,6 +80,7 @@ async function fetchDevTo() {
       comments: article.comments_count ?? 0,
     },
   }))
+  return keepSafe(posts, 'devto')
 }
 
 function stripHtml(html) {
@@ -61,7 +98,7 @@ async function fetchMedium() {
   const xml = await res.text()
   const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, MAX_POSTS_PER_SOURCE)
 
-  return items.map(([, block]) => {
+  const posts = items.map(([, block]) => {
     const pubDate = extractTag(block, 'pubDate')
     const categories = [...block.matchAll(/<category>([\s\S]*?)<\/category>/g)].map((m) =>
       m[1].replace('<![CDATA[', '').replace(']]>', '').trim()
@@ -78,6 +115,7 @@ async function fetchMedium() {
       stats: {},
     }
   })
+  return keepSafe(posts, 'medium')
 }
 
 async function readExisting() {

@@ -63,7 +63,8 @@ src/
 └── main.tsx
 scripts/
 ├── fetch-writing.mjs      # Build-time dev.to + Medium fetch → writing.generated.json (never throws)
-└── generate-llms-txt.mjs  # profile.ts → llms.txt + public/llms.txt
+├── generate-llms-txt.mjs  # profile.ts → llms.txt + public/llms.txt
+└── check-csp.mjs          # Post-build: inline <script> hashes must be in the netlify.toml CSP
 ```
 
 ## Common Commands
@@ -71,7 +72,7 @@ scripts/
 ```bash
 pnpm install        # Install dependencies
 pnpm dev            # Dev server at http://localhost:5173
-pnpm build          # fetch-writing → generate-llms-txt → tsc → vite build
+pnpm build          # fetch-writing → generate-llms-txt → tsc → vite build → check-csp
 pnpm preview        # Preview production build
 pnpm lint           # ESLint (max-warnings 0)
 pnpm sync:writing   # Refresh writing.generated.json only
@@ -130,7 +131,7 @@ netlify deploy --prod
 - ARIA labels on icon buttons and links
 - Keyboard navigation and visible focus indicators
 - Alt text for images
-- External links: `target="_blank"` and `rel="noopener noreferrer"`
+- External links: `target="_blank"` and `rel="noopener noreferrer"`; `window.open` passes `'noopener,noreferrer'`
 - WCAG AA contrast in both themes (why light-mode primary is `#00767F`, not neon cyan)
 
 ## README / GitHub Profile
@@ -153,3 +154,13 @@ netlify deploy --prod
 - Netlify auto-deploys on push to `main`
 - `netlify.toml`: Node 22, pnpm 8.15.0, `pnpm run build`, publish `dist`
 - SPA fallback redirect (`/*` → `/index.html`), security headers, immutable caching for `/assets/*`
+- `PNPM_FLAGS = "--frozen-lockfile"`: a stale `pnpm-lock.yaml` fails the deploy
+
+## Security Rules
+
+- **CSP lives in `netlify.toml`.** The inline theme script in `index.html` is allowed by its `sha256-` hash: if you edit that script, recompute the hash and update the CSP (`scripts/check-csp.mjs` fails `pnpm build` until you do). New third-party origins (scripts, fonts, images, `fetch`) need a matching CSP directive; `style-src 'unsafe-inline'` stays for Emotion
+- Check CSP changes with a `vite preview`-style server that sends the `netlify.toml` headers, in a real browser, looking for console CSP violations
+- Feed URLs from `scripts/fetch-writing.mjs` pass `safePostUrl` (https + platform host allowlist) before reaching `href`; keep any new feed source behind the same check
+- Validate `localStorage` values against an allowlist; never cast them
+- No `dangerouslySetInnerHTML` / `innerHTML`: render feed text as JSX
+- `.claude/settings.local.json` is per-user and git-ignored; shared agent permissions go in `.claude/settings.json`

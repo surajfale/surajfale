@@ -18,8 +18,9 @@ type ThemeMode = 'light' | 'dark'
 function App() {
   const [mode, setMode] = useState<ThemeMode>(() => {
     // Check localStorage first, then system preference
-    const savedMode = localStorage.getItem('theme-mode') as ThemeMode | null
-    if (savedMode) return savedMode
+    // Allowlist the stored value (as index.html's pre-paint script does) instead of casting it
+    const savedMode = localStorage.getItem('theme-mode')
+    if (savedMode === 'light' || savedMode === 'dark') return savedMode
 
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })

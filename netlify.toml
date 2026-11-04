@@ -10,6 +10,8 @@
   [build.environment]
     NODE_VERSION = "22"
     PNPM_VERSION = "8.15.0"
+    # Fail the install if pnpm-lock.yaml is out of date instead of re-resolving
+    PNPM_FLAGS = "--frozen-lockfile"
 
 # Redirect rules for SPA
 [[redirects]]
@@ -22,9 +24,15 @@
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    # script-src hash = the inline theme script in index.html. If you edit that
+    # script, update the hash here (scripts/check-csp.mjs fails the build until you do).
+    # style-src needs 'unsafe-inline' for Emotion/MUI runtime styles.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-Av0SsqsCRr4lbM0MVFZb3gyt+5W55nAfV+VVY+OOXKI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 [[headers]]
   for = "/assets/*"
