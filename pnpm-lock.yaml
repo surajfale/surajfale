@@ -21,12 +21,12 @@ dependencies:
   '@emotion/styled':
     specifier: ^11.14.1
     version: 11.14.1(@emotion/react@11.14.0)(@types/react@19.3.0)(react@19.3.1)
-  '@mui/icons-material':
-    specifier: ^9.5.0
-    version: 9.5.0(@mui/material@9.5.0)(@types/react@19.3.0)(react@19.3.1)
   '@mui/material':
     specifier: ^9.5.0
     version: 9.5.0(@emotion/react@11.14.0)(@emotion/styled@11.14.1)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
+  '@phosphor-icons/react':
+    specifier: ^2.1.10
+    version: 2.1.10(react-dom@19.3.1)(react@19.3.1)
   react:
     specifier: ^19.3.1
     version: 19.3.1
@@ -503,23 +503,6 @@ packages:
     resolution: {integrity: sha512-PErEpl3Lp+1ZqWYKI7GQU8XSiciAFmLbUAZ7IoaUL598HLy1UAFuEUMEJu8yAS1v8vkXYzWprMVZzky4UwXoOA==}
     dev: false
 
-  /@mui/icons-material@9.5.0(@mui/material@9.5.0)(@types/react@19.3.0)(react@19.3.1):
-    resolution: {integrity: sha512-dahtVaqnRUIBgaZ4WC9EdP+LgJ5d2rslASYIX+nDFG6+ssUiM11jQ+Gd1wH8vhUGoNA9ES40MYics5BI8zJFXQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      '@mui/material': ^9.5.0
-      '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.29.10
-      '@mui/material': 9.5.0(@emotion/react@11.14.0)(@emotion/styled@11.14.1)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
-      '@types/react': 19.3.0
-      react: 19.3.1
-    dev: false
-
   /@mui/material@9.5.0(@emotion/react@11.14.0)(@emotion/styled@11.14.1)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1):
     resolution: {integrity: sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==}
     engines: {node: '>=14.0.0'}
@@ -665,6 +648,17 @@ packages:
   /@oxc-project/types@0.156.0:
     resolution: {integrity: sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw==}
     dev: true
+
+  /@phosphor-icons/react@2.1.10(react-dom@19.3.1)(react@19.3.1):
+    resolution: {integrity: sha512-vt8Tvq8GLjheAZZYa+YG/pW7HDbov8El/MANW8pOAz4eGxrwhnbfrQZq0Cp4q8zBEu8NIhHdnr+r8thnfRSNYA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>= 16.8'
+      react-dom: '>= 16.8'
+    dependencies:
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+    dev: false
 
   /@popperjs/core@2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}

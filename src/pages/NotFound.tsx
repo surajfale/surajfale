@@ -1,10 +1,11 @@
 import { Box, Container, Typography, Button, alpha } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import HomeIcon from '@mui/icons-material/Home'
 import { DecryptText } from '../components/DecryptText'
 import Footer from '../components/Footer'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { fullViewportHeight } from '../theme'
+import { HouseIcon } from '@phosphor-icons/react'
+import AppIcon from '../components/AppIcon'
 
 const NotFound = () => {
   const navigate = useNavigate()
@@ -85,7 +86,7 @@ const NotFound = () => {
         <Button
           variant="contained"
           size="large"
-          startIcon={<HomeIcon />}
+          startIcon={<AppIcon icon={HouseIcon} />}
           onClick={() => navigate('/')}
         >
           Return Home

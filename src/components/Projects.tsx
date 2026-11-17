@@ -13,11 +13,12 @@ import {
   Grid,
   alpha,
 } from '@mui/material'
-import AppsIcon from '@mui/icons-material/Apps'
 import { profileData } from '../content/profile'
 import TiltCard from './TiltCard'
 import Reveal from './Reveal'
 import SectionHeading from './SectionHeading'
+import { SquaresFourIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 const Projects = () => {
   const navigate = useNavigate()
@@ -180,7 +181,7 @@ const Projects = () => {
             variant="outlined"
             color="secondary"
             size="large"
-            startIcon={<AppsIcon />}
+            startIcon={<AppIcon icon={SquaresFourIcon} />}
             onClick={() => navigate('/apps')}
             sx={{
               px: 4,

@@ -1,6 +1,7 @@
 import { Box, Container, Typography, Link } from '@mui/material'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import { transitionFor, hoverOnly } from '../theme'
+import { HeartIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 const linkTransition = transitionFor(['transform', 'color', 'text-shadow'])
 
@@ -42,7 +43,9 @@ const Footer = () => {
             }}
           >
             © {currentYear} Suraj Fale. Made with{' '}
-            <FavoriteIcon
+            <AppIcon
+              icon={HeartIcon}
+              weight="fill"
               sx={{
                 fontSize: '1rem',
                 color: 'accent1',

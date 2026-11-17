@@ -25,10 +25,6 @@ import {
   Divider,
   alpha,
 } from '@mui/material'
-import ViewModuleIcon from '@mui/icons-material/ViewModule'
-import ViewListIcon from '@mui/icons-material/ViewList'
-import LaunchIcon from '@mui/icons-material/Launch'
-import CodeIcon from '@mui/icons-material/Code'
 import { profileData } from '../content/profile'
 import { getAllCategories, filterProjectsByCategory, getProjectCategory } from '../utils/categories'
 import Footer from '../components/Footer'
@@ -38,6 +34,8 @@ import SectionHeading from '../components/SectionHeading'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { fullViewportHeight, transitionFor, hoverOnly } from '../theme'
 import type { Project } from '../content/profile'
+import { ArrowSquareOutIcon, CodeIcon, RowsIcon, SquaresFourIcon } from '@phosphor-icons/react'
+import AppIcon from '../components/AppIcon'
 
 type ViewMode = 'card' | 'list'
 
@@ -158,11 +156,11 @@ const Apps = () => {
             }}
           >
             <ToggleButton value="card" aria-label="card view">
-              <ViewModuleIcon sx={{ mr: 1 }} />
+              <AppIcon icon={SquaresFourIcon} sx={{ mr: 1 }} />
               Card
             </ToggleButton>
             <ToggleButton value="list" aria-label="list view">
-              <ViewListIcon sx={{ mr: 1 }} />
+              <AppIcon icon={RowsIcon} sx={{ mr: 1 }} />
               List
             </ToggleButton>
           </ToggleButtonGroup>
@@ -290,7 +288,7 @@ const Apps = () => {
                                         <Button
                                           variant="outlined"
                                           fullWidth
-                                          startIcon={<LaunchIcon />}
+                                          startIcon={<AppIcon icon={ArrowSquareOutIcon} />}
                                           onClick={(e) => {
                                             e.stopPropagation()
                                             window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
@@ -420,7 +418,7 @@ const Apps = () => {
                       <Button
                         variant="outlined"
                         size="small"
-                        startIcon={<LaunchIcon />}
+                        startIcon={<AppIcon icon={ArrowSquareOutIcon} />}
                         onClick={(e) => {
                           e.stopPropagation()
                           window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
@@ -432,7 +430,7 @@ const Apps = () => {
                         <Button
                           variant="outlined"
                           size="small"
-                          startIcon={<CodeIcon />}
+                          startIcon={<AppIcon icon={CodeIcon} />}
                           onClick={(e) => {
                             e.stopPropagation()
                             window.open(project.sourceUrl, '_blank', 'noopener,noreferrer')

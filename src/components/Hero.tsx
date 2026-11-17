@@ -1,9 +1,9 @@
 import { Box, Container, Typography, Button, Stack, alpha } from '@mui/material'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import GitHubIcon from '@mui/icons-material/GitHub'
 import { profileData } from '../content/profile'
 import { DecryptText } from './DecryptText'
 import { fullViewportHeight } from '../theme'
+import { GithubLogoIcon, LinkedinLogoIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 const Hero = () => {
   return (
@@ -84,7 +84,7 @@ const Hero = () => {
               component="a"
               variant="outlined"
               size="large"
-              startIcon={<LinkedInIcon />}
+              startIcon={<AppIcon icon={LinkedinLogoIcon} />}
               href={profileData.socials.find((s) => s.name === 'LinkedIn')?.url || '#'}
               target="_blank"
               rel="noopener noreferrer"
@@ -97,7 +97,7 @@ const Hero = () => {
               component="a"
               variant="contained"
               size="large"
-              startIcon={<GitHubIcon />}
+              startIcon={<AppIcon icon={GithubLogoIcon} />}
               href={profileData.socials.find((s) => s.name === 'GitHub')?.url || '#'}
               target="_blank"
               rel="noopener noreferrer"

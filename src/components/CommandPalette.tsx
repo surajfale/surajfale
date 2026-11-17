@@ -14,13 +14,8 @@ import {
   alpha,
   useTheme,
 } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import HomeIcon from '@mui/icons-material/Home'
-import AppsIcon from '@mui/icons-material/Apps'
-import PersonIcon from '@mui/icons-material/Person'
-import GitHubIcon from '@mui/icons-material/GitHub'
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
+import { ArrowElbowDownLeftIcon, GithubLogoIcon, HouseIcon, MagnifyingGlassIcon, MoonIcon, SquaresFourIcon, UserIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 interface CommandPaletteProps {
   toggleTheme: () => void
@@ -48,7 +43,7 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
         id: 'home',
         title: 'Home',
         subtitle: 'Navigate to home page',
-        icon: <HomeIcon />,
+        icon: <AppIcon icon={HouseIcon} />,
         action: () => {
           navigate('/')
           window.scrollTo(0, 0)
@@ -58,14 +53,14 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
         id: 'projects',
         title: 'Projects',
         subtitle: 'View all projects',
-        icon: <AppsIcon />,
+        icon: <AppIcon icon={SquaresFourIcon} />,
         action: () => navigate('/apps'),
       },
       {
         id: 'about',
         title: 'About Me',
         subtitle: 'Scroll to about section',
-        icon: <PersonIcon />,
+        icon: <AppIcon icon={UserIcon} />,
         action: () => {
           navigate('/')
           setTimeout(() => {
@@ -77,14 +72,14 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
         id: 'theme',
         title: 'Toggle Theme',
         subtitle: 'Switch between light and dark mode',
-        icon: <Brightness4Icon />,
+        icon: <AppIcon icon={MoonIcon} />,
         action: toggleTheme,
       },
       {
         id: 'github',
         title: 'GitHub',
         subtitle: 'Visit my GitHub profile',
-        icon: <GitHubIcon />,
+        icon: <AppIcon icon={GithubLogoIcon} />,
         action: () => window.open('https://github.com/surajfale', '_blank', 'noopener,noreferrer'),
       },
     ],
@@ -171,7 +166,7 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
               disableUnderline: true,
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon sx={{ color: 'text.secondary' }} />
+                  <AppIcon icon={MagnifyingGlassIcon} sx={{ color: 'text.secondary' }} />
                 </InputAdornment>
               ),
               sx: { fontSize: '1.2rem', fontFamily: '"Space Mono", monospace' },
@@ -217,7 +212,7 @@ const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
                     </Typography>
                   }
                 />
-                {index === selectedIndex && <KeyboardReturnIcon sx={{ fontSize: 16, color: 'text.disabled' }} />}
+                {index === selectedIndex && <AppIcon icon={ArrowElbowDownLeftIcon} sx={{ fontSize: 16, color: 'text.disabled' }} />}
               </ListItemButton>
             ))
           ) : (

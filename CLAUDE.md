@@ -18,7 +18,8 @@ Suraj is a Principal Engineer positioned as a **Big Data & Streaming specialist:
 - **Build Tool:** Vite 8 (Rolldown bundler)
 - **Runtime:** Node 24 LTS for dev and build only (`engines: >=24`, `.nvmrc`, Netlify `NODE_VERSION`); the deployed site is static
 - **Package Manager:** pnpm 8+ (required; `packageManager: pnpm@8.15.0`)
-- **UI Library:** Material-UI (MUI) v9 + MUI icons
+- **UI Library:** Material-UI (MUI) v9
+- **Icons:** Phosphor (`@phosphor-icons/react`, `*Icon` export names) rendered through `src/components/AppIcon.tsx`, which accepts MUI `sx`/`fontSize` and sets the single site-wide weight (`ICON_WEIGHT`). Don't add `@mui/icons-material` back
 - **Styling:** Emotion (CSS-in-JS via `sx`), plus global CSS in `src/index.css`
 - **Fonts:** Lexend Mega (headings/buttons) and Space Mono (body), loaded from Google Fonts in `index.css`
 - **Linting:** ESLint 10 with flat config (`eslint.config.js`, not .eslintrc); `eslint-plugin-react-hooks` 7 includes the React Compiler rules (e.g. no `setState` directly in an effect)
@@ -49,6 +50,7 @@ src/
 │   ├── CommandPalette.tsx # ⌘K / Ctrl+K palette (global)
 │   ├── SystemHUD.tsx      # Bottom-right HUD: section + scroll progress (md+ only, global)
 │   ├── ThemeToggle.tsx    # Fixed light/dark toggle
+│   ├── AppIcon.tsx        # Phosphor icon wrapper (MUI sx, one weight)
 │   └── ErrorBoundary.tsx
 ├── content/
 │   ├── profile.ts         # Single source of truth: profile, highlights, socials, projects

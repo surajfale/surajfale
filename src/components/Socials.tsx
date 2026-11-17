@@ -1,34 +1,27 @@
 import type { ReactElement } from 'react'
 import { Box, Container, Typography, IconButton, Stack, Tooltip, alpha } from '@mui/material'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import GitHubIcon from '@mui/icons-material/GitHub'
-import FacebookIcon from '@mui/icons-material/Facebook'
-import InstagramIcon from '@mui/icons-material/Instagram'
-import CameraAltIcon from '@mui/icons-material/CameraAlt'
-import CodeIcon from '@mui/icons-material/Code'
-import LayersIcon from '@mui/icons-material/Layers'
-import TerminalIcon from '@mui/icons-material/Terminal'
-import ArticleIcon from '@mui/icons-material/Article'
 import { profileData } from '../content/profile'
 import SectionHeading from './SectionHeading'
 import Reveal from './Reveal'
 import { glowShadow, transitionFor, hoverOnly } from '../theme'
+import { CameraIcon, CodeIcon, DevToLogoIcon, FacebookLogoIcon, GithubLogoIcon, InstagramLogoIcon, LinkedinLogoIcon, MediumLogoIcon, StackOverflowLogoIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 const iconTransition = transitionFor(['transform', 'box-shadow', 'border-color', 'color'])
 
 const Socials = () => {
   const getIcon = (iconName: string) => {
     const iconMap: Record<string, ReactElement> = {
-      LinkedIn: <LinkedInIcon fontSize="large" />,
-      GitHub: <GitHubIcon fontSize="large" />,
-      Facebook: <FacebookIcon fontSize="large" />,
-      Instagram: <InstagramIcon fontSize="large" />,
-      Camera: <CameraAltIcon fontSize="large" />,
-      StackOverflow: <LayersIcon fontSize="large" />,
-      DevTo: <TerminalIcon fontSize="large" />,
-      Medium: <ArticleIcon fontSize="large" />,
+      LinkedIn: <AppIcon icon={LinkedinLogoIcon} fontSize="large" />,
+      GitHub: <AppIcon icon={GithubLogoIcon} fontSize="large" />,
+      Facebook: <AppIcon icon={FacebookLogoIcon} fontSize="large" />,
+      Instagram: <AppIcon icon={InstagramLogoIcon} fontSize="large" />,
+      Camera: <AppIcon icon={CameraIcon} fontSize="large" />,
+      StackOverflow: <AppIcon icon={StackOverflowLogoIcon} fontSize="large" />,
+      DevTo: <AppIcon icon={DevToLogoIcon} fontSize="large" />,
+      Medium: <AppIcon icon={MediumLogoIcon} fontSize="large" />,
     }
-    return iconMap[iconName] || <CodeIcon fontSize="large" />
+    return iconMap[iconName] || <AppIcon icon={CodeIcon} fontSize="large" />
   }
 
   const emphasizedSocials = profileData.socials.filter((s) => s.emphasized)

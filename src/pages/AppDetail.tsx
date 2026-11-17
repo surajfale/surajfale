@@ -21,19 +21,14 @@ import {
   useTheme,
   alpha,
 } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import LaunchIcon from '@mui/icons-material/Launch'
-import CodeIcon from '@mui/icons-material/Code'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import HomeIcon from '@mui/icons-material/Home'
-import AppsIcon from '@mui/icons-material/Apps'
 import { profileData } from '../content/profile'
 import { getProjectCategory } from '../utils/categories'
 import Footer from '../components/Footer'
 import { DecryptText } from '../components/DecryptText'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { fullViewportHeight, transitionFor, hoverOnly } from '../theme'
+import { ArrowLeftIcon, ArrowSquareOutIcon, CaretDownIcon, CheckCircleIcon, CodeIcon, HouseIcon, SquaresFourIcon } from '@phosphor-icons/react'
+import AppIcon from '../components/AppIcon'
 
 const AppDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -106,7 +101,7 @@ const AppDetail = () => {
               fontWeight: 500,
             }}
           >
-            <HomeIcon fontSize="small" />
+            <AppIcon icon={HouseIcon} fontSize="small" />
             HOME
           </Link>
           <Link
@@ -125,7 +120,7 @@ const AppDetail = () => {
               fontWeight: 500,
             }}
           >
-            <AppsIcon fontSize="small" />
+            <AppIcon icon={SquaresFourIcon} fontSize="small" />
             APPS
           </Link>
           <Typography color="text.primary" sx={{ fontFamily: '"Space Mono", monospace', fontWeight: 700, textTransform: 'uppercase' }}>
@@ -181,7 +176,7 @@ const AppDetail = () => {
               <Button
                 variant="contained"
                 size="large"
-                startIcon={<LaunchIcon />}
+                startIcon={<AppIcon icon={ArrowSquareOutIcon} />}
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -193,7 +188,7 @@ const AppDetail = () => {
                 <Button
                   variant="outlined"
                   size="large"
-                  startIcon={<CodeIcon />}
+                  startIcon={<AppIcon icon={CodeIcon} />}
                   href={project.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -204,7 +199,7 @@ const AppDetail = () => {
               )}
               <Button
                 variant="text"
-                startIcon={<ArrowBackIcon />}
+                startIcon={<AppIcon icon={ArrowLeftIcon} />}
                 onClick={() => navigate('/apps')}
                 sx={{ flex: { xs: 1, sm: 'none' }, color: 'text.secondary', position: 'relative', zIndex: 10 }}
               >
@@ -272,7 +267,7 @@ const AppDetail = () => {
                 <Stack spacing={2}>
                   {project.features.map((feature, index) => (
                     <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                      <CheckCircleIcon sx={{ color: 'secondary.main', mt: 0.5, flexShrink: 0 }} />
+                      <AppIcon icon={CheckCircleIcon} sx={{ color: 'secondary.main', mt: 0.5, flexShrink: 0 }} />
                       <Typography variant="body1" color="text.primary" sx={{ fontFamily: '"Space Mono", monospace' }}>
                         {feature}
                       </Typography>
@@ -332,7 +327,7 @@ const AppDetail = () => {
                 borderColor: 'divider',
                 '&::before': { display: 'none' } // Hide default divider
             }}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'primary.main' }} />}>
+              <AccordionSummary expandIcon={<AppIcon icon={CaretDownIcon} sx={{ color: 'primary.main' }} />}>
                 <Typography variant="h5" sx={{ fontWeight: 900, textTransform: 'uppercase', color: 'primary.main' }}>
                   Architecture & Design
                 </Typography>
@@ -436,7 +431,7 @@ const AppDetail = () => {
         <Box sx={{ mt: 4, textAlign: 'center' }}>
           <Button
             variant="outlined"
-            startIcon={<ArrowBackIcon />}
+            startIcon={<AppIcon icon={ArrowLeftIcon} />}
             onClick={() => navigate('/apps')}
             size="large"
           >

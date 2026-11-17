@@ -9,15 +9,12 @@ import {
   Stack,
   Button,
 } from '@mui/material'
-import TerminalIcon from '@mui/icons-material/Terminal'
-import ArticleIcon from '@mui/icons-material/Article'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
 import { getWritingFeed, WritingPlatform, WritingPost } from '../content/writing'
 import TiltCard from './TiltCard'
 import Reveal from './Reveal'
 import SectionHeading from './SectionHeading'
+import { ChatCircleIcon, DevToLogoIcon, LinkedinLogoIcon, MediumLogoIcon, ThumbsUpIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 const PLATFORM_META: Record<
   WritingPlatform,
@@ -25,19 +22,19 @@ const PLATFORM_META: Record<
 > = {
   devto: {
     label: 'DEV',
-    icon: <TerminalIcon sx={{ fontSize: 18 }} />,
+    icon: <AppIcon icon={DevToLogoIcon} sx={{ fontSize: 18 }} />,
     gradient: 'linear-gradient(135deg, #00F0FF 0%, #001f3f 100%)',
     statusLabel: 'Auto-synced',
   },
   medium: {
     label: 'Medium',
-    icon: <ArticleIcon sx={{ fontSize: 18 }} />,
+    icon: <AppIcon icon={MediumLogoIcon} sx={{ fontSize: 18 }} />,
     gradient: 'linear-gradient(135deg, #BC13FE 0%, #1c0640 100%)',
     statusLabel: 'Auto-synced',
   },
   linkedin: {
     label: 'LinkedIn',
-    icon: <LinkedInIcon sx={{ fontSize: 18 }} />,
+    icon: <AppIcon icon={LinkedinLogoIcon} sx={{ fontSize: 18 }} />,
     gradient: 'linear-gradient(135deg, #6E7681 0%, #0d1117 100%)',
     statusLabel: 'Curated',
   },
@@ -93,13 +90,13 @@ const PostCard = ({ post, platformLabel }: { post: WritingPost; platformLabel: s
           <Stack direction="row" spacing={2}>
             {typeof post.stats?.reactions === 'number' && (
               <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center', color: 'text.secondary' }}>
-                <ThumbUpIcon sx={{ fontSize: 14 }} />
+                <AppIcon icon={ThumbsUpIcon} sx={{ fontSize: 14 }} />
                 <Typography variant="caption">{post.stats.reactions}</Typography>
               </Stack>
             )}
             {typeof post.stats?.comments === 'number' && (
               <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center', color: 'text.secondary' }}>
-                <ChatBubbleOutlineIcon sx={{ fontSize: 14 }} />
+                <AppIcon icon={ChatCircleIcon} sx={{ fontSize: 14 }} />
                 <Typography variant="caption">{post.stats.comments}</Typography>
               </Stack>
             )}

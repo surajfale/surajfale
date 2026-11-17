@@ -1,7 +1,7 @@
 import { IconButton, Tooltip, alpha } from '@mui/material'
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import Brightness7Icon from '@mui/icons-material/Brightness7'
 import { motion, transitionFor, hoverOnly } from '../theme'
+import { MoonIcon, SunIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 interface ThemeToggleProps {
   mode: 'light' | 'dark'
@@ -47,9 +47,9 @@ const ThemeToggle = ({ mode, onToggle }: ThemeToggleProps) => {
         }}
       >
         {mode === 'dark' ? (
-          <Brightness7Icon sx={{ color: 'secondary.main' }} />
+          <AppIcon icon={SunIcon} sx={{ color: 'secondary.main' }} />
         ) : (
-          <Brightness4Icon sx={{ color: 'primary.main' }} />
+          <AppIcon icon={MoonIcon} sx={{ color: 'primary.main' }} />
         )}
       </IconButton>
     </Tooltip>

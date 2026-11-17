@@ -14,8 +14,8 @@ export default defineConfig({
         codeSplitting: {
           groups: [
             {
-              name: 'mui-icons',
-              test: /[\\/]node_modules[\\/]@mui[\\/]icons-material[\\/]/,
+              name: 'icons',
+              test: /[\\/]node_modules[\\/]@phosphor-icons[\\/]/,
               priority: 20,
             },
             {

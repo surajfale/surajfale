@@ -1,18 +1,16 @@
 import type { ReactElement } from 'react'
 import { Box, Container, Typography, Paper, Grid, Chip, alpha } from '@mui/material'
-import WorkIcon from '@mui/icons-material/Work'
-import SchoolIcon from '@mui/icons-material/School'
-import TrendingUpIcon from '@mui/icons-material/TrendingUp'
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import { profileData } from '../content/profile'
 import SectionHeading from './SectionHeading'
 import Reveal from './Reveal'
+import { BriefcaseIcon, GraduationCapIcon, SparkleIcon, TrendUpIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 const About = () => {
   const iconMap: Record<number, ReactElement> = {
-    0: <WorkIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
-    1: <SchoolIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
-    2: <TrendingUpIcon sx={{ fontSize: 32, color: 'primary.main' }} />,
+    0: <AppIcon icon={BriefcaseIcon} sx={{ fontSize: 32, color: 'primary.main' }} />,
+    1: <AppIcon icon={GraduationCapIcon} sx={{ fontSize: 32, color: 'primary.main' }} />,
+    2: <AppIcon icon={TrendUpIcon} sx={{ fontSize: 32, color: 'primary.main' }} />,
   }
 
   return (
@@ -58,7 +56,7 @@ const About = () => {
                 borderColor: 'divider',
               }}
             >
-              <AutoAwesomeIcon sx={{ color: 'secondary.main', fontSize: 20 }} />
+              <AppIcon icon={SparkleIcon} sx={{ color: 'secondary.main', fontSize: 20 }} />
               <Typography
                 variant="body1"
                 sx={{

@@ -1,7 +1,8 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
 import { Box, Container, Typography, Button, alpha } from '@mui/material'
-import RefreshIcon from '@mui/icons-material/Refresh'
 import { fullViewportHeight } from '../theme'
+import { ArrowClockwiseIcon } from '@phosphor-icons/react'
+import AppIcon from './AppIcon'
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -81,7 +82,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
           <Button
             variant="contained"
             size="large"
-            startIcon={<RefreshIcon />}
+            startIcon={<AppIcon icon={ArrowClockwiseIcon} />}
             onClick={() => window.location.assign('/')}
           >
             Reload
