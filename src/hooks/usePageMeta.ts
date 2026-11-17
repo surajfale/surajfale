@@ -5,9 +5,9 @@ interface PageMeta {
   description?: string
 }
 
-const DEFAULT_TITLE = 'Suraj Fale - Software Engineer Portfolio'
+const DEFAULT_TITLE = 'Suraj Fale | Principal Engineer'
 const DEFAULT_DESCRIPTION =
-  'Suraj Fale - Software Engineer specializing in Scala, Apache Kafka, and distributed systems. Explore my projects and professional journey.'
+  'Suraj Fale, Principal Engineer: system design and Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java, exploring Generative AI.'
 
 const setMetaContent = (selector: string, content: string) => {
   const el = document.querySelector(selector)

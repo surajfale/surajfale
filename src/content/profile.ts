@@ -26,6 +26,16 @@ export interface CareerHighlight {
   description: string
 }
 
+export type StackDepth = 'Core' | 'Proficient' | 'Exploring'
+
+/** One row of the Core Stack & Architecture matrix. Platforms and languages stay separate rows. */
+export interface StackGroup {
+  domain: string
+  depth: StackDepth
+  items: string[]
+  note: string
+}
+
 export interface Profile {
   name: string
   title: string
@@ -33,6 +43,7 @@ export interface Profile {
   about: string
   highlights: CareerHighlight[]
   socials: SocialLink[]
+  stack: StackGroup[]
   projects: Project[]
 }
 
@@ -109,12 +120,51 @@ export const profileData: Profile = {
     {
       name: 'Snapchat',
       url: 'https://www.snapchat.com/add/suraj_f4',
-      icon: 'Camera',
+      icon: 'Snapchat',
       emphasized: false,
     },
   ],
 
-  // Featured section (Home page) shows the first two entries — lead with the projects
+  stack: [
+    {
+      domain: 'Platforms',
+      depth: 'Core',
+      items: ['Apache Spark', 'Apache Kafka'],
+      note: 'Batch and streaming pipelines at scale',
+    },
+    {
+      domain: 'Languages',
+      depth: 'Core',
+      items: ['Scala', 'Java'],
+      note: 'Typed, JVM-first service and pipeline code',
+    },
+    {
+      domain: 'Architecture',
+      depth: 'Core',
+      items: ['System design', 'Distributed systems', 'Event-driven architecture', 'Real-time processing'],
+      note: 'Resilient by design, pragmatic in delivery',
+    },
+    {
+      domain: 'Cloud & Infra',
+      depth: 'Proficient',
+      items: ['Cloud-native patterns', 'Docker', 'Kubernetes'],
+      note: 'Containerized, orchestrated, observable',
+    },
+    {
+      domain: 'Also Proficient',
+      depth: 'Proficient',
+      items: ['Python', 'JavaScript', 'Rust'],
+      note: 'Tooling, side projects and the odd daemon',
+    },
+    {
+      domain: 'Exploring',
+      depth: 'Exploring',
+      items: ['Generative AI', 'Prompt engineering', 'LLM integration'],
+      note: 'Practical AI features in production services',
+    },
+  ],
+
+  // Home features the first entry as the systems project card and lists the rest as tiles — lead with the projects
   // that best represent current Gen AI / full-stack work.
   projects: [
     {

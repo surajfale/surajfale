@@ -1,448 +1,160 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import {
-  Box,
-  Container,
-  Typography,
-  Button,
-  Chip,
-  Stack,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Breadcrumbs,
-  Link,
-  ImageList,
-  ImageListItem,
-  useMediaQuery,
-  useTheme,
-  alpha,
-} from '@mui/material'
+import { Link, useParams } from 'react-router-dom'
+import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon, CheckIcon, CodeIcon } from '@phosphor-icons/react'
 import { profileData } from '../content/profile'
 import { getProjectCategory } from '../utils/categories'
-import Footer from '../components/Footer'
-import { DecryptText } from '../components/DecryptText'
+import { hasLiveTarget } from '../utils/projects'
 import { usePageMeta } from '../hooks/usePageMeta'
-import { fullViewportHeight, transitionFor, hoverOnly } from '../theme'
-import { ArrowLeftIcon, ArrowSquareOutIcon, CaretDownIcon, CheckCircleIcon, CodeIcon, HouseIcon, SquaresFourIcon } from '@phosphor-icons/react'
-import AppIcon from '../components/AppIcon'
+import Bento from '../components/bento/Bento'
+import BentoLink from '../components/bento/BentoLink'
+import ActionLink from '../components/ActionLink'
+import ArchitectureNotes from '../components/ArchitectureNotes'
+import Tag from '../components/Tag'
+import NotFound from './NotFound'
 
-const AppDetail = () => {
+export default function AppDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const navigate = useNavigate()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const index = profileData.projects.findIndex((p) => p.slug === slug)
+  const project = profileData.projects[index]
 
-  const project = profileData.projects.find((p) => p.slug === slug)
+  usePageMeta({ title: project?.title ?? 'App Not Found', description: project?.description })
 
-  usePageMeta({
-    title: project?.title ?? 'App Not Found',
-    description: project?.description,
-  })
+  if (!project) return <NotFound what="app" />
 
-  if (!project) {
-    return (
-      <Box component="main" sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column' }}>
-        <Container maxWidth="lg" sx={{ flex: 1, py: 8 }}>
-          <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography variant="h3" gutterBottom sx={{ fontWeight: 900, textTransform: 'uppercase' }}>
-              App Not Found
-            </Typography>
-            <Button variant="contained" onClick={() => navigate('/apps')}>
-              Back to Apps
-            </Button>
-          </Box>
-        </Container>
-        <Footer />
-      </Box>
-    )
-  }
-
-  // Determine columns for ImageList based on screen size
-  const getImageListCols = () => {
-    if (project.screenshots.length === 1) return 1
-    if (isMobile) return 1
-    if (isTablet) return 2
-    return 3
-  }
-
-  const projectGradients = [
-    'linear-gradient(135deg, #00F0FF 0%, #001f3f 100%)',
-    'linear-gradient(135deg, #7000FF 0%, #001f3f 100%)',
-    'linear-gradient(135deg, #FF003C 0%, #001f3f 100%)',
-    'linear-gradient(135deg, #FDF500 0%, #001f3f 100%)',
-  ]
-  
-  const projectIndex = profileData.projects.findIndex((p) => p.slug === slug)
-  const accentGradient = projectGradients[projectIndex % projectGradients.length]
+  const all = profileData.projects
+  const prev = all[(index - 1 + all.length) % all.length]
+  const next = all[(index + 1) % all.length]
+  const number = String(index + 1).padStart(2, '0')
 
   return (
-    <Box component="main" sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column' }}>
-      <Container maxWidth="lg" sx={{ flex: 1, py: 4 }}>
-        {/* Breadcrumbs */}
-        <Breadcrumbs sx={{ mb: 4, '& .MuiBreadcrumbs-separator': { color: 'text.secondary' } }}>
-          <Link
-            component="button"
-            variant="body1"
-            onClick={() => navigate('/')}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 0.5,
-              color: 'text.secondary',
-              textDecoration: 'none',
-              '&:hover': { color: 'primary.main' },
-              cursor: 'pointer',
-              fontFamily: '"Space Mono", monospace',
-              fontWeight: 500,
-            }}
-          >
-            <AppIcon icon={HouseIcon} fontSize="small" />
-            HOME
-          </Link>
-          <Link
-            component="button"
-            variant="body1"
-            onClick={() => navigate('/apps')}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 0.5,
-              color: 'text.secondary',
-              textDecoration: 'none',
-              '&:hover': { color: 'primary.main' },
-              cursor: 'pointer',
-              fontFamily: '"Space Mono", monospace',
-              fontWeight: 500,
-            }}
-          >
-            <AppIcon icon={SquaresFourIcon} fontSize="small" />
-            APPS
-          </Link>
-          <Typography color="text.primary" sx={{ fontFamily: '"Space Mono", monospace', fontWeight: 700, textTransform: 'uppercase' }}>
-            {project.title}
-          </Typography>
-        </Breadcrumbs>
+    <main id="main" className="grid grid-cols-12 gap-4">
+      <Bento as="header" reveal={false} className="col-span-12 flex flex-col gap-6 lg:col-span-8">
+        <nav aria-label="Breadcrumb" className="meta">
+          <ol className="flex flex-wrap gap-2">
+            <li>
+              <Link to="/" className="hover:text-bone">
+                Home
+              </Link>{' '}
+              /
+            </li>
+            <li>
+              <Link to="/apps" className="hover:text-bone">
+                Apps
+              </Link>{' '}
+              /
+            </li>
+            <li aria-current="page" className="text-bone">
+              {project.title}
+            </li>
+          </ol>
+        </nav>
+        <h1 className="font-display text-[clamp(2.5rem,6.5vw,4.75rem)] leading-[0.95] font-extrabold tracking-[-0.03em]">
+          {project.title}
+        </h1>
+        <p className="max-w-2xl text-base leading-relaxed text-bone-muted sm:text-lg">{project.description}</p>
+        <div className="mt-auto flex flex-wrap gap-3 pt-2">
+          {hasLiveTarget(project) && (
+            <ActionLink tone="signal" href={project.liveUrl} trailingIcon={<ArrowUpRightIcon />}>
+              View Live Project
+            </ActionLink>
+          )}
+          {project.sourceUrl && (
+            <ActionLink href={project.sourceUrl} icon={<CodeIcon />} trailingIcon={<ArrowUpRightIcon />}>
+              Source code
+            </ActionLink>
+          )}
+          <ActionLink to="/apps" icon={<ArrowLeftIcon />}>
+            All apps
+          </ActionLink>
+        </div>
+      </Bento>
 
-        {/* Hero Section */}
-        <Card
-          sx={{
-            mb: 4,
-            bgcolor: (theme) => alpha(theme.palette.background.paper, 0.6),
-            backdropFilter: 'blur(10px)',
-            border: '1px solid',
-            borderColor: 'divider',
-            borderRadius: 2,
-            overflow: 'hidden',
-          }}
-        >
-          <CardMedia
-            component="div"
-            sx={{
-              height: { xs: 200, md: 300 },
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: accentGradient,
-              position: 'relative',
-            }}
-          >
-            <Box sx={{ textAlign: 'center', color: '#fff', px: 3, position: 'relative', zIndex: 1 }}>
-              <Typography variant="h3" component="h1" sx={{ fontWeight: 900, mb: 2, textTransform: 'uppercase', textShadow: '0 4px 8px rgba(0,0,0,0.5)' }}>
-                <DecryptText text={project.title} />
-              </Typography>
-              <Chip
-                label={getProjectCategory(project)}
-                sx={{
-                  bgcolor: 'rgba(0,0,0,0.4)',
-                  color: '#fff',
-                  fontWeight: 700,
-                  backdropFilter: 'blur(4px)',
-                }}
-              />
-            </Box>
-          </CardMedia>
-
-          <CardContent sx={{ p: 4 }}>
-            <Typography variant="h6" sx={{ mb: 3, color: 'text.secondary', lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
-              {project.description}
-            </Typography>
-
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<AppIcon icon={ArrowSquareOutIcon} />}
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{ flex: { xs: 1, sm: 'none' }, position: 'relative', zIndex: 10 }}
-              >
-                Live Preview
-              </Button>
-              {project.sourceUrl && (
-                <Button
-                  variant="outlined"
-                  size="large"
-                  startIcon={<AppIcon icon={CodeIcon} />}
-                  href={project.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ flex: { xs: 1, sm: 'none' }, position: 'relative', zIndex: 10 }}
-                >
-                  Source Code
-                </Button>
-              )}
-              <Button
-                variant="text"
-                startIcon={<AppIcon icon={ArrowLeftIcon} />}
-                onClick={() => navigate('/apps')}
-                sx={{ flex: { xs: 1, sm: 'none' }, color: 'text.secondary', position: 'relative', zIndex: 10 }}
-              >
-                Back to Apps
-              </Button>
-            </Stack>
-          </CardContent>
-        </Card>
-
-        {/* Screenshots Gallery */}
-        {project.screenshots && project.screenshots.length > 0 && (
-          <Box sx={{ mb: 4 }}>
-            <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase' }}>
-              Screenshots
-            </Typography>
-            <ImageList cols={getImageListCols()} gap={16}>
-              {project.screenshots.map((screenshot, index) => (
-                <ImageListItem 
-                    key={index} 
-                    sx={{ 
-                        borderRadius: 2, 
-                        overflow: 'hidden',
-                        border: '1px solid',
-                        borderColor: 'divider',
-                        transition: transitionFor(['transform', 'box-shadow']),
-                        [hoverOnly]: {
-                            '&:hover': {
-                                transform: 'scale(1.02)',
-                                boxShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.3)}`
-                            }
-                        }
-                    }}
-                >
-                  <img
-                    src={screenshot}
-                    alt={`${project.title} screenshot ${index + 1}`}
-                    loading="lazy"
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      objectFit: 'cover',
-                    }}
-                  />
-                </ImageListItem>
+      <Bento as="aside" reveal={false} labelledBy="spec-title" className="col-span-12 lg:col-span-4">
+        <h2 id="spec-title" className="meta">
+          Spec sheet · {number}
+        </h2>
+        <dl className="mt-4 space-y-4">
+          <div>
+            <dt className="meta">Category</dt>
+            <dd className="mt-1 font-mono text-sm">{getProjectCategory(project)}</dd>
+          </div>
+          <div>
+            <dt className="meta">Stack</dt>
+            <dd className="mt-2 flex flex-wrap gap-2">
+              {project.technologies.map((t) => (
+                <Tag key={t}>{t}</Tag>
               ))}
-            </ImageList>
-          </Box>
-        )}
+            </dd>
+          </div>
+          {project.techStackDetails && (
+            <div>
+              <dt className="meta">Build notes</dt>
+              <dd className="mt-1 text-sm leading-relaxed text-bone-muted">{project.techStackDetails}</dd>
+            </div>
+          )}
+        </dl>
+      </Bento>
 
-        <Grid container spacing={4}>
-          {/* Features */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Card sx={{ 
-                height: '100%', 
-                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
-                backdropFilter: 'blur(10px)',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'divider'
-            }}>
-              <CardContent sx={{ p: 3 }}>
-                <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase', color: 'primary.main' }}>
-                  Key Features
-                </Typography>
-                <Stack spacing={2}>
-                  {project.features.map((feature, index) => (
-                    <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                      <AppIcon icon={CheckCircleIcon} sx={{ color: 'secondary.main', mt: 0.5, flexShrink: 0 }} />
-                      <Typography variant="body1" color="text.primary" sx={{ fontFamily: '"Space Mono", monospace' }}>
-                        {feature}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
+      {project.screenshots.length > 0 && (
+        <Bento as="section" pad={false} labelledBy="shots-title" className="col-span-12 p-2">
+          <h2 id="shots-title" className="sr-only">
+            Screenshots
+          </h2>
+          <div className={project.screenshots.length > 1 ? 'grid gap-2 md:grid-cols-2' : ''}>
+            {project.screenshots.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt={`${project.title} screenshot ${i + 1}`}
+                width={1200}
+                height={750}
+                loading="lazy"
+                className="aspect-[16/10] w-full rounded-[2px] object-cover object-top"
+              />
+            ))}
+          </div>
+        </Bento>
+      )}
 
-          {/* Tech Stack */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Card sx={{ 
-                height: '100%', 
-                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
-                backdropFilter: 'blur(10px)',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'divider'
-            }}>
-              <CardContent sx={{ p: 3 }}>
-                <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 900, mb: 3, textTransform: 'uppercase', color: 'primary.main' }}>
-                  Technologies Used
-                </Typography>
-                <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap', mb: 3 }}>
-                  {project.technologies.map((tech, index) => (
-                    <Chip
-                      key={index}
-                      label={tech}
-                      variant="outlined"
-                      sx={{
-                        borderColor: 'secondary.main',
-                        color: 'text.primary',
-                        fontWeight: 600,
-                      }}
-                    />
-                  ))}
-                </Stack>
-                {project.techStackDetails && (
-                  <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
-                    {project.techStackDetails}
-                  </Typography>
-                )}
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+      <Bento labelledBy="features-title" className="col-span-12 lg:col-span-4">
+        <h2 id="features-title" className="font-display text-2xl font-bold">
+          Features
+        </h2>
+        <ul className="mt-5 space-y-3">
+          {project.features.map((f) => (
+            <li key={f} className="flex gap-3 text-sm leading-relaxed">
+              <CheckIcon aria-hidden className="mt-0.5 shrink-0 text-base text-bone-muted" />
+              {f}
+            </li>
+          ))}
+        </ul>
+      </Bento>
 
-        {/* Architecture Notes */}
-        {project.architectureNotes && (
-          <Box sx={{ mt: 4 }}>
-            <Accordion sx={{ 
-                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5), 
-                backdropFilter: 'blur(10px)',
-                borderRadius: '8px !important',
-                border: '1px solid',
-                borderColor: 'divider',
-                '&::before': { display: 'none' } // Hide default divider
-            }}>
-              <AccordionSummary expandIcon={<AppIcon icon={CaretDownIcon} sx={{ color: 'primary.main' }} />}>
-                <Typography variant="h5" sx={{ fontWeight: 900, textTransform: 'uppercase', color: 'primary.main' }}>
-                  Architecture & Design
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Box sx={{ lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}>
-                  {project.architectureNotes.split('\n').map((line, index) => {
-                    // Bold headers
-                    if (line.startsWith('**') && line.endsWith(':**')) {
-                      return (
-                        <Typography
-                          key={index}
-                          variant="h6"
-                          sx={{
-                            fontWeight: 700,
-                            color: 'secondary.main',
-                            mt: index > 0 ? 3 : 0,
-                            mb: 1.5,
-                            fontSize: '1.1rem',
-                            fontFamily: '"Space Mono", monospace',
-                            textTransform: 'uppercase',
-                          }}
-                        >
-                          {line.replace(/\*\*/g, '')}
-                        </Typography>
-                      )
-                    }
-                    // Bullet points
-                    if (line.trim().startsWith('•')) {
-                      const bulletText = line.replace(/^•\s*/, '')
-                      const parts = bulletText.split(/(\*\*.*?\*\*)/g)
+      {project.architectureNotes && (
+        <Bento labelledBy="arch-title" className="col-span-12 lg:col-span-8">
+          <p className="meta">Deep-dive</p>
+          <h2 id="arch-title" className="mt-2 mb-5 font-display text-2xl font-bold">
+            Architecture &amp; design
+          </h2>
+          <ArchitectureNotes notes={project.architectureNotes} />
+        </Bento>
+      )}
 
-                      return (
-                        <Box
-                          key={index}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            mb: 1,
-                            pl: 2,
-                          }}
-                        >
-                          <Typography
-                            component="span"
-                            sx={{
-                              color: 'primary.main',
-                              mr: 1.5,
-                              fontWeight: 700,
-                              fontSize: '1.2rem',
-                              lineHeight: 1.5,
-                            }}
-                          >
-                            •
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ flex: 1, lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}
-                          >
-                            {parts.map((part, partIndex) => {
-                              if (part.startsWith('**') && part.endsWith('**')) {
-                                return (
-                                  <Typography
-                                    key={partIndex}
-                                    component="span"
-                                    sx={{
-                                      fontWeight: 700,
-                                      color: 'text.primary',
-                                      fontFamily: '"Space Mono", monospace',
-                                    }}
-                                  >
-                                    {part.replace(/\*\*/g, '')}
-                                  </Typography>
-                                )
-                              }
-                              return <span key={partIndex}>{part}</span>
-                            })}
-                          </Typography>
-                        </Box>
-                      )
-                    }
-                    if (line.trim() === '') return <Box key={index} sx={{ height: 8 }} />
-                    return (
-                      <Typography
-                        key={index}
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ mb: 1, lineHeight: 1.8, fontFamily: '"Space Mono", monospace' }}
-                      >
-                        {line}
-                      </Typography>
-                    )
-                  })}
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-        )}
-
-        {/* Back Navigation */}
-        <Box sx={{ mt: 4, textAlign: 'center' }}>
-          <Button
-            variant="outlined"
-            startIcon={<AppIcon icon={ArrowLeftIcon} />}
-            onClick={() => navigate('/apps')}
-            size="large"
-          >
-            Back to All Apps
-          </Button>
-        </Box>
-      </Container>
-      <Footer />
-    </Box>
+      {all.length > 1 && (
+        <nav aria-label="More projects" className="col-span-12 grid grid-cols-12 gap-4">
+          <BentoLink to={`/apps/${prev.slug}`} className="col-span-12 sm:col-span-6">
+            <span className="meta flex items-center gap-1.5">
+              <ArrowLeftIcon aria-hidden /> Previous
+            </span>
+            <span className="mt-2 block font-display text-xl font-bold">{prev.title}</span>
+          </BentoLink>
+          <BentoLink to={`/apps/${next.slug}`} className="col-span-12 text-right sm:col-span-6">
+            <span className="meta flex items-center justify-end gap-1.5">
+              Next <ArrowRightIcon aria-hidden />
+            </span>
+            <span className="mt-2 block font-display text-xl font-bold">{next.title}</span>
+          </BentoLink>
+        </nav>
+      )}
+    </main>
   )
 }
-
-export default AppDetail
-

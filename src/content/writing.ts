@@ -55,3 +55,10 @@ export const getWritingFeed = (): PlatformFeed[] => [
 ]
 
 export const writingGeneratedAt = generatedWriting.generatedAt
+
+/** Newest posts across every platform, merged (the home Deep-dives tile). */
+export const getLatestPosts = (limit: number): WritingPost[] =>
+  getWritingFeed()
+    .flatMap((feed) => feed.posts)
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, limit)

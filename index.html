@@ -3,15 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0E0E10" />
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Suraj Fale - Software Engineer specializing in Scala, Apache Kafka, and distributed systems. Explore my projects and professional journey." />
-    <meta name="keywords" content="Suraj Fale, Software Engineer, Scala, Apache Kafka, React, Full Stack Developer" />
+    <!-- SEO Meta Tags (keep in sync with DEFAULT_* in src/hooks/usePageMeta.ts) -->
+    <meta name="description" content="Suraj Fale, Principal Engineer: system design and Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java, exploring Generative AI." />
+    <meta name="keywords" content="Suraj Fale, Principal Engineer, System Design, Apache Spark, Apache Kafka, Scala, Java, Distributed Systems" />
     <meta name="author" content="Suraj Fale" />
 
     <!-- Open Graph Tags -->
-    <meta property="og:title" content="Suraj Fale - Software Engineer Portfolio" />
-    <meta property="og:description" content="Software Engineer specializing in Scala, Apache Kafka, and distributed systems" />
+    <meta property="og:title" content="Suraj Fale | Principal Engineer" />
+    <meta property="og:description" content="System design and Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://surajfale.netlify.app/" />
     <meta property="og:image" content="https://surajfale.netlify.app/og-image.png" />
@@ -21,32 +23,22 @@
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Suraj Fale - Software Engineer Portfolio" />
-    <meta name="twitter:description" content="Software Engineer specializing in Scala, Apache Kafka, and distributed systems" />
+    <meta name="twitter:title" content="Suraj Fale | Principal Engineer" />
+    <meta name="twitter:description" content="System design and Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java." />
     <meta name="twitter:image" content="https://surajfale.netlify.app/og-image.png" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href="https://surajfale.netlify.app/" />
-    <title>Suraj Fale - Software Engineer Portfolio</title>
 
-    <!-- Set theme mode synchronously to avoid a flash of the wrong background before React mounts -->
-    <script>
-      (function () {
-        try {
-          var saved = localStorage.getItem('theme-mode');
-          var mode = saved === 'light' || saved === 'dark'
-            ? saved
-            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          document.documentElement.setAttribute('data-theme-mode', mode);
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme-mode', 'dark');
-        }
-      })();
-    </script>
-    <style>
-      html[data-theme-mode='dark'] body { background-color: #050511; color: #E0E0E0; }
-      html[data-theme-mode='light'] body { background-color: #F0F2F5; color: #1A1A1A; }
-    </style>
+    <!-- Syne (display) + Plus Jakarta Sans (body) + IBM Plex Mono (metadata) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+    />
+
+    <title>Suraj Fale | Principal Engineer</title>
 
     <script type="application/ld+json">
       {
@@ -55,7 +47,7 @@
         "name": "Suraj Fale",
         "jobTitle": "Principal Engineer",
         "url": "https://surajfale.netlify.app/",
-        "description": "Principal Engineer specializing in Scala, Apache Kafka, and distributed systems, exploring Generative AI and Prompt Engineering.",
+        "description": "Principal Engineer specializing in system design and Big Data & Streaming (Apache Spark, Apache Kafka) in Scala & Java, exploring Generative AI and Prompt Engineering.",
         "sameAs": [
           "https://www.linkedin.com/in/surajfale",
           "https://github.com/surajfale",

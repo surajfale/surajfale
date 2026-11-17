@@ -1,8 +1,5 @@
-import { Component, ErrorInfo, ReactNode } from 'react'
-import { Box, Container, Typography, Button, alpha } from '@mui/material'
-import { fullViewportHeight } from '../theme'
+import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { ArrowClockwiseIcon } from '@phosphor-icons/react'
-import AppIcon from './AppIcon'
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -12,6 +9,11 @@ interface ErrorBoundaryState {
   hasError: boolean
 }
 
+/**
+ * Render-error fallback. Deliberately plain (no motion components, no red):
+ * if something in the motion layer is what threw, this must still render.
+ * Errors are calm and specific, never an alarm-red badge.
+ */
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = { hasError: false }
 
@@ -31,64 +33,22 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     }
 
     return (
-      <Box
-        component="main"
-        sx={{
-          ...fullViewportHeight,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: 'background.default',
-        }}
-      >
-        <Container maxWidth="sm" sx={{ textAlign: 'center' }}>
-          <Typography
-            variant="h4"
-            component="h1"
-            gutterBottom
-            sx={{
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              color: 'text.primary',
-              textShadow: (theme) => `0 0 20px ${alpha(theme.palette.secondary.main, 0.5)}`,
-            }}
+      <main id="main" className="grid grid-cols-12 gap-4">
+        <section className="bento col-span-12 p-8 sm:p-10">
+          <p className="meta">Runtime · unhandled</p>
+          <h1 className="mt-4 font-display text-4xl font-extrabold sm:text-5xl">This page failed to render.</h1>
+          <p className="mt-4 max-w-lg text-bone-muted">
+            Something went wrong while drawing this view. Reloading usually fixes it.
+          </p>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-bento border-[1.5px] border-bone/40 px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.08em] transition-colors duration-150 hover:border-bone active:scale-[0.97]"
           >
-            System Error
-          </Typography>
-
-          <Box
-            sx={{
-              width: 100,
-              height: 4,
-              bgcolor: 'secondary.main',
-              mx: 'auto',
-              my: 3,
-              borderRadius: 2,
-              boxShadow: (theme) => `0 0 10px ${theme.palette.secondary.main}`,
-            }}
-          />
-
-          <Typography
-            variant="body1"
-            sx={{
-              color: 'text.secondary',
-              mb: 5,
-              fontFamily: '"Space Mono", monospace',
-            }}
-          >
-            Something went wrong rendering this page. Reloading usually fixes it.
-          </Typography>
-
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<AppIcon icon={ArrowClockwiseIcon} />}
-            onClick={() => window.location.assign('/')}
-          >
-            Reload
-          </Button>
-        </Container>
-      </Box>
+            <ArrowClockwiseIcon aria-hidden className="text-base" /> Reload page
+          </button>
+        </section>
+      </main>
     )
   }
 }

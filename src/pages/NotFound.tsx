@@ -1,100 +1,46 @@
-import { Box, Container, Typography, Button, alpha } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
-import { DecryptText } from '../components/DecryptText'
-import Footer from '../components/Footer'
+import { ArrowRightIcon, HouseIcon, SquaresFourIcon } from '@phosphor-icons/react'
 import { usePageMeta } from '../hooks/usePageMeta'
-import { fullViewportHeight } from '../theme'
-import { HouseIcon } from '@phosphor-icons/react'
-import AppIcon from '../components/AppIcon'
+import Bento from '../components/bento/Bento'
+import BentoLink from '../components/bento/BentoLink'
 
-const NotFound = () => {
-  const navigate = useNavigate()
-
-  usePageMeta({
-    title: 'Page Not Found',
-    description: 'This page could not be found.',
-  })
-
-  return (
-    <Box component="main" sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column' }}>
-      <Container
-        maxWidth="md"
-        sx={{
-          flex: 1,
-          py: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-        }}
-      >
-        <Typography
-          variant="h1"
-          component="p"
-          aria-hidden="true"
-          sx={{
-            fontSize: { xs: '5rem', md: '9rem' },
-            fontWeight: 900,
-            color: 'secondary.main',
-            textShadow: (theme) => `0 0 30px ${alpha(theme.palette.secondary.main, 0.6)}`,
-            lineHeight: 1,
-          }}
-        >
-          404
-        </Typography>
-
-        <Typography
-          variant="h4"
-          component="h1"
-          gutterBottom
-          sx={{
-            mt: 2,
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            color: 'text.primary',
-            textShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.5)}`,
-          }}
-        >
-          <DecryptText text="Signal Lost" />
-        </Typography>
-
-        <Box
-          sx={{
-            width: 100,
-            height: 4,
-            bgcolor: 'primary.main',
-            my: 3,
-            borderRadius: 2,
-            boxShadow: (theme) => `0 0 10px ${theme.palette.primary.main}`,
-          }}
-        />
-
-        <Typography
-          variant="body1"
-          sx={{
-            color: 'text.secondary',
-            maxWidth: '480px',
-            mb: 5,
-            fontFamily: '"Space Mono", monospace',
-          }}
-        >
-          This route doesn't resolve to anything. The page may have moved, or the link is out of
-          date.
-        </Typography>
-
-        <Button
-          variant="contained"
-          size="large"
-          startIcon={<AppIcon icon={HouseIcon} />}
-          onClick={() => navigate('/')}
-        >
-          Return Home
-        </Button>
-      </Container>
-      <Footer />
-    </Box>
-  )
+interface NotFoundProps {
+  /** What was missing, for the copy ("page" for unknown routes, "app" for bad slugs). */
+  what?: 'page' | 'app'
 }
 
-export default NotFound
+export default function NotFound({ what = 'page' }: NotFoundProps) {
+  usePageMeta({ title: what === 'app' ? 'App Not Found' : 'Page Not Found' })
+
+  return (
+    <main id="main" className="grid grid-cols-12 gap-4">
+      <Bento as="header" reveal={false} className="col-span-12 flex min-h-[22rem] flex-col justify-between gap-8 lg:col-span-8">
+        <p className="meta">Error · 404</p>
+        <div>
+          <h1 className="font-display text-[clamp(5rem,20vw,12rem)] leading-[0.8] font-extrabold tracking-[-0.05em]">
+            404
+          </h1>
+          <p className="mt-6 max-w-lg text-lg text-bone-muted">
+            {what === 'app'
+              ? 'That app is not in the index. It may have been renamed or retired.'
+              : 'Nothing is deployed at this address. The partition you wanted is not on this broker.'}
+          </p>
+        </div>
+      </Bento>
+
+      <div className="col-span-12 grid gap-4 lg:col-span-4">
+        <BentoLink to="/" reveal={false} className="flex flex-col justify-between gap-6">
+          <HouseIcon aria-hidden className="text-3xl" />
+          <span className="flex items-center justify-between font-display text-xl font-bold">
+            Back home <ArrowRightIcon aria-hidden />
+          </span>
+        </BentoLink>
+        <BentoLink to="/apps" reveal={false} className="flex flex-col justify-between gap-6">
+          <SquaresFourIcon aria-hidden className="text-3xl" />
+          <span className="flex items-center justify-between font-display text-xl font-bold">
+            Browse all apps <ArrowRightIcon aria-hidden />
+          </span>
+        </BentoLink>
+      </div>
+    </main>
+  )
+}

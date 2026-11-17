@@ -1,16 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   build: {
     outDir: 'dist',
     sourcemap: false,
     rolldownOptions: {
       output: {
         // Rolldown has no object-form manualChunks; codeSplitting groups replace it.
-        // Higher priority wins, so icons are claimed before the broader MUI group.
         codeSplitting: {
           groups: [
             {
@@ -19,8 +19,13 @@ export default defineConfig({
               priority: 20,
             },
             {
-              name: 'mui-core',
-              test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
+              name: 'motion',
+              test: /[\\/]node_modules[\\/](framer-motion|motion-dom|motion-utils)[\\/]/,
+              priority: 20,
+            },
+            {
+              name: 'react',
+              test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|scheduler)[\\/]/,
               priority: 10,
             },
           ],

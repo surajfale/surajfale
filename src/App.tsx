@@ -1,79 +1,53 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useCallback, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ThemeProvider, CssBaseline, Box } from '@mui/material'
-import { createAppTheme, fullViewportHeight } from './theme'
-import ThemeToggle from './components/ThemeToggle'
+import { MotionConfig } from 'framer-motion'
+import { IconContext } from '@phosphor-icons/react'
 import Home from './pages/Home'
 import Apps from './pages/Apps'
 import AppDetail from './pages/AppDetail'
 import NotFound from './pages/NotFound'
-import CustomCursor from './components/CustomCursor'
-import NeuralBackground from './components/NeuralBackground'
+import Nav from './components/Nav'
+import FooterRow from './components/FooterRow'
 import CommandPalette from './components/CommandPalette'
-import SystemHUD from './components/SystemHUD'
+import ScrollManager from './components/ScrollManager'
 import ErrorBoundary from './components/ErrorBoundary'
 
-type ThemeMode = 'light' | 'dark'
+// One icon weight site-wide; icons size to the surrounding font (1em).
+const ICONS = { weight: 'regular', size: '1em', mirrored: false } as const
 
 function App() {
-  const [mode, setMode] = useState<ThemeMode>(() => {
-    // Check localStorage first, then system preference
-    // Allowlist the stored value (as index.html's pre-paint script does) instead of casting it
-    const savedMode = localStorage.getItem('theme-mode')
-    if (savedMode === 'light' || savedMode === 'dark') return savedMode
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  })
-
-  useEffect(() => {
-    localStorage.setItem('theme-mode', mode)
-  }, [mode])
-
-  const theme = useMemo(() => createAppTheme(mode), [mode])
-
-  useEffect(() => {
-    const root = document.documentElement
-    root.style.setProperty('--background-default', theme.palette.background.default)
-    root.style.setProperty('--text-primary', theme.palette.text.primary)
-    root.style.setProperty('--primary-main', theme.palette.primary.main)
-    root.style.setProperty('--secondary-main', theme.palette.secondary.main)
-    // Keep in sync with the pre-paint attribute set in index.html so the body
-    // background/color set there don't get stuck on the mode picked at initial load.
-    root.setAttribute('data-theme-mode', mode)
-  }, [theme, mode])
-
-  const toggleTheme = () => {
-    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
-  }
+  const [paletteOpen, setPaletteOpen] = useState(false)
+  const openPalette = useCallback(() => setPaletteOpen(true), [])
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <NeuralBackground />
-      {/* <div className="noise-overlay" /> */} 
-      {/* Keeping noise overlay commented out as NeuralBackground replaces it, 
-          or we can keep both for texture + particles if desired. 
-          Let's disable noise for cleaner futuristic look. */}
-      
-      <CustomCursor />
-      
-      <BrowserRouter>
-        <CommandPalette toggleTheme={toggleTheme} />
-        <SystemHUD />
-        
-        <Box sx={{ ...fullViewportHeight, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
-          <ThemeToggle mode={mode} onToggle={toggleTheme} />
-          <ErrorBoundary>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/apps" element={<Apps />} />
-              <Route path="/apps/:slug" element={<AppDetail />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </ErrorBoundary>
-        </Box>
-      </BrowserRouter>
-    </ThemeProvider>
+    // reducedMotion="user": under prefers-reduced-motion, transforms (lifts,
+    // reveals, the nav indicator slide) are skipped; opacity and color still ease.
+    <MotionConfig reducedMotion="user">
+      <IconContext.Provider value={ICONS}>
+        <BrowserRouter>
+          <ScrollManager />
+          <a
+            href="#main"
+            className="sr-only z-50 rounded-bento bg-bone px-4 py-2 font-mono text-xs text-canvas uppercase focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          >
+            Skip to content
+          </a>
+          <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
+          <div className="mx-auto w-full max-w-[1320px] px-4 pt-3 sm:px-6">
+            <Nav onOpenPalette={openPalette} />
+            <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/apps" element={<Apps />} />
+                <Route path="/apps/:slug" element={<AppDetail />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </ErrorBoundary>
+            <FooterRow />
+          </div>
+        </BrowserRouter>
+      </IconContext.Provider>
+    </MotionConfig>
   )
 }
 

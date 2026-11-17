@@ -1,238 +1,195 @@
-import { useState, useEffect, useMemo, type ReactElement } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  Dialog,
-  DialogContent,
-  TextField,
-  List,
-  ListItemButton,
-  ListItemText,
-  ListItemIcon,
-  Box,
-  Typography,
-  InputAdornment,
-  alpha,
-  useTheme,
-} from '@mui/material'
-import { ArrowElbowDownLeftIcon, GithubLogoIcon, HouseIcon, MagnifyingGlassIcon, MoonIcon, SquaresFourIcon, UserIcon } from '@phosphor-icons/react'
-import AppIcon from './AppIcon'
-
-interface CommandPaletteProps {
-  toggleTheme: () => void
-}
+  ArrowElbowDownLeftIcon,
+  ArticleIcon,
+  CubeIcon,
+  GithubLogoIcon,
+  HouseIcon,
+  LinkedinLogoIcon,
+  MagnifyingGlassIcon,
+  SquaresFourIcon,
+  TreeStructureIcon,
+  type Icon,
+} from '@phosphor-icons/react'
+import { profileData } from '../content/profile'
+import { cn } from '../lib/cn'
 
 interface Command {
   id: string
   title: string
-  subtitle?: string
-  icon: ReactElement
-  action: () => void
-  shortcut?: string
+  group: 'Navigate' | 'Projects' | 'Links'
+  icon: Icon
+  run: () => void
 }
 
-const CommandPalette = ({ toggleTheme }: CommandPaletteProps) => {
-  const [open, setOpen] = useState(false)
-  const [query, setQuery] = useState('')
-  const [selectedIndex, setSelectedIndex] = useState(0)
+interface CommandPaletteProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
+
+const socialUrl = (name: string) => profileData.socials.find((s) => s.name === name)?.url ?? '/'
+const openExternal = (url: string) => window.open(url, '_blank', 'noopener,noreferrer')
+
+/**
+ * ⌘K / Ctrl+K palette. Keyboard-summoned UI is instant (no transition).
+ * ARIA combobox + listbox: focus stays in the input, arrows move
+ * aria-activedescendant, Enter runs, Escape closes and restores focus.
+ */
+export default function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const navigate = useNavigate()
-  const theme = useTheme()
+  const listId = useId()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const restoreFocusRef = useRef<HTMLElement | null>(null)
+  const [query, setQuery] = useState('')
+  const [selected, setSelected] = useState(0)
 
-  const commands: Command[] = useMemo(
+  const commands = useMemo<Command[]>(
     () => [
-      {
-        id: 'home',
-        title: 'Home',
-        subtitle: 'Navigate to home page',
-        icon: <AppIcon icon={HouseIcon} />,
-        action: () => {
-          navigate('/')
-          window.scrollTo(0, 0)
-        },
-      },
-      {
-        id: 'projects',
-        title: 'Projects',
-        subtitle: 'View all projects',
-        icon: <AppIcon icon={SquaresFourIcon} />,
-        action: () => navigate('/apps'),
-      },
-      {
-        id: 'about',
-        title: 'About Me',
-        subtitle: 'Scroll to about section',
-        icon: <AppIcon icon={UserIcon} />,
-        action: () => {
-          navigate('/')
-          setTimeout(() => {
-            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
-          }, 100)
-        },
-      },
-      {
-        id: 'theme',
-        title: 'Toggle Theme',
-        subtitle: 'Switch between light and dark mode',
-        icon: <AppIcon icon={MoonIcon} />,
-        action: toggleTheme,
-      },
-      {
-        id: 'github',
-        title: 'GitHub',
-        subtitle: 'Visit my GitHub profile',
-        icon: <AppIcon icon={GithubLogoIcon} />,
-        action: () => window.open('https://github.com/surajfale', '_blank', 'noopener,noreferrer'),
-      },
+      { id: 'home', title: 'Home', group: 'Navigate', icon: HouseIcon, run: () => navigate('/') },
+      { id: 'work', title: 'Featured work', group: 'Navigate', icon: CubeIcon, run: () => navigate('/#work') },
+      { id: 'writing', title: 'Writing & deep-dives', group: 'Navigate', icon: ArticleIcon, run: () => navigate('/#writing') },
+      { id: 'stack', title: 'Core stack & architecture', group: 'Navigate', icon: TreeStructureIcon, run: () => navigate('/#stack') },
+      { id: 'apps', title: 'All apps', group: 'Navigate', icon: SquaresFourIcon, run: () => navigate('/apps') },
+      ...profileData.projects.map<Command>((p) => ({
+        id: `project-${p.slug}`,
+        title: p.title,
+        group: 'Projects',
+        icon: CubeIcon,
+        run: () => navigate(`/apps/${p.slug}`),
+      })),
+      { id: 'github', title: 'GitHub', group: 'Links', icon: GithubLogoIcon, run: () => openExternal(socialUrl('GitHub')) },
+      { id: 'linkedin', title: 'LinkedIn', group: 'Links', icon: LinkedinLogoIcon, run: () => openExternal(socialUrl('LinkedIn')) },
     ],
-    [navigate, toggleTheme]
+    [navigate],
   )
 
-  const filteredCommands = commands.filter((cmd) =>
-    cmd.title.toLowerCase().includes(query.toLowerCase()) ||
-    (cmd.subtitle && cmd.subtitle.toLowerCase().includes(query.toLowerCase()))
-  )
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return q ? commands.filter((c) => `${c.title} ${c.group}`.toLowerCase().includes(q)) : commands
+  }, [commands, query])
 
+  const close = () => {
+    onOpenChange(false)
+    setQuery('')
+    setSelected(0)
+    restoreFocusRef.current?.focus()
+  }
+
+  // Global ⌘K / Ctrl+K toggle.
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault()
-        setOpen((prev) => !prev)
+        onOpenChange(!open)
       }
     }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open, onOpenChange])
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  // Remember who had focus, focus the input, and lock page scroll while open.
+  useEffect(() => {
+    if (!open) return
+    restoreFocusRef.current = document.activeElement as HTMLElement | null
+    inputRef.current?.focus()
+    const { overflow } = document.body.style
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = overflow
+    }
+  }, [open])
+
+  if (!open) return null
+
+  const run = (command: Command | undefined) => {
+    if (!command) return
+    close()
+    command.run()
+  }
+
+  const onInputKeyDown = (e: ReactKeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault()
-      setSelectedIndex((prev) =>
-        prev < filteredCommands.length - 1 ? prev + 1 : prev
-      )
+      setSelected((i) => (results.length ? (i + 1) % results.length : 0))
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
-      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : prev))
+      setSelected((i) => (results.length ? (i - 1 + results.length) % results.length : 0))
     } else if (e.key === 'Enter') {
       e.preventDefault()
-      if (filteredCommands[selectedIndex]) {
-        filteredCommands[selectedIndex].action()
-        setOpen(false)
-      }
+      run(results[selected])
+    } else if (e.key === 'Escape') {
+      e.preventDefault()
+      close()
+    } else if (e.key === 'Tab') {
+      e.preventDefault() // the input is the only tab stop inside the modal
     }
   }
 
-  return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      // Summoned by ⌘K dozens of times a day: appear instantly, no fade
-      transitionDuration={0}
-      maxWidth="sm"
-      fullWidth
-      slotProps={{
-        paper: {
-          sx: {
-            bgcolor: 'background.paper',
-            backgroundImage: 'none',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid',
-            borderColor: 'primary.main',
-            borderRadius: 2,
-            boxShadow: (theme) => `0 0 50px ${alpha(theme.palette.primary.main, 0.2)}`,
-            overflow: 'hidden',
-          },
-        },
-        transition: {
-          onEnter: () => {
-            setQuery('')
-            setSelectedIndex(0)
-          },
-        },
-      }}
-    >
-      <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
-        <TextField
-          fullWidth
-          autoFocus
-          placeholder="Type a command or search..."
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value)
-            setSelectedIndex(0)
-          }}
-          onKeyDown={handleKeyDown}
-          variant="standard"
-          slotProps={{
-            input: {
-              disableUnderline: true,
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AppIcon icon={MagnifyingGlassIcon} sx={{ color: 'text.secondary' }} />
-                </InputAdornment>
-              ),
-              sx: { fontSize: '1.2rem', fontFamily: '"Space Mono", monospace' },
-            },
-          }}
-        />
-      </Box>
+  const optionId = (id: string) => `${listId}-${id}`
+  const active = results[selected]
 
-      <DialogContent sx={{ p: 0, maxHeight: 400 }}>
-        <List sx={{ py: 0 }}>
-          {filteredCommands.length > 0 ? (
-            filteredCommands.map((cmd, index) => (
-              <ListItemButton
-                key={cmd.id}
-                selected={index === selectedIndex}
-                onClick={() => {
-                  cmd.action()
-                  setOpen(false)
-                }}
-                sx={{
-                  py: 1.5,
-                  px: 3,
-                  borderLeft: '4px solid',
-                  borderColor: index === selectedIndex ? 'primary.main' : 'transparent',
-                  bgcolor: index === selectedIndex ? alpha(theme.palette.primary.main, 0.1) : 'transparent',
-                  '&:hover': {
-                    bgcolor: alpha(theme.palette.primary.main, 0.05),
-                  },
-                }}
-              >
-                <ListItemIcon sx={{ minWidth: 40, color: index === selectedIndex ? 'primary.main' : 'text.secondary' }}>
-                  {cmd.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography variant="body1" sx={{ fontWeight: 600, fontFamily: '"Space Mono", monospace' }}>
-                      {cmd.title}
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                      {cmd.subtitle}
-                    </Typography>
-                  }
-                />
-                {index === selectedIndex && <AppIcon icon={ArrowElbowDownLeftIcon} sx={{ fontSize: 16, color: 'text.disabled' }} />}
-              </ListItemButton>
-            ))
-          ) : (
-            <Box sx={{ p: 4, textAlign: 'center', color: 'text.secondary' }}>
-              <Typography variant="body2">No commands found</Typography>
-            </Box>
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-canvas/80 px-4 pt-[12vh]" onMouseDown={close}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command palette"
+        className="w-full max-w-xl overflow-hidden rounded-bento border-[1.5px] border-bone bg-card"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-3 border-b-[1.5px] border-bone/60 px-4">
+          <MagnifyingGlassIcon aria-hidden className="text-lg text-bone-muted" />
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setSelected(0)
+            }}
+            onKeyDown={onInputKeyDown}
+            role="combobox"
+            aria-expanded="true"
+            aria-controls={listId}
+            aria-activedescendant={active ? optionId(active.id) : undefined}
+            aria-autocomplete="list"
+            placeholder="Jump to a section, project or profile…"
+            className="h-14 w-full bg-transparent font-mono text-sm text-bone placeholder:text-bone-muted focus:outline-none"
+          />
+          <kbd className="meta rounded-inner border border-bone/40 px-1.5 py-0.5">Esc</kbd>
+        </div>
+
+        <ul id={listId} role="listbox" aria-label="Commands" className="max-h-[50vh] overflow-y-auto p-2">
+          {results.length === 0 && (
+            <li className="px-3 py-6 text-center font-mono text-sm text-bone-muted">No matches for “{query}”.</li>
           )}
-        </List>
-      </DialogContent>
-      
-      <Box sx={{ p: 1.5, borderTop: '1px solid', borderColor: 'divider', display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-        <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.disabled' }}>
-          <Box component="span" sx={{ bgcolor: alpha(theme.palette.text.primary, 0.1), px: 0.5, borderRadius: 0.5 }}>↑↓</Box> to navigate
-        </Typography>
-        <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.disabled' }}>
-          <Box component="span" sx={{ bgcolor: alpha(theme.palette.text.primary, 0.1), px: 0.5, borderRadius: 0.5 }}>↵</Box> to select
-        </Typography>
-      </Box>
-    </Dialog>
+          {results.map((command, i) => {
+            const isActive = i === selected
+            const CommandIcon = command.icon
+            return (
+              <li
+                key={command.id}
+                id={optionId(command.id)}
+                role="option"
+                aria-selected={isActive}
+                onMouseMove={() => setSelected(i)}
+                onClick={() => run(command)}
+                className={cn(
+                  'relative flex cursor-pointer items-center gap-3 rounded-inner px-3 py-2.5 text-sm',
+                  isActive ? 'bg-canvas text-bone' : 'text-bone-muted',
+                )}
+              >
+                {/* Active indicator (Signal Red use #2). */}
+                {isActive && <span aria-hidden className="absolute inset-y-2 left-0 w-0.5 bg-signal" />}
+                <CommandIcon aria-hidden className="text-base" />
+                <span className="flex-1">{command.title}</span>
+                <span className="meta">{command.group}</span>
+                {isActive && <ArrowElbowDownLeftIcon aria-hidden className="text-bone-muted" />}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </div>
   )
 }
-
-export default CommandPalette
